@@ -1,11 +1,12 @@
 package pl.edu.pk.hallreservation.repository;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.NoRepositoryBean;
+
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
-import pl.edu.pk.hallreservation.model.User;
+@NoRepositoryBean
+public interface BaseRepository<T> extends CrudRepository<T, Long> {
 
-public interface UserRepository extends CrudRepository<User, Long> {
-
-    List<User> findByLastName(String lastName);
+    @Override List<T> findAll();
 }

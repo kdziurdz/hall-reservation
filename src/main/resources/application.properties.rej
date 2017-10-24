@@ -1,0 +1,6 @@
+diff a/src/main/resources/application.properties b/src/main/resources/application.properties	(rejected hunks)
+@@ -0,3 +0,4 @@
+ 
+ logging.level.org.springframework.web = TRACE
+ logging.level.org.hibernate = TRACE
++debug=true

@@ -1,7 +1,12 @@
 package pl.edu.pk.hallreservation.repository;
 
-/**
- * Created by rumca on 23.10.2017.
- */
-public class UserRepository {
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+import pl.edu.pk.hallreservation.model.User;
+
+@Repository
+public interface UserRepository extends BaseRepository<User> {
+
+    List<User> findByLastName(String lastName);
 }
