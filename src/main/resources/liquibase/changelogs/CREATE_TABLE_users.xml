@@ -17,6 +17,9 @@
             <column name="LAST_NAME" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
+            <column name="PASSWORD" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
             <column name="EMAIL" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
