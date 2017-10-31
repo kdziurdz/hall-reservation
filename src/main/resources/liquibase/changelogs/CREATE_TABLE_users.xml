@@ -8,7 +8,7 @@
 
     <changeSet id="1" author="Konrad">
         <createTable tableName="USERS">
-            <column name="ID" type="int">
+            <column name="ID" type="int" autoIncrement="true" incrementBy="1">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="FIRST_NAME" type="varchar(50)">
@@ -17,7 +17,7 @@
             <column name="LAST_NAME" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="PASSWORD" type="varchar(50)">
+            <column name="PASSWORD" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="EMAIL" type="varchar(50)">

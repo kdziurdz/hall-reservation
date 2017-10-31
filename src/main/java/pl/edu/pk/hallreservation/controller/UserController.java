@@ -3,9 +3,11 @@ package pl.edu.pk.hallreservation.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.model.User;
 import pl.edu.pk.hallreservation.repository.UserRepository;
+import pl.edu.pk.hallreservation.service.UserService;
 
 import java.util.List;
 
@@ -14,19 +16,24 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
+                          UserService userService) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userService = userService;
     }
 
-    @GetMapping("create")
-    public ResponseEntity<User> greeting(String name) {
+    @PostMapping("sign-up")
+    public ResponseEntity<HttpStatus> signUp() {
 
-        userRepository.save(new User("jan", "kowalski"));
-        userRepository.save(new User("dupa", "jasia"));
-
-        return new ResponseEntity<>(new User("firstname", "lastname"), HttpStatus.CREATED);
+        userService.createUser(new User("jan", "kowalski", bCryptPasswordEncoder
+                .encode("password"), "ema@il"));
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("count")

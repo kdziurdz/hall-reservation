@@ -8,5 +8,5 @@ import pl.edu.pk.hallreservation.model.User;
 @Repository
 public interface UserRepository extends BaseRepository<User> {
 
-    List<User> findByLastName(String lastName);
+    User findOneByFirstName(String firstName);
 }
