@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.edu.pk.hallreservation.model.User;
+import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.repository.UserRepository;
 
 import javax.transaction.Transactional;
@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findOneByFirstName(username);
+        return userRepository.findOneByUsername(username);
     }
 
     @Transactional

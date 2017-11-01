@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+<changeSet author="Konrad" id="3">
+        <createTable tableName="USER_AUTHORITIES">
+            <column name="USER_ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUTHORITY" type="varchar2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!--<changeSet author="Konrad" id="4">-->
+        <!--<createIndex tablespace="PLATFORM_APP_IDX" indexName="INST_BANK_STATEMENT_HOUR_I1" tableName="USER_AUTHORITIES" unique="true">-->
+            <!--<column name="USER_ID"/>-->
+            <!--<column name="HOUR"/>-->
+        <!--</createIndex>-->
+        <!--<addPrimaryKey columnNames="USER_ID, HOUR" forIndexName="INST_BANK_STATEMENT_HOUR_I1"-->
+                       <!--tableName="USER_AUTHORITIES"/>-->
+    <!--</changeSet>-->
+
+    <changeSet author="Konrad" id="5">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="USER_AUTHORITIES"
+                                 constraintName="USER_AUTHORITY_FK1" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="USERS"/>
+    </changeSet>
+</databaseChangeLog>

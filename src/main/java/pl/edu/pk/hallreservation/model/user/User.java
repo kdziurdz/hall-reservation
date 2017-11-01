@@ -1,4 +1,4 @@
-package pl.edu.pk.hallreservation.model;
+package pl.edu.pk.hallreservation.model.user;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
@@ -23,6 +25,10 @@ public class User implements UserDetails {
     private String firstName;
 
     @NotNull
+    @Column(name = "USERNAME")
+    private String username;
+
+    @NotNull
     @Column(name = "LAST_NAME")
     private String lastName;
 
@@ -34,13 +40,30 @@ public class User implements UserDetails {
     @Column(name = "EMAIL")
     private String email;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "USER_AUTHORITIES",
+            joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),
+            foreignKey = @ForeignKey(name = "USER_AUTHORITY_FK1")
+    )
+    private Set<UserAuthority> authorities = new HashSet<>();
+
     protected User() {}
 
-    public User(String firstName, String lastName, String password, String email) {
+    public User(String firstName, String username, String lastName, String password, String email, Set<UserAuthority> authorities) {
         this.firstName = firstName;
+        this.username = username;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
+        this.authorities = authorities;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setAuthorities(Set<UserAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     public Long getId() {
@@ -81,7 +104,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     public String getPassword() {
@@ -90,7 +113,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return firstName;
+        return username;
     }
 
     @Override

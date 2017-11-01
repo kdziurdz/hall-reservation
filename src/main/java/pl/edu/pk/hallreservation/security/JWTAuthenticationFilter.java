@@ -7,8 +7,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import pl.edu.pk.hallreservation.model.user.User;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,8 +32,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         System.out.println("attemptAuthentication");
         try {
-            User creds = new ObjectMapper()
-                    .readValue(req.getInputStream(), User.class);
+            AccountCredentials creds = new ObjectMapper()
+                    .readValue(req.getInputStream(), AccountCredentials.class);
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
