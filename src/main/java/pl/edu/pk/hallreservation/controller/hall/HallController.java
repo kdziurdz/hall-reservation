@@ -32,7 +32,7 @@ public class HallController {
 
     @GetMapping("")
     public ResponseEntity<Page<HallDTO>> getAll(Pageable pageable) {
-
+        hallService.refreshHallsClasses();
         return new ResponseEntity<>(new PageImpl<>(new ArrayList<>()), HttpStatus.OK);
     }
 }
