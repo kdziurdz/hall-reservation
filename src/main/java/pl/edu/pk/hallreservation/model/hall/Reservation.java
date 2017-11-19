@@ -24,14 +24,15 @@ public class Reservation {
     @Column(name = "DATE")
     private LocalDate date;
 
-//    @OneToOne
-//    @JoinColumn(name = "USER_ID", nullable = false)
-//    private User user;
-//
-//    @OneToOne
-//    @JoinColumn(name = "HALL_ID", nullable = false)
-//    private Hall hall;
+    @OneToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 
+    @ManyToOne
+    @JoinTable(name = "HALLS_RESERVATIONS",
+            inverseJoinColumns = @JoinColumn(name = "HALL_ID"),
+            joinColumns= @JoinColumn(name = "RESERVATION_ID"))
+    private Hall hall;
 
     public Reservation(Integer lessonNumber, LocalDate date) {
         this.lessonNumber = lessonNumber;

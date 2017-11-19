@@ -17,7 +17,17 @@
             <column name="DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>
+            <column name="USER_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
+    <changeSet id="576" author="Konrad">
+        <addForeignKeyConstraint baseColumnNames="USER_ID"
+                                 baseTableName="RESERVATIONS"
+                                 constraintName="FK_RE_US_USER_ID"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="USERS"/>
+    </changeSet>
 </databaseChangeLog>
