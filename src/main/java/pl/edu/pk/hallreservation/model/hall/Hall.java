@@ -1,6 +1,8 @@
 package pl.edu.pk.hallreservation.model.hall;
 
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -20,15 +22,16 @@ public class Hall {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "id")
-//    @JoinTable(name = "LECTURES",
-//            joinColumns = {@JoinColumn(name = "ID", referencedColumnName = "ID")},
-//    foreignKey = @ForeignKey("FK_LECTURE_HALL"))
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "HALLS_LECTURES",
+            joinColumns = @JoinColumn(name = "HALL_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LECTURE_ID"))
     private Set<Lecture> lectures = new HashSet<>();
 
-    @OneToMany(mappedBy = "id")
-//    @JoinTable(name = "RESERVATIONS",
-//            joinColumns = {@JoinColumn(name = "ID", referencedColumnName = "ID")})
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "HALLS_RESERVATIONS",
+            joinColumns = @JoinColumn(name = "HALL_ID"),
+            inverseJoinColumns = @JoinColumn(name = "RESERVATION_ID"))
     private Set<Reservation> reservations = new HashSet<>();
 
     public Hall(String name, Set<Lecture> lectures, Set<Reservation> reservations) {

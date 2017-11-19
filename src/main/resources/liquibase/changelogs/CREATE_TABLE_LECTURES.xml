@@ -23,34 +23,7 @@
             <column name="DAY_OF_WEEK" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="USER_ID" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="HALL_ID" type="int">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
-    </changeSet>
-
-
-    <!--<changeSet author="Konrad" id="15">-->
-        <!--<addUniqueConstraint columnNames="NAME" constraintName="HALL_NAME_UK" tableName="HALLS"/>-->
-    <!--</changeSet>-->
-
-    <changeSet id="16" author="Konrad">
-        <addForeignKeyConstraint baseColumnNames="USER_ID"
-                                 baseTableName="LECTURES"
-                                 constraintName="FK_LECTURE_USER"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="USERS"/>
-    </changeSet>
-
-    <changeSet id="17" author="Konrad">
-        <addForeignKeyConstraint baseColumnNames="HALL_ID"
-                                 baseTableName="LECTURES"
-                                 constraintName="FK_LECTURE_HALL"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="HALLS"/>
     </changeSet>
 
 </databaseChangeLog>

@@ -24,26 +24,21 @@ public class Reservation {
     @Column(name = "DATE")
     private LocalDate date;
 
-    @OneToOne
-    @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+//    @OneToOne
+//    @JoinColumn(name = "USER_ID", nullable = false)
+//    private User user;
+//
+//    @OneToOne
+//    @JoinColumn(name = "HALL_ID", nullable = false)
+//    private Hall hall;
 
-    @OneToOne
-    @JoinColumn(name = "HALL_ID", nullable = false)
-    private Hall hall;
 
-
-    public Reservation(Integer lessonNumber, LocalDate date, User user) {
+    public Reservation(Integer lessonNumber, LocalDate date) {
         this.lessonNumber = lessonNumber;
         this.date = date;
-        this.user = user;
     }
 
     public Reservation() {
-    }
-
-    public Hall getHall() {
-        return hall;
     }
 
     public Long getId() {
@@ -58,23 +53,11 @@ public class Reservation {
         return date;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public void setLessonNumber(Integer lessonNumber) {
         this.lessonNumber = lessonNumber;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
     }
 }

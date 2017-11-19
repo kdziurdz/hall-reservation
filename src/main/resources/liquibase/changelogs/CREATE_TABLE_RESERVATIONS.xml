@@ -17,34 +17,7 @@
             <column name="DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>
-            <column name="USER_ID" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="HALL_ID" type="int">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
-    </changeSet>
-
-
-    <!--<changeSet author="Konrad" id="11">-->
-        <!--<addUniqueConstraint columnNames="NAME" constraintName="HALL_NAME_UK" tableName="HALLS"/>-->
-    <!--</changeSet>-->
-
-    <changeSet id="19" author="Konrad">
-        <addForeignKeyConstraint baseColumnNames="USER_ID"
-                                 baseTableName="RESERVATIONS"
-                                 constraintName="FK_RESERVATION_USER"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="USERS"/>
-    </changeSet>
-
-    <changeSet id="20" author="Konrad">
-        <addForeignKeyConstraint baseColumnNames="HALL_ID"
-                                 baseTableName="RESERVATIONS"
-                                 constraintName="FK_RESERVATION_HALL"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="HALLS"/>
     </changeSet>
 
 </databaseChangeLog>

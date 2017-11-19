@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="30" author="Konrad">
+        <createTable tableName="HALLS_RESERVATIONS">
+            <column name="HALL_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RESERVATION_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="31" author="Konrad">
+        <addPrimaryKey columnNames="HALL_ID, RESERVATION_ID"
+                       constraintName="PK_HA_RE_RESERVATIONS"
+                       tableName="HALLS_RESERVATIONS"/>
+    </changeSet>
+
+    <changeSet author="Konrad" id="32">
+        <addUniqueConstraint columnNames="HALL_ID"
+                             constraintName="UK_HA_RE_ID"
+                             tableName="HALLS_RESERVATIONS"/>
+    </changeSet>
+
+    <changeSet id="33" author="Konrad">
+        <addForeignKeyConstraint baseColumnNames="HALL_ID"
+                                 baseTableName="HALLS_RESERVATIONS"
+                                 constraintName="FK_HA_RE_HALL"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="HALLS"/>
+    </changeSet>
+
+    <changeSet id="34" author="Konrad">
+        <addForeignKeyConstraint baseColumnNames="RESERVATION_ID"
+                                 baseTableName="HALLS_RESERVATIONS"
+                                 constraintName="FK_HA_RE_RESERVATION"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="RESERVATIONS"/>
+    </changeSet>
+
+</databaseChangeLog>

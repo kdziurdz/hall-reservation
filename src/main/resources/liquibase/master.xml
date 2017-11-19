@@ -11,4 +11,6 @@
     <include file="classpath:liquibase/changelogs/CREATE_TABLE_HALLS.xml"/>
     <include file="classpath:liquibase/changelogs/CREATE_TABLE_RESERVATIONS.xml"/>
     <include file="classpath:liquibase/changelogs/CREATE_TABLE_LECTURES.xml"/>
+    <include file="classpath:liquibase/changelogs/CREATE_TABLE_HALLS_LECTURES.xml"/>
+    <include file="classpath:liquibase/changelogs/CREATE_TABLE_HALLS_RESERVATIONS.xml"/>
 </databaseChangeLog>

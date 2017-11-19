@@ -13,8 +13,7 @@ import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.repository.HallRepository;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class HallParserService {
@@ -37,17 +36,24 @@ public class HallParserService {
 
     public void refreshHallsClasses() {
         try {
+            Map<String, Hall> halls = new HashMap<>();
             int hallUrlNumber = 2; // intended index start
             do {
                 Document doc = Jsoup.connect(String.format(HALL_URL, hallUrlNumber)).get();
                 if(doc.title().contains(PUBLIC_HALL_POLISH)) {
-                    hallRepository.save(fetchSingleHallData(doc));
+                    Hall hall = fetchSingleHallData(doc);
+
+                    if(!halls.containsKey(hall.getName())){
+                        halls.put(hall.getName(), hall);
+                    } else {
+                        mergeHalls(halls.get(hall.getName()), hall); // merge even with odd
+                    }
                     hallUrlNumber++;
                 } else {
                     break;
                 }
             } while(true);
-
+            persistHalls(halls);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,6 +63,7 @@ public class HallParserService {
 
     private Hall fetchSingleHallData(Document doc) throws IOException{
         String title = doc.getElementsByClass(TITLE_POLISH_CLASS_NAME).first().text();
+        String hallName = getHallName(title);
         Set<Lecture> lectures = new HashSet<>();
 
         // check if has word "odd" in title to decide if week type is even
@@ -82,12 +89,21 @@ public class HallParserService {
             for (int j = 2; j < tableCells.size(); j++) {
 
                 // j - 1 because j index has offset to real day of week number (MONDAY = 1)
-                lectures.add(collectSingleLessonData(title, lessonNumber, tableCells.get(j).children().size() == 0,
+                lectures.add(collectSingleLessonData(hallName, lessonNumber, tableCells.get(j).children().size() == 0,
                         daysOfWeekService.getByCreds(j - 1, isEven)));
             }
         }
 
-        return new Hall(title, lectures, new HashSet<>());
+        return new Hall(hallName, lectures, new HashSet<>());
+    }
+
+    private void persistHalls(Map<String, Hall> halls) {
+        hallRepository.save(halls.values());
+    }
+
+    private Hall mergeHalls(Hall hall1, Hall hall2){
+        hall1.getLectures().addAll(hall2.getLectures());
+        return hall1;
     }
 
     private Lecture collectSingleLessonData(String hallName, int lessonNumber, boolean isFree, DayOfWeek dayOfWeek) {
@@ -95,6 +111,10 @@ public class HallParserService {
                 isFree ? "wolna" : "zajeta", dayOfWeek.isEven() ? "parzysty" : "nieparzysty", dayOfWeek.getNumberOfDay()));
         return new Lecture(lessonNumber, dayOfWeek.isEven(), isFree, dayOfWeek); //TODO delete day of week
 
+    }
+
+    private String getHallName(String title) {
+        return title.substring(0, title.indexOf("-"));
     }
 
     private boolean hasEvenInName(String name) {

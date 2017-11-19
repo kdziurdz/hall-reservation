@@ -34,9 +34,9 @@ public class Lecture {
     @Column(name = "DAY_OF_WEEK")
     private DayOfWeek dayOfWeek;
 
-    @OneToOne
-    @JoinColumn(name = "HALL_ID", nullable = false)
-    private Hall hall;
+//    @OneToOne
+//    @JoinColumn(name = "HALL_ID", nullable = false)
+//    private Hall hall;
 
     public Lecture(Integer lessonNumber, Boolean isEven, Boolean isFree, DayOfWeek dayOfWeek) {
         this.lessonNumber = lessonNumber;
@@ -46,10 +46,6 @@ public class Lecture {
     }
 
     public Lecture() {
-    }
-
-    public Hall getHall() {
-        return hall;
     }
 
     public Integer getLessonNumber() {
@@ -89,9 +85,5 @@ public class Lecture {
 
     public void setDayOfWeek(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
     }
 }
