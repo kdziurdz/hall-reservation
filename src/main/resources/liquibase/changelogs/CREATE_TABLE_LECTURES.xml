@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="14" author="Konrad">
+        <createTable tableName="LECTURES">
+            <column name="ID" type="int" autoIncrement="true" incrementBy="1">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="LESSON_NUMBER" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_EVEN" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_FREE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DAY_OF_WEEK" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HALL_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <!--<changeSet author="Konrad" id="15">-->
+        <!--<addUniqueConstraint columnNames="NAME" constraintName="HALL_NAME_UK" tableName="HALLS"/>-->
+    <!--</changeSet>-->
+
+    <changeSet id="16" author="Konrad">
+        <addForeignKeyConstraint baseColumnNames="USER_ID"
+                                 baseTableName="LECTURES"
+                                 constraintName="FK_LECTURE_USER"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="USERS"/>
+    </changeSet>
+
+    <changeSet id="17" author="Konrad">
+        <addForeignKeyConstraint baseColumnNames="HALL_ID"
+                                 baseTableName="LECTURES"
+                                 constraintName="FK_LECTURE_HALL"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="HALLS"/>
+    </changeSet>
+
+</databaseChangeLog>

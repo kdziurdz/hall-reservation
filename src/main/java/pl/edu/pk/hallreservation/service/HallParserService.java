@@ -7,11 +7,17 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pk.hallreservation.model.DayOfWeek;
+import pl.edu.pk.hallreservation.model.hall.Hall;
+import pl.edu.pk.hallreservation.model.hall.Lecture;
+import pl.edu.pk.hallreservation.model.hall.Reservation;
+import pl.edu.pk.hallreservation.repository.HallRepository;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
-public class HallService {
+public class HallParserService {
 
     private static final String HALL_URL = "http://www.mech.pk.edu.pl/~podzial/stacjonarne/html/plany/s%d.html";
     private static final String ODD_POLISH = "nieparzyste";
@@ -21,10 +27,12 @@ public class HallService {
     private static final String PUBLIC_HALL_POLISH = "ogólnodostępna";
 
     private final DaysOfWeekService daysOfWeekService;
+    private final HallRepository hallRepository;
 
     @Autowired
-    public HallService(DaysOfWeekService daysOfWeekService) {
+    public HallParserService(DaysOfWeekService daysOfWeekService, HallRepository hallRepository) {
         this.daysOfWeekService = daysOfWeekService;
+        this.hallRepository = hallRepository;
     }
 
     public void refreshHallsClasses() {
@@ -33,7 +41,7 @@ public class HallService {
             do {
                 Document doc = Jsoup.connect(String.format(HALL_URL, hallUrlNumber)).get();
                 if(doc.title().contains(PUBLIC_HALL_POLISH)) {
-                    fetchSingleHallData(doc);
+                    hallRepository.save(fetchSingleHallData(doc));
                     hallUrlNumber++;
                 } else {
                     break;
@@ -47,8 +55,9 @@ public class HallService {
 
     }
 
-    private void fetchSingleHallData(Document doc) throws IOException{
+    private Hall fetchSingleHallData(Document doc) throws IOException{
         String title = doc.getElementsByClass(TITLE_POLISH_CLASS_NAME).first().text();
+        Set<Lecture> lectures = new HashSet<>();
 
         // check if has word "odd" in title to decide if week type is even
         boolean isEven = hasEvenInName(title);
@@ -73,15 +82,18 @@ public class HallService {
             for (int j = 2; j < tableCells.size(); j++) {
 
                 // j - 1 because j index has offset to real day of week number (MONDAY = 1)
-                collectSingleLessonData(title, lessonNumber, tableCells.get(j).children().size() == 0,
-                        daysOfWeekService.getByCreds(j - 1, isEven));
+                lectures.add(collectSingleLessonData(title, lessonNumber, tableCells.get(j).children().size() == 0,
+                        daysOfWeekService.getByCreds(j - 1, isEven)));
             }
         }
+
+        return new Hall(title, lectures, new HashSet<>());
     }
 
-    private void collectSingleLessonData(String hallName, int lessonNumber, boolean isFree, DayOfWeek dayOfWeek) {
+    private Lecture collectSingleLessonData(String hallName, int lessonNumber, boolean isFree, DayOfWeek dayOfWeek) {
         System.out.println(String.format("Sala %s w %d godzinie lekcyjnej jest %s. Dzien tygodnia to: %s %s", hallName, lessonNumber,
                 isFree ? "wolna" : "zajeta", dayOfWeek.isEven() ? "parzysty" : "nieparzysty", dayOfWeek.getNumberOfDay()));
+        return new Lecture(lessonNumber, dayOfWeek.isEven(), isFree, dayOfWeek); //TODO delete day of week
 
     }
 

@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.hall.dto.HallDTO;
-import pl.edu.pk.hallreservation.service.HallService;
+import pl.edu.pk.hallreservation.service.HallParserService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ import java.util.ArrayList;
 @RequestMapping("hall")
 public class HallController {
 
-    private final HallService hallService;
+    private final HallParserService hallParserService;
 
     @Autowired
-    public HallController(HallService hallService) {
-        this.hallService = hallService;
+    public HallController(HallParserService hallParserService) {
+        this.hallParserService = hallParserService;
     }
 
     @PostMapping("")
@@ -32,7 +32,7 @@ public class HallController {
 
     @GetMapping("")
     public ResponseEntity<Page<HallDTO>> getAll(Pageable pageable) {
-        hallService.refreshHallsClasses();
+        hallParserService.refreshHallsClasses();
         return new ResponseEntity<>(new PageImpl<>(new ArrayList<>()), HttpStatus.OK);
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="7" author="Konrad">
+        <createTable tableName="HALLS">
+            <column name="ID" type="int" autoIncrement="true" incrementBy="1">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <!--<column name="RESERVATION_ID" type="varchar(50)">-->
+                <!--<constraints nullable="false"/>-->
+            <!--</column>-->
+            <!--<column name="LECTURE_ID" type="varchar(50)">-->
+                <!--<constraints nullable="false"/>-->
+            <!--</column>-->
+        </createTable>
+    </changeSet>
+
+
+    <changeSet author="Konrad" id="8">
+        <addUniqueConstraint columnNames="NAME" constraintName="HALL_NAME_UK" tableName="HALLS"/>
+    </changeSet>
+
+    <!--<changeSet id="9" author="Konrad">-->
+        <!--<addForeignKeyConstraint baseColumnNames="RESERVATION_ID"-->
+                                 <!--baseTableName="HALLS"-->
+                                 <!--constraintName="FK_HALL_RESERVATION"-->
+                                 <!--deferrable="true"-->
+                                 <!--initiallyDeferred="true"-->
+                                 <!--onDelete="CASCADE"-->
+                                 <!--onUpdate="RESTRICT"-->
+                                 <!--referencedColumnNames="id"-->
+                                 <!--referencedTableName="person"/>-->
+    <!--</changeSet>-->
+
+</databaseChangeLog>

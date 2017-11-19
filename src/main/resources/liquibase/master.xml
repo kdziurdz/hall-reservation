@@ -8,4 +8,7 @@
     <include file="classpath:liquibase/changelogs/LOAD_DATA_users.xml"/>
     <include file="classpath:liquibase/changelogs/CREATE_COLLECTION_TABLE_user_authorities.xml"/>
     <include file="classpath:liquibase/changelogs/LOAD_DATA_user_authorities.xml"/>
+    <include file="classpath:liquibase/changelogs/CREATE_TABLE_HALLS.xml"/>
+    <include file="classpath:liquibase/changelogs/CREATE_TABLE_RESERVATIONS.xml"/>
+    <include file="classpath:liquibase/changelogs/CREATE_TABLE_LECTURES.xml"/>
 </databaseChangeLog>
