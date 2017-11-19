@@ -34,9 +34,11 @@ public class Lecture {
     @Column(name = "DAY_OF_WEEK")
     private DayOfWeek dayOfWeek;
 
-//    @OneToOne
-//    @JoinColumn(name = "HALL_ID", nullable = false)
-//    private Hall hall;
+    @ManyToOne
+    @JoinTable(name = "HALLS_LECTURES",
+            inverseJoinColumns = @JoinColumn(name = "HALL_ID"),
+            joinColumns= @JoinColumn(name = "LECTURE_ID"))
+    private Hall hall;
 
     public Lecture(Integer lessonNumber, Boolean isEven, Boolean isFree, DayOfWeek dayOfWeek) {
         this.lessonNumber = lessonNumber;

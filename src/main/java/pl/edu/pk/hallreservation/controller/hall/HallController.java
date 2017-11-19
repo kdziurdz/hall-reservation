@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.hall.dto.HallDTO;
+import pl.edu.pk.hallreservation.model.hall.Hall;
+import pl.edu.pk.hallreservation.repository.HallRepository;
 import pl.edu.pk.hallreservation.service.HallParserService;
+import pl.edu.pk.hallreservation.service.HallService;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 
 @RestController
@@ -18,21 +20,28 @@ import java.util.ArrayList;
 public class HallController {
 
     private final HallParserService hallParserService;
+    private final HallService hallService;
 
     @Autowired
-    public HallController(HallParserService hallParserService) {
+    public HallController(HallParserService hallParserService, HallRepository hallRepository,
+                          HallService hallService) {
         this.hallParserService = hallParserService;
-    }
-
-    @PostMapping("")
-    public ResponseEntity<HttpStatus> create(@Valid @RequestBody HallDTO hallDTO) {
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        this.hallService = hallService;
     }
 
     @GetMapping("")
-    public ResponseEntity<Page<HallDTO>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<Hall>> getAll(Pageable pageable) {
+        return new ResponseEntity<>(hallService.getAll(pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("refresh")
+    public ResponseEntity<HttpStatus> refreshHalls() {
         hallParserService.refreshHallsClasses();
-        return new ResponseEntity<>(new PageImpl<>(new ArrayList<>()), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Hall> getAll(@PathVariable Long id) {
+        return new ResponseEntity<>(hallService.getOne(id), HttpStatus.OK);
     }
 }

@@ -107,9 +107,7 @@ public class HallParserService {
     }
 
     private Lecture collectSingleLessonData(String hallName, int lessonNumber, boolean isFree, DayOfWeek dayOfWeek) {
-        System.out.println(String.format("Sala %s w %d godzinie lekcyjnej jest %s. Dzien tygodnia to: %s %s", hallName, lessonNumber,
-                isFree ? "wolna" : "zajeta", dayOfWeek.isEven() ? "parzysty" : "nieparzysty", dayOfWeek.getNumberOfDay()));
-        return new Lecture(lessonNumber, dayOfWeek.isEven(), isFree, dayOfWeek); //TODO delete day of week
+        return new Lecture(lessonNumber, dayOfWeek.isEven(), isFree, dayOfWeek);
 
     }
 
