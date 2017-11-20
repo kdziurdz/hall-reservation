@@ -23,12 +23,6 @@
                        tableName="HALLS_RESERVATIONS"/>
     </changeSet>
 
-    <changeSet author="Konrad" id="32">
-        <addUniqueConstraint columnNames="HALL_ID"
-                             constraintName="UK_HA_RE_ID"
-                             tableName="HALLS_RESERVATIONS"/>
-    </changeSet>
-
     <changeSet id="33" author="Konrad">
         <addForeignKeyConstraint baseColumnNames="HALL_ID"
                                  baseTableName="HALLS_RESERVATIONS"

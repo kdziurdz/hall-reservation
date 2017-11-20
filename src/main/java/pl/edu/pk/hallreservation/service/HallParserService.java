@@ -89,8 +89,8 @@ public class HallParserService {
             for (int j = 2; j < tableCells.size(); j++) {
 
                 // j - 1 because j index has offset to real day of week number (MONDAY = 1)
-                lectures.add(collectSingleLessonData(hallName, lessonNumber, tableCells.get(j).children().size() == 0,
-                        daysOfWeekService.getByCreds(j - 1, isEven)));
+                lectures.add(collectSingleLessonData(lessonNumber, tableCells.get(j).children().size() == 0,
+                        isEven, daysOfWeekService.getByCreds(j - 1)));
             }
         }
 
@@ -106,8 +106,9 @@ public class HallParserService {
         return hall1;
     }
 
-    private Lecture collectSingleLessonData(String hallName, int lessonNumber, boolean isFree, DayOfWeek dayOfWeek) {
-        return new Lecture(lessonNumber, dayOfWeek.isEven(), isFree, dayOfWeek);
+    private Lecture collectSingleLessonData(int lessonNumber, boolean isFree, boolean isEven,
+                                            DayOfWeek dayOfWeek) {
+        return new Lecture(lessonNumber, isEven, isFree, dayOfWeek);
 
     }
 

@@ -5,22 +5,22 @@ import pl.edu.pk.hallreservation.model.DayOfWeek;
 
 @Service
 public class DaysOfWeekService {
-    public DayOfWeek getByCreds(int numberOfDay, boolean isEven) {
+    public DayOfWeek getByCreds(int numberOfDay) {
         switch (numberOfDay) {
             case 1: {
-                return isEven ? DayOfWeek.MONDAY_EVEN : DayOfWeek.MONDAY_ODD;
+                return DayOfWeek.MONDAY;
             }
             case 2: {
-                return isEven ? DayOfWeek.TUESDAY_EVEN : DayOfWeek.TUESDAY_ODD;
+                return DayOfWeek.TUESDAY;
             }
             case 3: {
-                return isEven ? DayOfWeek.WEDNESDAY_EVEN : DayOfWeek.WEDNESDAY_ODD;
+                return DayOfWeek.WEDNESDAY;
             }
             case 4: {
-                return isEven ? DayOfWeek.THURSDAY_EVEN : DayOfWeek.THURSDAY_ODD;
+                return DayOfWeek.THURSDAY;
             }
             case 5: {
-                return isEven ? DayOfWeek.FRIDAY_EVEN : DayOfWeek.FRIDAY_ODD;
+                return DayOfWeek.FRIDAY;
             }
             default: {
                 throw new IllegalArgumentException("Cannot match proper day of week with number: " + numberOfDay);

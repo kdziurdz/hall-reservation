@@ -1,6 +1,7 @@
 package pl.edu.pk.hallreservation.model.hall;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import pl.edu.pk.hallreservation.model.user.User;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Reservation {
     private Integer lessonNumber;
 
     @NotNull
-    @Column(name = "DATE")
+    @Column(name = "DATE", columnDefinition = "DATE")
     private LocalDate date;
 
     @OneToOne
@@ -34,9 +35,12 @@ public class Reservation {
             joinColumns= @JoinColumn(name = "RESERVATION_ID"))
     private Hall hall;
 
-    public Reservation(Integer lessonNumber, LocalDate date) {
+
+    public Reservation(Integer lessonNumber, LocalDate date, User user, Hall hall) {
         this.lessonNumber = lessonNumber;
         this.date = date;
+        this.user = user;
+        this.hall = hall;
     }
 
     public Reservation() {
@@ -50,15 +54,36 @@ public class Reservation {
         return lessonNumber;
     }
 
-    public LocalDate getDate() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getLocalDate() {
         return date;
+    }
+
+    public void setLocalDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
     }
 
     public void setLessonNumber(Integer lessonNumber) {
         this.lessonNumber = lessonNumber;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 }
