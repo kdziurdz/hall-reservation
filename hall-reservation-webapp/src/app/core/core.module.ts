@@ -1,22 +1,17 @@
 import { NgModule } from '@angular/core';
-import {SidebarNavComponent} from "./sidebar-nav/sidebar-nav.component";
-import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
-import { TopNavbarComponent } from './top-navbar/top-navbar.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
-    SidebarNavComponent,
-    TopNavbarComponent
+    ToolbarComponent
   ],
   providers: [],
   imports: [
-    MatSidenavModule,
-    MatIconModule,
-    MatToolbarModule
+    SharedModule
   ],
   exports: [
-    SidebarNavComponent,
-    TopNavbarComponent
+    ToolbarComponent
   ]
 })
 export class CoreModule {

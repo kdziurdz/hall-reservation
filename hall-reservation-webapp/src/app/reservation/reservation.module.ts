@@ -1,6 +1,7 @@
 import { ReservationCreatorComponent } from './reservation-creator/reservation-creator.component';
 import { NgModule } from '@angular/core';
 import { ReservationRoutingModule } from './reservation-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { ReservationRoutingModule } from './reservation-routing.module';
   providers: [
   ],
   imports: [
-    ReservationRoutingModule
+    ReservationRoutingModule,
+    SharedModule
   ],
   exports: []
 })
