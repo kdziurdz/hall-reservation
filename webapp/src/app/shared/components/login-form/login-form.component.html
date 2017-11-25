@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div>Formularz logowania</div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="main-content" fxLayout="row" fxFlexAlign="center">
+  <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
+    <mat-card>
+      <mat-card-content class="form-content">
+        <mat-form-field>
+          <input matInput formControlName="username" placeholder="Login">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="password" formControlName="password" placeholder="Hasło">
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+        <button class="mat-raised-button mat-primary" color="primary"
+                [disabled]="loginForm.invalid" type="submit" role="button">Zaloguj
+        </button>
+      </mat-card-actions>
+  </mat-card>
+  </form>
+</div>
+

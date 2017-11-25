@@ -1,0 +1,15 @@
+.main-content {
+
+  justify-content: center;
+  padding: 40px;
+
+  form {
+    width: 400px;
+  }
+
+  .form-content {
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

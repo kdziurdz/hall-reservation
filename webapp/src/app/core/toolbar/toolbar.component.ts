@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'hr-toolbar',
@@ -9,8 +10,16 @@ export class ToolbarComponent {
 
   @Output() onToggleSidenav: EventEmitter<any> = new EventEmitter<any>()
 
+
+  constructor(private authService: AuthService) {
+  }
+
   toggleSidenav(): void {
     this.onToggleSidenav.emit();
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
 }

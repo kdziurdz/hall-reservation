@@ -8,9 +8,9 @@
       <div>PK Hall Reservation</div>
     </div>
     <mat-menu #appMenu="matMenu">
-      <button mat-menu-item> Moje konto</button>
-      <button mat-menu-item> O Aplikacji</button>
-      <button mat-menu-item> Wyloguj</button>
+      <button mat-menu-item>Moje konto</button>
+      <button mat-menu-item>O Aplikacji</button>
+      <button mat-menu-item (click)="logout()">Wyloguj</button>
     </mat-menu>
     <button mat-icon-button class="mat-icon-button" [matMenuTriggerFor]="appMenu">
       <mat-icon>more_vert</mat-icon>
