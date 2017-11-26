@@ -1,9 +1,29 @@
-<div fxLayout="row" fxLayoutAlign="space-between">
-  <div>
-    DIV 1 na lewo
-  </div>
-  <button (click)="doRequest()">request</button>
-  <div>
-    DIV 2 max na prawo
-  </div>
-</div>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div>Wyszukiwanie wolnych sal</div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+    <mat-card class="main-content" fxLayout="row" fxFlexAlign="center">
+      <mat-card-content class="hr-w-100">
+        <mat-card class="main-content" fxLayout="row" fxFlexAlign="center">
+          <mat-card-content class="hr-w-100">
+            <mat-form-field class="hr-w-100">
+              <input matInput [matDatepicker]="picker" placeholder="Wybierz datę">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="hr-w-100">
+              <input matInput type="password" formControlName="password" placeholder="Hasło">
+            </mat-form-field>
+            <mat-card-actions class="hr-w-100" fxLayout="row" fxLayoutAlign="end center">
+              <button class="mat-raised-button mat-primary" color="primary"
+                      type="submit" role="button">Szukaj
+              </button>
+            </mat-card-actions>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+

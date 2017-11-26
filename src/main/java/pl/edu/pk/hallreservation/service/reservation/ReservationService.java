@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -41,6 +42,19 @@ public class ReservationService {
                 saveReservationDTO.getDate(), userService.getActualUser(), hall);
 
         reservationRepository.save(reservation);
+    }
+
+    public void search(LocalDate dateFrom, LocalDate dateTo, Integer lessonFrom, Integer lessonTo, List<Long> hallIds) {
+        List<Hall> halls = getListOfHalls(hallIds);
+
+        for (LocalDate date = dateFrom; date.isBefore(dateTo); date = date.plusDays(1)) {
+
+        }
+
+    }
+
+    private List<Hall> getListOfHalls(List<Long> ids) {
+        return this.hallService.get(ids);
     }
 
     private boolean isWeekEven(LocalDate date) {

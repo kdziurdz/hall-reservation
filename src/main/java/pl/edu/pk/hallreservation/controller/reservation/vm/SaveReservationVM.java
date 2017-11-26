@@ -1,7 +1,5 @@
 package pl.edu.pk.hallreservation.controller.reservation.vm;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -12,11 +10,10 @@ public class SaveReservationVM {
     private Long hallId;
 
     @NotNull
-    //@JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     @NotNull
-    private Integer lessonNumber;
+    private Integer lessonNumber; // TODO array
 
     public SaveReservationVM(Long hallId, LocalDate date, Integer lessonNumber) {
         this.hallId = hallId;

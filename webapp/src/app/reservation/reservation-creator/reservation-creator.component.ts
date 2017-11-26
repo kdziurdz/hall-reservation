@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'hr-reservation-creator',
-  templateUrl: 'reservation-creator.component.html'
+  templateUrl: './reservation-creator.component.html',
+  styleUrls: ['./reservation-creator.component.scss']
 })
 export class ReservationCreatorComponent {
 

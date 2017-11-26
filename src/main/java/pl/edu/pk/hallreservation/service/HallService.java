@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pl.edu.pk.hallreservation.model.hall.Hall;
 import pl.edu.pk.hallreservation.repository.HallRepository;
 
+import java.util.List;
+
 
 @Service
 public class HallService {
@@ -22,5 +24,9 @@ public class HallService {
 
     public Hall getOne(Long id) {
         return hallRepository.getOneById(id);
+    }
+
+    public List<Hall> get(List<Long> ids) {
+        return hallRepository.getAllById(ids);
     }
 }
