@@ -12,6 +12,7 @@ public interface HallRepository extends BaseRepository<Hall> {
         return findOneById(id).orElseThrow(() -> new ObjectNotFoundException("Hall", id));
     }
 
-    List<Hall> getAllById(List<Long> ids);
+    List<Hall> findByIdIn(List<Long> ids);
 
+    List<Hall> findByNameContainingIgnoreCase(String name);
 }

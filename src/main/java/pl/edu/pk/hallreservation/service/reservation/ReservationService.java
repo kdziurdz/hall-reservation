@@ -5,17 +5,17 @@ import pl.edu.pk.hallreservation.model.hall.Hall;
 import pl.edu.pk.hallreservation.model.hall.Lecture;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
-import pl.edu.pk.hallreservation.service.HallService;
+import pl.edu.pk.hallreservation.service.hall.HallService;
 import pl.edu.pk.hallreservation.service.UserService;
+import pl.edu.pk.hallreservation.service.reservation.dto.AvailableReservationDTO;
 import pl.edu.pk.hallreservation.service.reservation.dto.SaveReservationDTO;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -35,22 +35,30 @@ public class ReservationService {
         Hall hall = hallService.getOne(saveReservationDTO.getHallId());
 
         checkLessonHourAvailability(hall.getLectures(), saveReservationDTO.getDate(),
-                saveReservationDTO.getLessonNumber());
-        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumber());
+                saveReservationDTO.getLessonNumbers());
+        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers());
 
-        Reservation reservation = new Reservation(saveReservationDTO.getLessonNumber(),
+        Reservation reservation = new Reservation(new HashSet<>(saveReservationDTO.getLessonNumbers()),
                 saveReservationDTO.getDate(), userService.getActualUser(), hall);
 
         reservationRepository.save(reservation);
     }
 
-    public void search(LocalDate dateFrom, LocalDate dateTo, Integer lessonFrom, Integer lessonTo, List<Long> hallIds) {
+    public List<AvailableReservationDTO> search(LocalDate dateFrom, LocalDate dateTo, List<Integer> lessonNumbers, List<Long> hallIds) {
+        List<AvailableReservationDTO> availableReservations = new ArrayList<>();
         List<Hall> halls = getListOfHalls(hallIds);
 
-        for (LocalDate date = dateFrom; date.isBefore(dateTo); date = date.plusDays(1)) {
+        halls.forEach(hall -> {
+            for (LocalDate date = dateFrom; date.isBefore(dateTo); date = date.plusDays(1)) {
+                List<Lecture> availableSlots = getAvailableSlots(hall.getLectures(), date, lessonNumbers);
 
-        }
+                List<Integer> lessons = availableSlots.stream().map(Lecture::getLessonNumber).collect(Collectors.toList());
 
+                availableReservations.add(new AvailableReservationDTO(date, hall.getId(),
+                        hall.getName(), lessons));
+            }
+        });
+        return availableReservations;
     }
 
     private List<Hall> getListOfHalls(List<Long> ids) {
@@ -62,27 +70,55 @@ public class ReservationService {
         return date.get(woy) % 2 == 0;
     }
 
-    private void checkLessonHourAvailability(Set<Lecture> lectures, LocalDate date, int lessonNumber) {
+    private void checkLessonHourAvailability(Set<Lecture> lectures, LocalDate date, List<Integer> lessonNumbers) {
         boolean isEven = isWeekEven(date);
         int dayOfWeek = date.getDayOfWeek().getValue();
-        boolean isFree = lectures.stream().anyMatch(lecture -> lecture.getLessonNumber() == lessonNumber
-                && lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek
-                && lecture.getEven().equals(isEven)
-                && lecture.getFree());
 
-        if (!isFree) {
-            throw new IllegalArgumentException(String
-                    .format("Lesson %d, at %tD is not free. Week is even: %b", lessonNumber, date, isEven));
+        Set<Lecture> desiredLectures = lectures.stream()
+                .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek
+                && lecture.getEven().equals(isEven)
+                && lecture.getFree()).collect(Collectors.toSet());
+
+        for (Integer lessonNumber: lessonNumbers) {
+            boolean isFree = desiredLectures.stream().anyMatch(lecture -> Objects.equals(lecture.getLessonNumber(), lessonNumber));
+
+            if (!isFree) {
+                throw new IllegalArgumentException(String
+                        .format("Lesson %d, at %tD is not free. Week is even: %b", lessonNumber, date, isEven));
+            }
         }
     }
 
-    private void checkLessonHourReservationAvailability (LocalDate date, int lessonNumber) {
+    private List<Lecture> getAvailableSlots(Set<Lecture> lectures, LocalDate date, List<Integer> lessonNumbers) {
 
-        boolean exists = reservationRepository.existsByDateAndLessonNumber(date, lessonNumber);
 
-        if (exists) {
-            throw new IllegalArgumentException(String
-                    .format("Lesson %d, at %tD is already reserved", lessonNumber, date));
+        boolean isEven = isWeekEven(date);
+        int dayOfWeek = date.getDayOfWeek().getValue();
+
+        return lectures.stream()
+                .filter(Lecture::getFree)
+                .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek)
+                .filter(lecture -> lecture.getEven().equals(isEven))
+                .filter(lecture -> lessonNumbers.contains(lecture.getLessonNumber())).collect(Collectors.toList());
+
+    }
+
+    private void checkLessonHourReservationAvailability (LocalDate date, List<Integer> lessonNumbers) {
+
+        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDate(date);
+
+        for(Reservation reservation: reservationsInSingleDay) {
+            Set<Integer> reservedLessonNumbers = reservation.getLessonNumbers();
+            for(Integer desiredLessonNumber: lessonNumbers) {
+                boolean lessonAlreadyReserved = reservedLessonNumbers.contains(desiredLessonNumber);
+
+                if (lessonAlreadyReserved) {
+                    throw new IllegalArgumentException(String
+                            .format("Lesson %d, at %tD is already reserved", desiredLessonNumber, date));
+                }
+            }
         }
+
+
     }
 }

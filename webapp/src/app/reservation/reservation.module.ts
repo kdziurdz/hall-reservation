@@ -2,6 +2,8 @@ import { ReservationCreatorComponent } from './reservation-creator/reservation-c
 import { NgModule } from '@angular/core';
 import { ReservationRoutingModule } from './reservation-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -11,7 +13,9 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     ReservationRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   exports: []
 })

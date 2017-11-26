@@ -5,15 +5,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.pk.hallreservation.controller.reservation.vm.AvailableReservation;
+import pl.edu.pk.hallreservation.controller.reservation.vm.AvailableReservationVM;
 import pl.edu.pk.hallreservation.controller.reservation.vm.SaveReservationVM;
-import pl.edu.pk.hallreservation.service.DaysOfWeekService;
 import pl.edu.pk.hallreservation.service.reservation.ReservationMapper;
 import pl.edu.pk.hallreservation.service.reservation.ReservationService;
+import pl.edu.pk.hallreservation.service.reservation.dto.AvailableReservationDTO;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -38,22 +36,21 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("")
-    public ResponseEntity<SaveReservationVM> get() {
-
-        return new ResponseEntity<>(new SaveReservationVM(1L, LocalDate.now(), 1),HttpStatus.OK);
-    }
+//    @GetMapping("")
+//    public ResponseEntity<SaveReservationVM> get() {
+//
+//        return new ResponseEntity<>(new SaveReservationVM(1L, LocalDate.now(), 1),HttpStatus.OK);
+//    }
 
     @GetMapping("search")
-    public ResponseEntity<List<AvailableReservation>> search(@RequestParam @DateTimeFormat(pattern = "yyyy-dd-MM") LocalDate dateFrom,
-                                                             @RequestParam @DateTimeFormat(pattern = "yyyy-dd-MM")LocalDate dateTo,
-                                                             @RequestParam Integer lessonFrom,
-                                                             @RequestParam Integer lessonTo,
-                                                             @RequestParam List<Long> hallIds) {
+    public ResponseEntity<List<AvailableReservationVM>> search(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
+                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate dateTo,
+                                                               @RequestParam List<Integer> lessonNumbers,
+                                                               @RequestParam List<Long> hallIds) {
 
+        List<AvailableReservationDTO> dtos =
+                reservationService.search(dateFrom, dateTo, lessonNumbers, hallIds);
 
-        reservationService.search(dateFrom, dateTo, lessonFrom, lessonTo, hallIds);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(reservationMapper.asVMs(dtos),HttpStatus.OK);
     }
 }

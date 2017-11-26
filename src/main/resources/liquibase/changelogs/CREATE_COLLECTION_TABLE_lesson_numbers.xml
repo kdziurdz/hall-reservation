@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+<changeSet author="Konrad" id="3">
+        <createTable tableName="LESSON_NUMBERS">
+            <column name="RESERVATION_ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LESSON_NUMBER" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Konrad" id="5">
+        <addForeignKeyConstraint baseColumnNames="RESERVATION_ID" baseTableName="LESSON_NUMBERS"
+                                 constraintName="LESSON_NUMBERS_FK1" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="RESERVATIONS"/>
+    </changeSet>
+</databaseChangeLog>

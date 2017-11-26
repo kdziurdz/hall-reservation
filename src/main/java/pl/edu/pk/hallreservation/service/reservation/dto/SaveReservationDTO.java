@@ -1,24 +1,30 @@
 package pl.edu.pk.hallreservation.service.reservation.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 public class SaveReservationDTO {
+
 
     @NotNull
     private Long hallId;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
-    @NotNull
-    private Integer lessonNumber;
+    @NotEmpty
+    private List<Integer> lessonNumbers; // TODO array
 
-    public SaveReservationDTO(Long hallId, LocalDate date, Integer lessonNumber) {
+    public SaveReservationDTO(Long hallId, LocalDate date, List<Integer> lessonNumbers) {
         this.hallId = hallId;
         this.date = date;
-        this.lessonNumber = lessonNumber;
+        this.lessonNumbers = lessonNumbers;
     }
 
     public SaveReservationDTO() {
@@ -40,11 +46,11 @@ public class SaveReservationDTO {
         this.date = date;
     }
 
-    public Integer getLessonNumber() {
-        return lessonNumber;
+    public List<Integer> getLessonNumbers() {
+        return lessonNumbers;
     }
 
-    public void setLessonNumber(Integer lessonNumber) {
-        this.lessonNumber = lessonNumber;
+    public void setLessonNumbers(List<Integer> lessonNumbers) {
+        this.lessonNumbers = lessonNumbers;
     }
 }

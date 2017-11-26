@@ -4,10 +4,11 @@ import org.springframework.stereotype.Repository;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface ReservationRepository extends BaseRepository<Reservation> {
 
-    boolean existsByDateAndLessonNumber(LocalDate date, Integer lessonNumber);
+    List<Reservation> findAllByDate(LocalDate date);
 
 }

@@ -1,12 +1,12 @@
 package pl.edu.pk.hallreservation.model.hall;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import pl.edu.pk.hallreservation.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "RESERVATIONS")
@@ -18,8 +18,13 @@ public class Reservation {
     private Long id;
 
     @NotNull
-    @Column(name = "LESSON_NUMBER")
-    private Integer lessonNumber;
+    @Column(name = "LESSON_NUMBERS")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "LESSON_NUMBERS",
+            joinColumns = @JoinColumn(name = "RESERVATION_ID", nullable = false, updatable = false),
+            foreignKey = @ForeignKey(name = "LESSON_NUMBERS_FK1")
+    )
+    private Set<Integer> lessonNumbers;
 
     @NotNull
     @Column(name = "DATE", columnDefinition = "DATE")
@@ -35,23 +40,18 @@ public class Reservation {
             joinColumns= @JoinColumn(name = "RESERVATION_ID"))
     private Hall hall;
 
+    public Reservation() {
+    }
 
-    public Reservation(Integer lessonNumber, LocalDate date, User user, Hall hall) {
-        this.lessonNumber = lessonNumber;
+    public Reservation(Set<Integer> lessonNumbers, LocalDate date, User user, Hall hall) {
+        this.lessonNumbers = lessonNumbers;
         this.date = date;
         this.user = user;
         this.hall = hall;
     }
 
-    public Reservation() {
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public Integer getLessonNumber() {
-        return lessonNumber;
     }
 
     public void setId(Long id) {
@@ -82,8 +82,19 @@ public class Reservation {
         this.hall = hall;
     }
 
-    public void setLessonNumber(Integer lessonNumber) {
-        this.lessonNumber = lessonNumber;
+    public Set<Integer> getLessonNumbers() {
+        return lessonNumbers;
     }
 
+    public void setLessonNumbers(Set<Integer> lessonNumbers) {
+        this.lessonNumbers = lessonNumbers;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }

@@ -1,22 +1,26 @@
 package pl.edu.pk.hallreservation.controller.reservation.vm;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.util.List;
 
-public class AvailableReservation {
-   private LocalDate date;
-   private Long hallId;
-   private String hallName;
-   private List<Integer> lessonNumbers;
+public class AvailableReservationVM {
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+    private Long hallId;
+    private String hallName;
+    private List<Integer> lessonNumbers;
 
-    public AvailableReservation(LocalDate date, Long hallId, String hallName, List<Integer> lessonNumbers) {
+    public AvailableReservationVM(LocalDate date, Long hallId, String hallName, List<Integer> lessonNumbers) {
         this.date = date;
         this.hallId = hallId;
         this.hallName = hallName;
         this.lessonNumbers = lessonNumbers;
     }
 
-    public AvailableReservation() {
+
+    public AvailableReservationVM() {
     }
 
     public LocalDate getDate() {

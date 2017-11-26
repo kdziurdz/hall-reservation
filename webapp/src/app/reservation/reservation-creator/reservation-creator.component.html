@@ -4,26 +4,33 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<form [formGroup]="searchFormGroup" novalidate (ngSubmit)="submit()">
+  <mat-card class="main-content" fxLayout="row" fxFlexAlign="center">
+    <mat-card-content class="hr-w-100">
+      <mat-card class="main-content" fxLayout="row" fxFlexAlign="center">
+        <mat-card-content class="hr-w-100">
 
-    <mat-card class="main-content" fxLayout="row" fxFlexAlign="center">
-      <mat-card-content class="hr-w-100">
-        <mat-card class="main-content" fxLayout="row" fxFlexAlign="center">
-          <mat-card-content class="hr-w-100">
-            <mat-form-field class="hr-w-100">
-              <input matInput [matDatepicker]="picker" placeholder="Wybierz datę">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="hr-w-100">
-              <input matInput type="password" formControlName="password" placeholder="Hasło">
-            </mat-form-field>
-            <mat-card-actions class="hr-w-100" fxLayout="row" fxLayoutAlign="end center">
-              <button class="mat-raised-button mat-primary" color="primary"
-                      type="submit" role="button">Szukaj
-              </button>
-            </mat-card-actions>
-          </mat-card-content>
-        </mat-card>
-      </mat-card-content>
-    </mat-card>
+          <mat-form-field class="hr-w-100">
+            <input type="text" placeholder="Szuaj salę" matInput [formControl]="hallSearchQuery" [matAutocomplete]="auto">
+          </mat-form-field>
 
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let hall of querriedHalls | async" [value]="hall.id">
+              {{ hall.name }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-form-field class="hr-w-100">
+            <input matInput [matDatepicker]="picker" placeholder="Wybierz datę">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-card-actions class="hr-w-100" fxLayout="row" fxLayoutAlign="end center">
+            <button class="mat-raised-button mat-primary" color="primary"
+                    type="submit" role="button">Szukaj
+            </button>
+          </mat-card-actions>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</form>
