@@ -44,25 +44,28 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public List<AvailableReservationDTO> search(LocalDate dateFrom, LocalDate dateTo, List<Integer> lessonNumbers, List<Long> hallIds) {
+    public List<AvailableReservationDTO> search(LocalDate dateFrom, LocalDate dateTo, Integer duration, List<Long> hallIds) {
         List<AvailableReservationDTO> availableReservations = new ArrayList<>();
         List<Hall> halls = getListOfHalls(hallIds);
 
         halls.forEach(hall -> {
             for (LocalDate date = dateFrom; date.isBefore(dateTo); date = date.plusDays(1)) {
-                List<Lecture> availableSlots = getAvailableSlots(hall.getLectures(), date, lessonNumbers);
+                List<List<Lecture>> availableSlots = getAvailableSlots(hall.getLectures(), date, duration);
 
-                List<Integer> lessons = availableSlots.stream().map(Lecture::getLessonNumber).collect(Collectors.toList());
+                List<List<Integer>> availableLessonsSlots = availableSlots.stream()
+                        .map(lectures -> lectures.stream().map(Lecture::getLessonNumber).collect(Collectors.toList())).collect(Collectors.toList());
 
-                availableReservations.add(new AvailableReservationDTO(date, hall.getId(),
-                        hall.getName(), lessons));
+                if (availableLessonsSlots.size() > 0) {
+                    availableReservations.add(new AvailableReservationDTO(date, hall.getId(),
+                            hall.getName(), availableLessonsSlots));
+                }
             }
         });
         return availableReservations;
     }
 
     private List<Hall> getListOfHalls(List<Long> ids) {
-        return this.hallService.get(ids);
+        return ids != null ? this.hallService.get(ids) : this.hallService.getAll();
     }
 
     private boolean isWeekEven(LocalDate date) {
@@ -76,10 +79,10 @@ public class ReservationService {
 
         Set<Lecture> desiredLectures = lectures.stream()
                 .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek
-                && lecture.getEven().equals(isEven)
-                && lecture.getFree()).collect(Collectors.toSet());
+                        && lecture.getEven().equals(isEven)
+                        && lecture.getFree()).collect(Collectors.toSet());
 
-        for (Integer lessonNumber: lessonNumbers) {
+        for (Integer lessonNumber : lessonNumbers) {
             boolean isFree = desiredLectures.stream().anyMatch(lecture -> Objects.equals(lecture.getLessonNumber(), lessonNumber));
 
             if (!isFree) {
@@ -89,27 +92,44 @@ public class ReservationService {
         }
     }
 
-    private List<Lecture> getAvailableSlots(Set<Lecture> lectures, LocalDate date, List<Integer> lessonNumbers) {
+    private List<List<Lecture>> getAvailableSlots(Set<Lecture> lectures, LocalDate date, Integer duration) {
 
 
         boolean isEven = isWeekEven(date);
         int dayOfWeek = date.getDayOfWeek().getValue();
 
-        return lectures.stream()
+        List<Lecture> freeHoursAtGivenDay = lectures.stream()
                 .filter(Lecture::getFree)
                 .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek)
                 .filter(lecture -> lecture.getEven().equals(isEven))
-                .filter(lecture -> lessonNumbers.contains(lecture.getLessonNumber())).collect(Collectors.toList());
+                .sorted(Comparator.comparing(Lecture::getLessonNumber))
+                .collect(Collectors.toList());
 
+        List<List<Lecture>> resultListSlot = new ArrayList<>();
+
+        duration = duration - 1;
+
+        if (freeHoursAtGivenDay.size() >= duration) {
+            for (int i = 0; i + duration < freeHoursAtGivenDay.size(); i++) {
+                int lessonStartNumber = freeHoursAtGivenDay.get(i).getLessonNumber();
+                if (freeHoursAtGivenDay.get(i + duration)
+                        .getLessonNumber().equals(lessonStartNumber + duration)) {
+                    resultListSlot.add(new ArrayList<>(freeHoursAtGivenDay.subList(i, i + duration + 1)));
+                }
+            }
+            return resultListSlot;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
-    private void checkLessonHourReservationAvailability (LocalDate date, List<Integer> lessonNumbers) {
+    private void checkLessonHourReservationAvailability(LocalDate date, List<Integer> lessonNumbers) {
 
         List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDate(date);
 
-        for(Reservation reservation: reservationsInSingleDay) {
+        for (Reservation reservation : reservationsInSingleDay) {
             Set<Integer> reservedLessonNumbers = reservation.getLessonNumbers();
-            for(Integer desiredLessonNumber: lessonNumbers) {
+            for (Integer desiredLessonNumber : lessonNumbers) {
                 boolean lessonAlreadyReserved = reservedLessonNumbers.contains(desiredLessonNumber);
 
                 if (lessonAlreadyReserved) {

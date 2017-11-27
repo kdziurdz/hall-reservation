@@ -80,7 +80,8 @@ export class ReservationCreatorComponent implements OnInit {
     let values = this.searchFormGroup.getRawValue();
 
     this.reservationService.searchReservations(this.formatDate(values.dateFrom), this.formatDate(values.dateTo),
-      values.hallIds.map(hall => hall.id), values.duration).subscribe();
+      this.searchFormGroup.get('hallIds').disabled ? null : values.hallIds.map(hall => hall.id),
+      values.duration).subscribe();
   }
 
   private formatDate(d: Date): string {

@@ -21,7 +21,7 @@ public class HallService {
         this.hallDTOMapper= hallDTOMapper;
     }
 
-    public Page<Hall> getAll(Pageable pageable) {
+    public Page<Hall> getAllPageable(Pageable pageable) {
         Page<Hall> halls = hallRepository.findAll(pageable);
         return halls;
     }
@@ -32,6 +32,10 @@ public class HallService {
 
     public List<Hall> get(List<Long> ids) {
         return hallRepository.findByIdIn(ids);
+    }
+
+    public List<Hall> getAll() {
+        return hallRepository.findAll();
     }
 
     public List<HallDTO> search(String query) {

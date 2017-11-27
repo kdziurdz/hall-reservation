@@ -45,11 +45,11 @@ public class ReservationController {
     @GetMapping("search")
     public ResponseEntity<List<AvailableReservationVM>> search(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
                                                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateTo,
-                                                               @RequestParam List<Integer> lessonNumbers,
-                                                               @RequestParam List<Long> hallIds) {
+                                                               @RequestParam Integer duration,
+                                                               @RequestParam(required = false) List<Long> hallIds) {
 
         List<AvailableReservationDTO> dtos =
-                reservationService.search(dateFrom, dateTo, lessonNumbers, hallIds);
+                reservationService.search(dateFrom, dateTo, duration, hallIds);
 
         return new ResponseEntity<>(reservationMapper.asVMs(dtos),HttpStatus.OK);
     }

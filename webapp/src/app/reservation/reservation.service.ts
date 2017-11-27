@@ -17,7 +17,9 @@ export class ReservationService {
 
     params = params.set('dateFrom', dateFrom);
     params = params.set('dateTo', dateTo);
-    params = params.set('hallIds', hallIds.toString());
+    if(hallIds){
+      params = params.set('hallIds', hallIds.toString());
+    }
     params = params.set('duration', duration.toString());
     return this.httpClient.get(RESERVATION_URL, {params: params})
   }

@@ -33,7 +33,7 @@ public class HallController {
 
     @GetMapping("")
     public ResponseEntity<Page<Hall>> getAll(Pageable pageable) {
-        return new ResponseEntity<>(hallService.getAll(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(hallService.getAllPageable(pageable), HttpStatus.OK);
     }
 
     @GetMapping("refresh")

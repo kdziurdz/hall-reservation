@@ -14,5 +14,7 @@ public interface HallRepository extends BaseRepository<Hall> {
 
     List<Hall> findByIdIn(List<Long> ids);
 
+    List<Hall> findAll();
+
     List<Hall> findByNameContainingIgnoreCase(String name);
 }

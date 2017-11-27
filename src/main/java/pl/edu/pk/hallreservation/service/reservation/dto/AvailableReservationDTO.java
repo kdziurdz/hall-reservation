@@ -7,9 +7,9 @@ public class AvailableReservationDTO {
    private LocalDate date;
    private Long hallId;
    private String hallName;
-   private List<Integer> lessonNumbers;
+   private List<List<Integer>> lessonNumbers;
 
-    public AvailableReservationDTO(LocalDate date, Long hallId, String hallName, List<Integer> lessonNumbers) {
+    public AvailableReservationDTO(LocalDate date, Long hallId, String hallName, List<List<Integer>> lessonNumbers) {
         this.date = date;
         this.hallId = hallId;
         this.hallName = hallName;
@@ -43,11 +43,11 @@ public class AvailableReservationDTO {
         this.hallName = hallName;
     }
 
-    public List<Integer> getLessonNumbers() {
+    public List<List<Integer>> getLessonNumbers() {
         return lessonNumbers;
     }
 
-    public void setLessonNumbers(List<Integer> lessonNumbers) {
+    public void setLessonNumbers(List<List<Integer>> lessonNumbers) {
         this.lessonNumbers = lessonNumbers;
     }
 }
