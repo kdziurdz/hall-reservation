@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import {
   MatAutocompleteModule,
-  MatButtonModule,
-  MatCardModule,
+  MatButtonModule, MatButtonToggleModule,
+  MatCardModule, MatChipsModule,
   MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
@@ -10,7 +10,7 @@ import {
   MatMenuModule, MatNativeDateModule,
   MatOptionModule,
   MatSelectModule,
-  MatSidenavModule,
+  MatSidenavModule, MatSlideToggleModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -36,6 +36,8 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
+    MatChipsModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule {

@@ -44,7 +44,7 @@ public class ReservationController {
 
     @GetMapping("search")
     public ResponseEntity<List<AvailableReservationVM>> search(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
-                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate dateTo,
+                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateTo,
                                                                @RequestParam List<Integer> lessonNumbers,
                                                                @RequestParam List<Long> hallIds) {
 

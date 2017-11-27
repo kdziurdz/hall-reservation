@@ -1,0 +1,1 @@
+export const AVAILABLE_RESERVATION_DURATION_HOURS = [1, 2, 3, 4];
