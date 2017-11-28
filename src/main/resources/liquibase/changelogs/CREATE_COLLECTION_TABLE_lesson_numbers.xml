@@ -11,7 +11,7 @@
             <column name="RESERVATION_ID" type="NUMBER(19, 0)">
                 <constraints nullable="false"/>
             </column>
-            <column name="LESSON_NUMBER" type="NUMBER(19, 0)">
+            <column name="LESSON_NUMBERS" type="NUMBER(19, 0)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

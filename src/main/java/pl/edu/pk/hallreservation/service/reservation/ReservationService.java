@@ -1,8 +1,6 @@
 package pl.edu.pk.hallreservation.service.reservation;
 
 import org.springframework.stereotype.Service;
-import pl.edu.pk.hallreservation.model.hall.Hall;
-import pl.edu.pk.hallreservation.model.hall.Lecture;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
 import pl.edu.pk.hallreservation.service.hall.HallService;
@@ -38,7 +36,7 @@ public class ReservationService {
 
         checkLessonHourAvailability(hall.getLectures(), saveReservationDTO.getDate(),
                 saveReservationDTO.getLessonNumbers());
-        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers());
+        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers(), hall);
 
         Reservation reservation = new Reservation(new HashSet<>(saveReservationDTO.getLessonNumbers()),
                 saveReservationDTO.getDate(), userService.getActualUser(), hallService.getOneEntity(hall.getId()));
@@ -52,10 +50,11 @@ public class ReservationService {
 
         halls.forEach(hall -> {
             for (LocalDate date = dateFrom; date.isBefore(dateTo) || date.isEqual(dateTo); date = date.plusDays(1)) {
-                List<List<LectureDTO>> availableSlots = getAvailableSlots(hall.getLectures(), date, duration);
+                List<List<LectureDTO>> availableSlots = getAvailableSlots(hall.getLectures(), date, duration, hall);
 
                 List<List<Integer>> availableLessonsSlots = availableSlots.stream()
-                        .map(lectures -> lectures.stream().map(LectureDTO::getLessonNumber).collect(Collectors.toList())).collect(Collectors.toList());
+                        .map(lectures -> lectures.stream().map(LectureDTO::getLessonNumber)
+                                .collect(Collectors.toList())).collect(Collectors.toList());
 
                 if (availableLessonsSlots.size() > 0) {
                     availableReservations.add(new AvailableReservationDTO(date, hall.getId(),
@@ -94,8 +93,7 @@ public class ReservationService {
         }
     }
 
-    private List<List<LectureDTO>> getAvailableSlots(Set<LectureDTO> lectures, LocalDate date, Integer duration) {
-
+    private List<List<LectureDTO>> getAvailableSlots(Set<LectureDTO> lectures, LocalDate date, Integer duration, HallDTO hall) {
 
         boolean isEven = isWeekEven(date);
         int dayOfWeek = date.getDayOfWeek().getValue();
@@ -104,6 +102,7 @@ public class ReservationService {
                 .filter(LectureDTO::getFree)
                 .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek)
                 .filter(lecture -> lecture.getEven().equals(isEven))
+                .filter(lecture -> isLessonNumberNotReserved(date, lecture.getLessonNumber(), hall))
                 .sorted(Comparator.comparing(LectureDTO::getLessonNumber))
                 .collect(Collectors.toList());
 
@@ -125,9 +124,16 @@ public class ReservationService {
         }
     }
 
-    private void checkLessonHourReservationAvailability(LocalDate date, List<Integer> lessonNumbers) {
+    private boolean isLessonNumberNotReserved(LocalDate date, Integer lessonNumber, HallDTO hall) {
 
-        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDate(date);
+        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDateAndHall_Id(date, hall.getId());
+        return reservationsInSingleDay.size() == 0 || reservationsInSingleDay.stream()
+                .noneMatch(reservation -> reservation.getLessonNumbers().contains(lessonNumber));
+    }
+
+    private void checkLessonHourReservationAvailability(LocalDate date, List<Integer> lessonNumbers, HallDTO hall) {
+
+        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDateAndHall_Id(date, hall.getId());
 
         for (Reservation reservation : reservationsInSingleDay) {
             Set<Integer> reservedLessonNumbers = reservation.getLessonNumbers();

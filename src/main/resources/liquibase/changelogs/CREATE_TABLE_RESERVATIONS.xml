@@ -11,9 +11,6 @@
             <column name="ID" type="int" autoIncrement="true" incrementBy="1">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="LESSON_NUMBER" type="int">
-                <constraints nullable="false"/>
-            </column>
             <column name="DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>

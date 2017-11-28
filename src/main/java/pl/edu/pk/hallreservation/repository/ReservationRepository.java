@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends BaseRepository<Reservation> {
 
-    List<Reservation> findAllByDate(LocalDate date);
+    List<Reservation> findAllByDateAndHall_Id(LocalDate date, Long hall_Id);
 
 }
