@@ -1,4 +1,4 @@
-<mat-accordion class="m-1 d-block">
+<mat-accordion class="m-1 d-block" *ngIf="searchResults && searchResults.length > 0;">
   <mat-expansion-panel *ngFor="let availableSlot of searchResults">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -29,3 +29,7 @@
     </div>
   </mat-expansion-panel>
 </mat-accordion>
+
+<mat-card class="m-1 d-block" *ngIf="searchResults && searchResults.length == 0;">
+  <mat-card-content>Brak dopasowań. Zmień kryteria wyszukiwania</mat-card-content>
+</mat-card>
