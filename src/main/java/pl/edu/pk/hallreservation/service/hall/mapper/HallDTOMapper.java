@@ -8,7 +8,7 @@ import pl.edu.pk.hallreservation.service.hall.dto.HallDTO;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {LectureDTOMapper.class})
 public interface HallDTOMapper {
 
     HallDTO asDTO(Hall hall);

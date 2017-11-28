@@ -4,7 +4,6 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthService } from './auth/auth.service';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MainInterceptor } from './auth/main.interceptor';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
@@ -37,12 +36,7 @@ export class CoreModule {
           provide: HTTP_INTERCEPTORS,
           useClass: TokenInterceptor,
           multi: true
-        },
-        // {
-        //   provide: HTTP_INTERCEPTORS,
-        //   useClass: MainInterceptor,
-        //   multi: true
-        // }
+        }
        ]
     };
   }

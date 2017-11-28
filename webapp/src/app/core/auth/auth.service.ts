@@ -13,14 +13,11 @@ const AUTHORIZATION_HEADER = 'Authorization';
 @Injectable()
 export class AuthService {
 
-  private isLoggedIn = false;
-
   constructor(private httpClient: HttpClient, private router: Router) { //
   }
 
   public getToken(): string {
-    let token =  localStorage.getItem(TOKEN);
-    return token;
+    return localStorage.getItem(TOKEN);
   }
 
   public isAuthenticated(): boolean {

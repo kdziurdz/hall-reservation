@@ -7,6 +7,8 @@ import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
 import pl.edu.pk.hallreservation.service.hall.HallService;
 import pl.edu.pk.hallreservation.service.UserService;
+import pl.edu.pk.hallreservation.service.hall.dto.HallDTO;
+import pl.edu.pk.hallreservation.service.hall.dto.LectureDTO;
 import pl.edu.pk.hallreservation.service.reservation.dto.AvailableReservationDTO;
 import pl.edu.pk.hallreservation.service.reservation.dto.SaveReservationDTO;
 
@@ -32,28 +34,28 @@ public class ReservationService {
     }
 
     public void create(@NotNull SaveReservationDTO saveReservationDTO) {
-        Hall hall = hallService.getOne(saveReservationDTO.getHallId());
+        HallDTO hall = hallService.getOne(saveReservationDTO.getHallId());
 
         checkLessonHourAvailability(hall.getLectures(), saveReservationDTO.getDate(),
                 saveReservationDTO.getLessonNumbers());
         checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers());
 
         Reservation reservation = new Reservation(new HashSet<>(saveReservationDTO.getLessonNumbers()),
-                saveReservationDTO.getDate(), userService.getActualUser(), hall);
+                saveReservationDTO.getDate(), userService.getActualUser(), hallService.getOneEntity(hall.getId()));
 
         reservationRepository.save(reservation);
     }
 
     public List<AvailableReservationDTO> search(LocalDate dateFrom, LocalDate dateTo, Integer duration, List<Long> hallIds) {
         List<AvailableReservationDTO> availableReservations = new ArrayList<>();
-        List<Hall> halls = getListOfHalls(hallIds);
+        List<HallDTO> halls = getListOfHalls(hallIds);
 
         halls.forEach(hall -> {
-            for (LocalDate date = dateFrom; date.isBefore(dateTo); date = date.plusDays(1)) {
-                List<List<Lecture>> availableSlots = getAvailableSlots(hall.getLectures(), date, duration);
+            for (LocalDate date = dateFrom; date.isBefore(dateTo) || date.isEqual(dateTo); date = date.plusDays(1)) {
+                List<List<LectureDTO>> availableSlots = getAvailableSlots(hall.getLectures(), date, duration);
 
                 List<List<Integer>> availableLessonsSlots = availableSlots.stream()
-                        .map(lectures -> lectures.stream().map(Lecture::getLessonNumber).collect(Collectors.toList())).collect(Collectors.toList());
+                        .map(lectures -> lectures.stream().map(LectureDTO::getLessonNumber).collect(Collectors.toList())).collect(Collectors.toList());
 
                 if (availableLessonsSlots.size() > 0) {
                     availableReservations.add(new AvailableReservationDTO(date, hall.getId(),
@@ -64,7 +66,7 @@ public class ReservationService {
         return availableReservations;
     }
 
-    private List<Hall> getListOfHalls(List<Long> ids) {
+    private List<HallDTO> getListOfHalls(List<Long> ids) {
         return ids != null ? this.hallService.get(ids) : this.hallService.getAll();
     }
 
@@ -73,11 +75,11 @@ public class ReservationService {
         return date.get(woy) % 2 == 0;
     }
 
-    private void checkLessonHourAvailability(Set<Lecture> lectures, LocalDate date, List<Integer> lessonNumbers) {
+    private void checkLessonHourAvailability(Set<LectureDTO> lectures, LocalDate date, List<Integer> lessonNumbers) {
         boolean isEven = isWeekEven(date);
         int dayOfWeek = date.getDayOfWeek().getValue();
 
-        Set<Lecture> desiredLectures = lectures.stream()
+        Set<LectureDTO> desiredLectures = lectures.stream()
                 .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek
                         && lecture.getEven().equals(isEven)
                         && lecture.getFree()).collect(Collectors.toSet());
@@ -92,20 +94,20 @@ public class ReservationService {
         }
     }
 
-    private List<List<Lecture>> getAvailableSlots(Set<Lecture> lectures, LocalDate date, Integer duration) {
+    private List<List<LectureDTO>> getAvailableSlots(Set<LectureDTO> lectures, LocalDate date, Integer duration) {
 
 
         boolean isEven = isWeekEven(date);
         int dayOfWeek = date.getDayOfWeek().getValue();
 
-        List<Lecture> freeHoursAtGivenDay = lectures.stream()
-                .filter(Lecture::getFree)
+        List<LectureDTO> freeHoursAtGivenDay = lectures.stream()
+                .filter(LectureDTO::getFree)
                 .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek)
                 .filter(lecture -> lecture.getEven().equals(isEven))
-                .sorted(Comparator.comparing(Lecture::getLessonNumber))
+                .sorted(Comparator.comparing(LectureDTO::getLessonNumber))
                 .collect(Collectors.toList());
 
-        List<List<Lecture>> resultListSlot = new ArrayList<>();
+        List<List<LectureDTO>> resultListSlot = new ArrayList<>();
 
         duration = duration - 1;
 

@@ -21,21 +21,25 @@ public class HallService {
         this.hallDTOMapper= hallDTOMapper;
     }
 
-    public Page<Hall> getAllPageable(Pageable pageable) {
+    public Page<HallDTO> getAllPageable(Pageable pageable) {
         Page<Hall> halls = hallRepository.findAll(pageable);
-        return halls;
+        return halls.map(hallDTOMapper::asDTO);
     }
 
-    public Hall getOne(Long id) {
+    public HallDTO getOne(Long id) {
+        return hallDTOMapper.asDTO(hallRepository.getOneById(id));
+    }
+
+    public Hall getOneEntity(Long id) {
         return hallRepository.getOneById(id);
     }
 
-    public List<Hall> get(List<Long> ids) {
-        return hallRepository.findByIdIn(ids);
+    public List<HallDTO> get(List<Long> ids) {
+        return hallDTOMapper.asDTOs(hallRepository.findByIdIn(ids));
     }
 
-    public List<Hall> getAll() {
-        return hallRepository.findAll();
+    public List<HallDTO> getAll() {
+        return hallDTOMapper.asDTOs(hallRepository.findAll());
     }
 
     public List<HallDTO> search(String query) {

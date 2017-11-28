@@ -36,12 +36,6 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping("")
-//    public ResponseEntity<SaveReservationVM> get() {
-//
-//        return new ResponseEntity<>(new SaveReservationVM(1L, LocalDate.now(), 1),HttpStatus.OK);
-//    }
-
     @GetMapping("search")
     public ResponseEntity<List<AvailableReservationVM>> search(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
                                                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateTo,

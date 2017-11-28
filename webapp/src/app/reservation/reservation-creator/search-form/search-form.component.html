@@ -4,12 +4,13 @@
 
       <div fxLayout="row" fxLayout.lt-sm="column">
         <mat-form-field ngClass.gt-xs="mr-2">
-          <input matInput formControlName="dateFrom" [matDatepicker]="dateFrom" placeholder="Data od">
-          <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
+          <input matInput formControlName="dateFrom" #dateFrom [min]="todayDate" [max]="searchFormGroup.get('dateTo').value"
+                 [matDatepicker]="dateFrom" placeholder="Data od">
+          <mat-datepicker-toggle matSuffix  [for]="dateFrom"></mat-datepicker-toggle>
           <mat-datepicker #dateFrom></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput formControlName="dateTo" [matDatepicker]="dateTo" placeholder="Data do">
+          <input matInput formControlName="dateTo" [min]="searchFormGroup.get('dateFrom').value || todayDate" [matDatepicker]="dateTo" placeholder="Data do">
           <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
           <mat-datepicker #dateTo></mat-datepicker>
         </mat-form-field>

@@ -18,6 +18,7 @@ export class SearchFormComponent implements OnInit {
   allHalls: FormControl;
   querriedHalls: Observable<Array<Hall>>;
   availableDuration = AVAILABLE_RESERVATION_DURATION_HOURS;
+  todayDate: Date;
 
   @Output() onSearchParamsChanged: EventEmitter<SearchParams> = new EventEmitter<SearchParams>();
 
@@ -25,6 +26,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.todayDate = new Date();
     this.allHalls = new FormControl(true);
     this.hallSearchQuery = new FormControl({value: null, disabled: this.allHalls.value});
 

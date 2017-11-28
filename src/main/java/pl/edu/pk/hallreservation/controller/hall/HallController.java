@@ -32,19 +32,14 @@ public class HallController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Page<Hall>> getAll(Pageable pageable) {
-        return new ResponseEntity<>(hallService.getAllPageable(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<HallVM>> getAll(Pageable pageable) {
+        return new ResponseEntity<>(hallService.getAllPageable(pageable).map(hallMapper::asVM), HttpStatus.OK);
     }
 
     @GetMapping("refresh")
     public ResponseEntity<HttpStatus> refreshHalls() {
         hallParserService.refreshHallsClasses();
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Hall> getAll(@PathVariable Long id) {
-        return new ResponseEntity<>(hallService.getOne(id), HttpStatus.OK);
     }
 
     @GetMapping("/search")
