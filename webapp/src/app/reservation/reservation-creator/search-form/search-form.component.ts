@@ -32,7 +32,7 @@ export class SearchFormComponent implements OnInit {
 
 
     this.searchFormGroup = new FormGroup({
-      dateFrom: new FormControl(null, Validators.required),
+      dateFrom: new FormControl(this.todayDate, Validators.required),
       dateTo: new FormControl(null, Validators.required),
       duration: new FormControl(null, Validators.required),
       hallIds: new FormArray([], Validators.required)

@@ -1,21 +1,17 @@
-export interface AvailableReservationCredentials {
-  date: string;
-  hallId: number;
+import { AbstractReservation, AbstractReservationCredentials } from './abstract-reservation';
+export interface AvailableReservationCredentials extends AbstractReservationCredentials{
   hallName: string;
   lessonNumbers: Array<Array<number>>;
 }
 
-export class AvailableReservation {
-  readonly date;
-  readonly hallId;
+export class AvailableReservation extends AbstractReservation{
   readonly hallName;
   readonly lessonNumbers;
 
 
   constructor(cred: AvailableReservationCredentials) {
+    super(cred);
     if(cred) {
-      this.date = cred.date;
-      this.hallId = cred.hallId;
       this.hallName = cred.hallName;
       this.lessonNumbers = cred.lessonNumbers;
     }

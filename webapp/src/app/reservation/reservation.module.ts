@@ -7,12 +7,17 @@ import { CommonModule } from '@angular/common';
 import { ReservationService } from './reservation.service';
 import { SearchFormComponent } from './reservation-creator/search-form/search-form.component';
 import { SearchResultsViewerComponent } from './reservation-creator/search-results-viewer/search-results-viewer.component';
+import { ReservationConfirmationDialog } from './reservation-creator/search-results-viewer/reservation-confirmation-dialog/reservation-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     ReservationCreatorComponent,
     SearchFormComponent,
-    SearchResultsViewerComponent
+    SearchResultsViewerComponent,
+    ReservationConfirmationDialog
+  ],
+  entryComponents: [
+    ReservationConfirmationDialog
   ],
   providers: [
     ReservationService

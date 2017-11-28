@@ -5,4 +5,4 @@
 </mat-toolbar>
 
 <hr-search-form (onSearchParamsChanged)="onSearchParamsChanged($event)"></hr-search-form>
-<hr-search-results-viewer [searchResults]="searchResults"></hr-search-results-viewer>
+<hr-search-results-viewer (onReservationCommitted)="onReservationCommitted($event)" [searchResults]="searchResults"></hr-search-results-viewer>

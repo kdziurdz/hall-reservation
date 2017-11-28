@@ -17,11 +17,10 @@
                 <mat-icon mat-list-icon>watch_later
                 </mat-icon>
                 <h4 mat-line>{{lessonNumberArray}}</h4>
-                <p mat-line>{{getLessonNumberStart(lessonNumberArray[0])}}
-                  - {{getLessonNumberEnd(lessonNumberArray[lessonNumberArray.length -1])}} </p>
+                <p mat-line>{{getReservationTimeAsString(lessonNumberArray)}}</p>
 
                 <button class="mat-raised-button mat-accent"
-                        type="button" role="button">Rezerwuj
+                        type="button" role="button" (click)="onAvailableReservationChosen(availableSlot, lessonNumberArray)">Rezerwuj
                 </button>
           </mat-list-item>
           <mat-divider></mat-divider>
