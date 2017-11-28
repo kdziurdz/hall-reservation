@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { AvailableReservation } from '../../model/search-result';
-import { LESSON_NUMBER_TIME_END, LESSON_NUMBER_TIME_START } from '../../reservation.consts';
+import {
+  LESSON_END_IDENTIFIER_PREFIX,
+  LESSON_NUMBER_TIME_END, LESSON_NUMBER_TIME_START,
+  LESSON_START_IDENTIFIER_PREFIX
+} from '../../reservation.consts';
 
 
 @Component({
@@ -16,11 +20,11 @@ export class SearchResultsViewerComponent {
   @Input() searchResults: Array<AvailableReservation> = [];
 
   getLessonNumberStart(lessonNumber: number){
-    return this.timeStart[lessonNumber];
+    return this.timeStart[LESSON_START_IDENTIFIER_PREFIX + lessonNumber];
   }
 
   getLessonNumberEnd(lessonNumber: number){
-    return this.timeEnd[lessonNumber];
+    return this.timeEnd[LESSON_END_IDENTIFIER_PREFIX + lessonNumber];
   }
 
 }
