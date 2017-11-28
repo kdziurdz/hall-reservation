@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Hall } from './model/hall';
+import { AvailableReservation } from './model/search-result';
+import { SearchParams } from './reservation-creator/search-form/search-params';
 
 export const RESERVATION_URL = 'api/reservation/search';
 
@@ -12,16 +14,16 @@ export class ReservationService {
 
   }
 
-  searchReservations(dateFrom: string, dateTo: string, hallIds: number[], duration: any): Observable<any> {
+  searchReservations(searchParams: SearchParams): Observable<Array<AvailableReservation>> {
     let params: HttpParams = new HttpParams();
 
-    params = params.set('dateFrom', dateFrom);
-    params = params.set('dateTo', dateTo);
-    if(hallIds){
-      params = params.set('hallIds', hallIds.toString());
+    params = params.set('dateFrom', searchParams.dateFrom);
+    params = params.set('dateTo', searchParams.dateTo);
+    if(searchParams.hallIds){
+      params = params.set('hallIds', searchParams.hallIds.toString());
     }
-    params = params.set('duration', duration.toString());
-    return this.httpClient.get(RESERVATION_URL, {params: params})
+    params = params.set('duration', searchParams.duration.toString());
+    return this.httpClient.get<Array<AvailableReservation>>(RESERVATION_URL, {params: params})
   }
 
   searchHalls(query: any): Observable<Array<Hall>> {

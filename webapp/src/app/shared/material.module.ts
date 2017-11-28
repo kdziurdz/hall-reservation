@@ -3,10 +3,10 @@ import {
   MatAutocompleteModule,
   MatButtonModule, MatButtonToggleModule,
   MatCardModule, MatChipsModule,
-  MatDatepickerModule,
+  MatDatepickerModule, MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatListModule,
   MatMenuModule, MatNativeDateModule,
   MatOptionModule,
   MatSelectModule,
@@ -37,7 +37,9 @@ import {
     MatNativeDateModule,
     MatAutocompleteModule,
     MatChipsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatExpansionModule,
+    MatListModule
   ]
 })
 export class MaterialModule {
