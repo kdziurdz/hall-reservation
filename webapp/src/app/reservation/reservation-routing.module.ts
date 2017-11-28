@@ -1,9 +1,23 @@
 import { NgModule }              from '@angular/core';
 import { RouterModule, Routes }  from '@angular/router';
 import { ReservationCreatorComponent } from './reservation-creator/reservation-creator.component';
+import { MyReservationsComponent } from './my-reservations/my-reservatons.component';
 
 const appRoutes: Routes = [
-  { path: '', component: ReservationCreatorComponent }
+  {
+    path: 'search',
+    component: ReservationCreatorComponent
+  },
+  {
+    path: 'my',
+    component: MyReservationsComponent
+  },
+  {
+    path: '', redirectTo: 'search', pathMatch: 'full'
+  },
+  {
+    path: '**', redirectTo: 'search' // todo wtf
+  },
 ];
 
 @NgModule({
@@ -14,4 +28,5 @@ const appRoutes: Routes = [
     RouterModule
   ]
 })
-export class ReservationRoutingModule {}
+export class ReservationRoutingModule {
+}

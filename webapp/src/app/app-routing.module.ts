@@ -6,12 +6,12 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { LoginGuard } from './core/auth/login.guard';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/reservation', pathMatch: 'full'},
   {path: 'login', canActivate: [LoginGuard], component: LoginFormComponent},
   {path: 'page-not-found', component: PageNotFoundComponent},
   {path: 'reservation',
     loadChildren: 'app/reservation/reservation.module#ReservationModule',
-    pathMatch: 'full', canActivate: [AuthGuard]},
+    pathMatch: 'prefix', canActivate: [AuthGuard]},
+  {path: '', redirectTo: '/reservation', pathMatch: 'full'},
   {path: '**', redirectTo: 'page-not-found'},
 ];
 
