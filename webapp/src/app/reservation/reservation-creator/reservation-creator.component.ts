@@ -11,8 +11,7 @@ import { AvailableReservation } from '../model/search-result';
 
 @Component({
   selector: 'hr-reservation-creator',
-  templateUrl: './reservation-creator.component.html',
-  styleUrls: ['./reservation-creator.component.scss']
+  templateUrl: './reservation-creator.component.html'
 })
 export class ReservationCreatorComponent {
 

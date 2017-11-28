@@ -9,8 +9,7 @@ import {
 
 @Component({
   selector: 'hr-search-results-viewer',
-  templateUrl: './search-results-viewer.component.html',
-  styleUrls: ['./search-results-viewer.component.scss']
+  templateUrl: './search-results-viewer.component.html'
 })
 export class SearchResultsViewerComponent {
 
