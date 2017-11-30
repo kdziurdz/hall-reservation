@@ -11,9 +11,8 @@ import { ReservationConfirmationDialog } from './reservation-creator/search-resu
 import { MyReservationsComponent } from './my-reservations/my-reservatons.component';
 import { ReservationListComponent } from './my-reservations/reservation-list/reservation-list.component';
 import { FutureReservationsComponent } from './my-reservations/future-reservations/future-reservations.component';
-import { SearchReservationsComponent } from './my-reservations/search-reservations/search-reservations.component';
 import { PlannedReservationSearchFormComponent } from './my-reservations/search-reservations/planned-reservation-search-form/planned-reservation-search-form.component';
-import { PlannedReservationsViewerComponent } from './my-reservations/search-reservations/search-results-viewer/planned-reservations-viewer.component';
+import { PlannedReservationsViewerComponent } from './my-reservations/search-reservations/planned-reservations-viewer.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { PlannedReservationsViewerComponent } from './my-reservations/search-res
     ReservationConfirmationDialog,
     MyReservationsComponent,
     ReservationListComponent,
-    SearchReservationsComponent,
     FutureReservationsComponent,
     PlannedReservationSearchFormComponent,
     PlannedReservationsViewerComponent

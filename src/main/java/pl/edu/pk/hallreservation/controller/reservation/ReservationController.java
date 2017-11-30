@@ -53,9 +53,12 @@ public class ReservationController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Page<ReservationVM>> search(Pageable pageable, @RequestParam String status) {
+    public ResponseEntity<Page<ReservationVM>> search(Pageable pageable, @RequestParam List<String> status,
+                                                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
+                                                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateTo,
+                                                      @RequestParam(required = false) List<Long> hallIds) {
 
-        Page<ReservationDTO> dtos = reservationService.getPage(pageable, status);
+        Page<ReservationDTO> dtos = reservationService.getPage(pageable, status, dateFrom, dateTo, hallIds);
 
         return new ResponseEntity<>(dtos.map(reservationMapper::asVM),HttpStatus.OK);
     }

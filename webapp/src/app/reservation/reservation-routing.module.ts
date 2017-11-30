@@ -3,7 +3,7 @@ import { RouterModule, Routes }  from '@angular/router';
 import { ReservationCreatorComponent } from './reservation-creator/reservation-creator.component';
 import { MyReservationsComponent } from './my-reservations/my-reservatons.component';
 import { FutureReservationsComponent } from './my-reservations/future-reservations/future-reservations.component';
-import { SearchReservationsComponent } from './my-reservations/search-reservations/search-reservations.component';
+import { PlannedReservationsViewerComponent } from './my-reservations/search-reservations/planned-reservations-viewer.component';
 
 const appRoutes: Routes = [
   {
@@ -25,7 +25,7 @@ const appRoutes: Routes = [
       },
       {
         path: 'search',
-        component: SearchReservationsComponent
+        component: PlannedReservationsViewerComponent
       }
     ]
   },

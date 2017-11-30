@@ -1,0 +1,42 @@
+<hr-planned-reservation-search-form (onSearchParamsChanged)="onSearchParamsChanged($event)"></hr-planned-reservation-search-form>
+
+<mat-card class="m-1 d-block" *ngIf="page && page.content.length > 0">
+  <mat-card-content fxLayout="column">
+    <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lessonNumbers">
+        <mat-header-cell *matHeaderCellDef> Numery lekcji </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lessonNumbers}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="hall">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Sala </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.hall.name}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [pageSize]="page.size"
+                   [length]="page.totalElements"
+                   [pageIndex]="page.number"
+                   (page)="onPageChange($event)"
+                   [pageSizeOptions]="[10, 20, 30]">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="m-1 d-block" *ngIf="page && page.content.length == 0;">
+  <mat-card-content>Brak dopasowań. Zmień kryteria wyszukiwania</mat-card-content>
+</mat-card>
+
+
+
+

@@ -2,10 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
-import { Hall } from '../../../model/hall';
 import { PlannedReservationSearchParams } from './planned-reservation-search-params';
-import { ReservationService } from '../../../reservation.service';
+import { Hall } from '../../../model/hall';
 import { ReservationStatus } from '../../reservation-status.enum';
+import { ReservationService } from '../../../reservation.service';
 
 @Component({
   selector: 'hr-planned-reservation-search-form',

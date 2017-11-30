@@ -3,7 +3,6 @@ package pl.edu.pk.hallreservation.service.reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
 import pl.edu.pk.hallreservation.service.hall.HallService;
@@ -72,31 +71,27 @@ public class ReservationService {
         return availableReservations;
     }
 
-    public Page<ReservationDTO> getPage(Pageable pageable, String status) {
+    public Page<ReservationDTO> getPage(Pageable pageable, List<String> statuses, LocalDate dateFrom, LocalDate dateTo, List<Long> hallIds) {
 
         Page<Reservation> page;
-        switch (status) {
-            case "future": {
-                page = this.reservationRepository.findAllByUser_idAndDateAfterAndCancelledOrderByDate(pageable,
-                        userService.getActualUser().getId(),
-                        LocalDate.now().minusDays(1), false);
-                break;
+
+        if(hallIds == null) {
+            if(statuses.size() == 2) {
+                page = reservationRepository.findAllByUser_idAndDateBetween(pageable,
+                        userService.getActualUser().getId(), dateFrom, dateTo);
+            } else if(statuses.size() == 1 && statuses.get(0).equals("CANCELLED")) {
+                page = reservationRepository.findAllByUser_idAndCancelledAndDateBetween(pageable,
+                        userService.getActualUser().getId(), true, dateFrom, dateTo);
+            } else {
+                page = reservationRepository.findAllByUser_idAndCancelledAndDateBetween(pageable,
+                        userService.getActualUser().getId(), false, dateFrom, dateTo);
             }
-            case "past": {
-                page = this.reservationRepository.findAllByUser_idAndDateBeforeAndCancelledOrderByDate(pageable,
-                        userService.getActualUser().getId(),
-                        LocalDate.now(), false);
-                break;
-            }
-            case "cancelled": {
-                page = this.reservationRepository.findAllByUser_idAndCancelledOrderByDate(pageable,
-                        userService.getActualUser().getId(), true);
-                break;
-            }
-            default: {
-                throw new ObjectNotFoundException("No status matched");
-            }
+        } else {
+            return null;
         }
+
+
+
         return page.map(reservationMapper::asDTO);
 
     }

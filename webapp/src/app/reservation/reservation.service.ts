@@ -38,6 +38,15 @@ export class ReservationService {
     if (searchParams.hallIds) {
       params = params.set('hallIds', searchParams.hallIds.toString());
     }
+    if (searchParams.sort) {
+      params = params.set('sort', searchParams.sort);
+    }
+    if (searchParams.pageNumber) {
+      params = params.set('pageNumber', String(searchParams.pageNumber));
+    }
+    if (searchParams.pageSize) {
+      params = params.set('pageSize', String(searchParams.pageSize));
+    }
     params = params.set('status', searchParams.status.toString());
     return this.httpClient.get<Page<PlannedReservation>>(`${RESERVATION_URL}`, {params: params});
   }

@@ -13,10 +13,10 @@ public interface ReservationRepository extends BaseRepository<Reservation> {
 
     List<Reservation> findAllByDateAndHall_IdAndCancelled(LocalDate date, Long hall_Id, Boolean cancelled);
 
-    Page<Reservation> findAllByUser_idAndDateAfterAndCancelledOrderByDate(Pageable pageable, Long user_id, LocalDate date, Boolean cancelled);
+    Page<Reservation> findAllByUser_idAndDateBetween(Pageable pageable, Long user_id,LocalDate dateAfter, LocalDate dateBefore);
 
-    Page<Reservation> findAllByUser_idAndDateBeforeAndCancelledOrderByDate(Pageable pageable, Long user_id, LocalDate date, Boolean cancelled);
+    Page<Reservation> findAllByUser_idAndCancelledAndDateBetween(Pageable pageable, Long user_id, Boolean cancelled,
+                                                               LocalDate dateAfter, LocalDate dateBefore);
 
-    Page<Reservation> findAllByUser_idAndCancelledOrderByDate(Pageable pageable, Long user_id, Boolean cancelled);
 
 }
