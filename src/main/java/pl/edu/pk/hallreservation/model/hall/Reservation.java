@@ -36,7 +36,7 @@ public class Reservation {
 
     @OneToOne
     @JoinColumn(name = "CANCLLER_ID")
-    private User cancellerId;
+    private User canceller;
 
     @Column(name = "CANCLLED")
     private Boolean cancelled = false;
@@ -108,12 +108,12 @@ public class Reservation {
         this.date = date;
     }
 
-    public User getCancellerId() {
-        return cancellerId;
+    public User getcanceller() {
+        return canceller;
     }
 
-    public void setCancellerId(User cancellerId) {
-        this.cancellerId = cancellerId;
+    public void setcanceller(User canceller) {
+        this.canceller = canceller;
     }
 
     public Boolean getCancelled() {

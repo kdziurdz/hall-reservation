@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ReservationService } from '../reservation.service';
-import { SearchParams } from './search-form/search-params';
+import { AvailableReservationSlotSearchParams } from './search-form/available-reservation-slot-search-params';
 import { AvailableReservation } from '../model/available-reservation';
 
 @Component({
@@ -14,8 +14,8 @@ export class ReservationCreatorComponent {
   constructor(private reservationService: ReservationService) {
   }
 
-  onSearchParamsChanged(params: SearchParams) {
-    this.reservationService.searchReservations(params).subscribe(searchResults => {
+  onSearchParamsChanged(params: AvailableReservationSlotSearchParams) {
+    this.reservationService.searchAvailableReservationSlots(params).subscribe(searchResults => {
       this.searchResults = searchResults;
     });
   }

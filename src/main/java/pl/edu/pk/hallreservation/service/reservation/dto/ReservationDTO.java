@@ -15,7 +15,7 @@ public class ReservationDTO {
 
     private UserDTO user;
 
-    private UserDTO cancellerId;
+    private UserDTO canceller;
 
     private Boolean cancelled;
 
@@ -24,12 +24,12 @@ public class ReservationDTO {
     private HallDTO hall;
 
     public ReservationDTO(Long id, List<Integer> lessonNumbers, LocalDate date, UserDTO user,
-                          UserDTO cancellerId, Boolean cancelled, String cancellationReason, HallDTO hall) {
+                          UserDTO canceller, Boolean cancelled, String cancellationReason, HallDTO hall) {
         this.id = id;
         this.lessonNumbers = lessonNumbers;
         this.date = date;
         this.user = user;
-        this.cancellerId = cancellerId;
+        this.canceller = canceller;
         this.cancelled = cancelled;
         this.cancellationReason = cancellationReason;
         this.hall = hall;
@@ -70,12 +70,12 @@ public class ReservationDTO {
         this.user = user;
     }
 
-    public UserDTO getCancellerId() {
-        return cancellerId;
+    public UserDTO getcanceller() {
+        return canceller;
     }
 
-    public void setCancellerId(UserDTO cancellerId) {
-        this.cancellerId = cancellerId;
+    public void setcanceller(UserDTO canceller) {
+        this.canceller = canceller;
     }
 
     public Boolean getCancelled() {

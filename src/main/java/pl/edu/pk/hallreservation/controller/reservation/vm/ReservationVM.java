@@ -18,7 +18,7 @@ public class ReservationVM {
 
     private UserVM user;
 
-    private UserVM cancellerId;
+    private UserVM canceller;
 
     private Boolean cancelled;
 
@@ -27,12 +27,12 @@ public class ReservationVM {
     private HallVM hall;
 
     public ReservationVM(Long id, List<Integer> lessonNumbers, LocalDate date, UserVM user,
-                         UserVM cancellerId, Boolean cancelled, String cancellationReason, HallVM hall) {
+                         UserVM canceller, Boolean cancelled, String cancellationReason, HallVM hall) {
         this.id = id;
         this.lessonNumbers = lessonNumbers;
         this.date = date;
         this.user = user;
-        this.cancellerId = cancellerId;
+        this.canceller = canceller;
         this.cancelled = cancelled;
         this.cancellationReason = cancellationReason;
         this.hall = hall;
@@ -73,12 +73,12 @@ public class ReservationVM {
         this.user = user;
     }
 
-    public UserVM getCancellerId() {
-        return cancellerId;
+    public UserVM getcanceller() {
+        return canceller;
     }
 
-    public void setCancellerId(UserVM cancellerId) {
-        this.cancellerId = cancellerId;
+    public void setcanceller(UserVM canceller) {
+        this.canceller = canceller;
     }
 
     public Boolean getCancelled() {

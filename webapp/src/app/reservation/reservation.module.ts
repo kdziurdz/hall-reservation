@@ -10,6 +10,10 @@ import { SearchResultsViewerComponent } from './reservation-creator/search-resul
 import { ReservationConfirmationDialog } from './reservation-creator/search-results-viewer/reservation-confirmation-dialog/reservation-confirmation-dialog.component';
 import { MyReservationsComponent } from './my-reservations/my-reservatons.component';
 import { ReservationListComponent } from './my-reservations/reservation-list/reservation-list.component';
+import { FutureReservationsComponent } from './my-reservations/future-reservations/future-reservations.component';
+import { SearchReservationsComponent } from './my-reservations/search-reservations/search-reservations.component';
+import { PlannedReservationSearchFormComponent } from './my-reservations/search-reservations/planned-reservation-search-form/planned-reservation-search-form.component';
+import { PlannedReservationsViewerComponent } from './my-reservations/search-reservations/search-results-viewer/planned-reservations-viewer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,11 @@ import { ReservationListComponent } from './my-reservations/reservation-list/res
     SearchResultsViewerComponent,
     ReservationConfirmationDialog,
     MyReservationsComponent,
-    ReservationListComponent
+    ReservationListComponent,
+    SearchReservationsComponent,
+    FutureReservationsComponent,
+    PlannedReservationSearchFormComponent,
+    PlannedReservationsViewerComponent
   ],
   entryComponents: [
     ReservationConfirmationDialog

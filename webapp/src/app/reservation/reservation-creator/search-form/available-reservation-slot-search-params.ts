@@ -1,4 +1,4 @@
-export interface SearchParams {
+export interface AvailableReservationSlotSearchParams {
   dateFrom: string;
   dateTo: string;
   hallIds: number[] | null;

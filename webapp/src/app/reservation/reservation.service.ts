@@ -3,8 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Hall } from './model/hall';
 import { AvailableReservation } from './model/available-reservation';
-import { SearchParams } from './reservation-creator/search-form/search-params';
+import { AvailableReservationSlotSearchParams } from './reservation-creator/search-form/available-reservation-slot-search-params';
 import { SaveReservation } from './model/save-reservation';
+import { Page } from '../core/model/page';
+import { PlannedReservation } from './my-reservations/planned-reservations';
+import { PlannedReservationSearchParams } from './my-reservations/search-reservations/planned-reservation-search-form/planned-reservation-search-params';
 
 export const RESERVATION_URL = 'api/reservation';
 
@@ -15,7 +18,7 @@ export class ReservationService {
 
   }
 
-  searchReservations(searchParams: SearchParams): Observable<Array<AvailableReservation>> {
+  searchAvailableReservationSlots(searchParams: AvailableReservationSlotSearchParams): Observable<Array<AvailableReservation>> {
     let params: HttpParams = new HttpParams();
 
     params = params.set('dateFrom', searchParams.dateFrom);
@@ -25,6 +28,18 @@ export class ReservationService {
     }
     params = params.set('duration', searchParams.duration.toString());
     return this.httpClient.get<Array<AvailableReservation>>(`${RESERVATION_URL}/search`, {params: params});
+  }
+
+  searchPlannedReservations(searchParams: PlannedReservationSearchParams): Observable<Page<PlannedReservation>> {
+    let params: HttpParams = new HttpParams();
+
+    params = params.set('dateFrom', searchParams.dateFrom);
+    params = params.set('dateTo', searchParams.dateTo);
+    if (searchParams.hallIds) {
+      params = params.set('hallIds', searchParams.hallIds.toString());
+    }
+    params = params.set('status', searchParams.status.toString());
+    return this.httpClient.get<Page<PlannedReservation>>(`${RESERVATION_URL}`, {params: params});
   }
 
   searchHalls(query: any): Observable<Array<Hall>> {

@@ -2,40 +2,38 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
-import { Hall } from '../../model/hall';
-import { AVAILABLE_RESERVATION_DURATION_HOURS } from '../../reservation.consts';
-import { ReservationService } from '../../reservation.service';
-import { AvailableReservationSlotSearchParams } from './available-reservation-slot-search-params';
+import { Hall } from '../../../model/hall';
+import { PlannedReservationSearchParams } from './planned-reservation-search-params';
+import { ReservationService } from '../../../reservation.service';
+import { ReservationStatus } from '../../reservation-status.enum';
 
 @Component({
-  selector: 'hr-search-form',
-  templateUrl: './search-form.component.html',
-  styleUrls: ['./search-form.component.scss']
+  selector: 'hr-planned-reservation-search-form',
+  templateUrl: './planned-reservation-search-form.component.html',
+  styleUrls: ['./planned-reservation-search-form.component.scss']
 })
-export class SearchFormComponent implements OnInit {
+export class PlannedReservationSearchFormComponent implements OnInit {
   searchFormGroup: FormGroup;
   hallSearchQuery: FormControl;
   allHalls: FormControl;
   querriedHalls: Observable<Array<Hall>>;
-  availableDuration = AVAILABLE_RESERVATION_DURATION_HOURS;
-  todayDate: Date;
+  reservationStatuses = ReservationStatus;
 
-  @Output() onSearchParamsChanged: EventEmitter<AvailableReservationSlotSearchParams> = new EventEmitter<AvailableReservationSlotSearchParams>();
+  @Output() onSearchParamsChanged: EventEmitter<PlannedReservationSearchParams> = new EventEmitter<PlannedReservationSearchParams>();
 
   constructor(private reservationService: ReservationService) {
   }
 
   ngOnInit(): void {
-    this.todayDate = new Date();
     this.allHalls = new FormControl(true);
     this.hallSearchQuery = new FormControl({value: null, disabled: this.allHalls.value});
 
 
     this.searchFormGroup = new FormGroup({
-      dateFrom: new FormControl(this.todayDate, Validators.required),
+      dateFrom: new FormControl(null, Validators.required),
       dateTo: new FormControl(null, Validators.required),
-      duration: new FormControl(null, Validators.required),
-      hallIds: new FormArray([], Validators.required)
+      hallIds: new FormArray([], Validators.required),
+      status: new FormControl(null, Validators.required)
     });
 
     if (this.allHalls.value) {
@@ -81,11 +79,11 @@ export class SearchFormComponent implements OnInit {
   submit() {
     let values = this.searchFormGroup.getRawValue();
 
-    let searchParams: AvailableReservationSlotSearchParams = {
+    let searchParams: PlannedReservationSearchParams = {
       dateFrom: this.formatDate(values.dateFrom),
       dateTo: this.formatDate(values.dateTo),
       hallIds: this.searchFormGroup.get('hallIds').disabled ? null : values.hallIds.map(hall => hall.id),
-      duration: values.duration as string
+      status: values.status
     };
 
     this.onSearchParamsChanged.emit(searchParams);

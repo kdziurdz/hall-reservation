@@ -6,11 +6,21 @@
 
 <mat-card class="d-block m-1">
   <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="Przyszłe"><hr-reservation-list></hr-reservation-list></mat-tab>
-      <mat-tab label="Dokonane"><hr-reservation-list></hr-reservation-list></mat-tab>
-      <mat-tab label="Anulowane"><hr-reservation-list></hr-reservation-list></mat-tab>
-    </mat-tab-group>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
+         routerLink="future"
+         routerLinkActive #future="routerLinkActive"
+         [active]="future.isActive">
+        Przyszłe
+      </a>
+      <a mat-tab-link
+         routerLink="search"
+         routerLinkActive #search="routerLinkActive"
+         [active]="search.isActive">
+        Szukaj
+      </a>
+    </nav>
+    <router-outlet></router-outlet>
   </mat-card-content>
 
 </mat-card>
