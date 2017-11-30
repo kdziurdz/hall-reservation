@@ -1,4 +1,4 @@
-package pl.edu.pk.hallreservation.service;
+package pl.edu.pk.hallreservation.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

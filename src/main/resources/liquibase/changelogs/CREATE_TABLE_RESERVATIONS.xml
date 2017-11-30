@@ -15,6 +15,15 @@
                 <constraints nullable="false"/>
             </column>
             <column name="USER_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CANCLLER_ID" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="CANCLLED" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="CANCELLATION_REASON" type="varchar(50)">
                 <constraints nullable="true"/>
             </column>
         </createTable>
@@ -24,6 +33,14 @@
         <addForeignKeyConstraint baseColumnNames="USER_ID"
                                  baseTableName="RESERVATIONS"
                                  constraintName="FK_RE_US_USER_ID"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="USERS"/>
+    </changeSet>
+
+    <changeSet id="57516" author="Konrad">
+        <addForeignKeyConstraint baseColumnNames="CANCLLER_ID"
+                                 baseTableName="RESERVATIONS"
+                                 constraintName="FK_RE_US_CANCLLER_ID"
                                  referencedColumnNames="ID"
                                  referencedTableName="USERS"/>
     </changeSet>

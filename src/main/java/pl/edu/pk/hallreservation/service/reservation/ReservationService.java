@@ -1,10 +1,15 @@
 package pl.edu.pk.hallreservation.service.reservation;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
 import pl.edu.pk.hallreservation.service.hall.HallService;
-import pl.edu.pk.hallreservation.service.UserService;
+import pl.edu.pk.hallreservation.service.reservation.dto.ReservationDTO;
+import pl.edu.pk.hallreservation.service.reservation.mapper.ReservationMapper;
+import pl.edu.pk.hallreservation.service.user.UserService;
 import pl.edu.pk.hallreservation.service.hall.dto.HallDTO;
 import pl.edu.pk.hallreservation.service.hall.dto.LectureDTO;
 import pl.edu.pk.hallreservation.service.reservation.dto.AvailableReservationDTO;
@@ -23,12 +28,14 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final HallService hallService;
     private final UserService userService;
+    private final ReservationMapper reservationMapper;
 
     public ReservationService(ReservationRepository reservationRepository, HallService hallService,
-                              UserService userService) {
+                              UserService userService, ReservationMapper reservationMapper) {
         this.reservationRepository = reservationRepository;
         this.hallService = hallService;
         this.userService = userService;
+        this.reservationMapper = reservationMapper;
     }
 
     public void create(@NotNull SaveReservationDTO saveReservationDTO) {
@@ -63,6 +70,35 @@ public class ReservationService {
             }
         });
         return availableReservations;
+    }
+
+    public Page<ReservationDTO> getPage(Pageable pageable, String status) {
+
+        Page<Reservation> page;
+        switch (status) {
+            case "future": {
+                page = this.reservationRepository.findAllByUser_idAndDateAfterAndCancelledOrderByDate(pageable,
+                        userService.getActualUser().getId(),
+                        LocalDate.now().minusDays(1), false);
+                break;
+            }
+            case "past": {
+                page = this.reservationRepository.findAllByUser_idAndDateBeforeAndCancelledOrderByDate(pageable,
+                        userService.getActualUser().getId(),
+                        LocalDate.now(), false);
+                break;
+            }
+            case "cancelled": {
+                page = this.reservationRepository.findAllByUser_idAndCancelledOrderByDate(pageable,
+                        userService.getActualUser().getId(), true);
+                break;
+            }
+            default: {
+                throw new ObjectNotFoundException("No status matched");
+            }
+        }
+        return page.map(reservationMapper::asDTO);
+
     }
 
     private List<HallDTO> getListOfHalls(List<Long> ids) {
@@ -126,14 +162,16 @@ public class ReservationService {
 
     private boolean isLessonNumberNotReserved(LocalDate date, Integer lessonNumber, HallDTO hall) {
 
-        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDateAndHall_Id(date, hall.getId());
+        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDateAndHall_IdAndCancelled(date, hall.getId(),
+                false);
         return reservationsInSingleDay.size() == 0 || reservationsInSingleDay.stream()
                 .noneMatch(reservation -> reservation.getLessonNumbers().contains(lessonNumber));
     }
 
     private void checkLessonHourReservationAvailability(LocalDate date, List<Integer> lessonNumbers, HallDTO hall) {
 
-        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDateAndHall_Id(date, hall.getId());
+        List<Reservation> reservationsInSingleDay = reservationRepository.findAllByDateAndHall_IdAndCancelled(date, hall.getId(),
+                false);
 
         for (Reservation reservation : reservationsInSingleDay) {
             Set<Integer> reservedLessonNumbers = reservation.getLessonNumbers();

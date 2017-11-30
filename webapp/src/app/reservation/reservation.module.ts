@@ -9,6 +9,7 @@ import { SearchFormComponent } from './reservation-creator/search-form/search-fo
 import { SearchResultsViewerComponent } from './reservation-creator/search-results-viewer/search-results-viewer.component';
 import { ReservationConfirmationDialog } from './reservation-creator/search-results-viewer/reservation-confirmation-dialog/reservation-confirmation-dialog.component';
 import { MyReservationsComponent } from './my-reservations/my-reservatons.component';
+import { ReservationListComponent } from './my-reservations/reservation-list/reservation-list.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MyReservationsComponent } from './my-reservations/my-reservatons.compon
     SearchResultsViewerComponent,
     ReservationConfirmationDialog,
     MyReservationsComponent,
+    ReservationListComponent
   ],
   entryComponents: [
     ReservationConfirmationDialog

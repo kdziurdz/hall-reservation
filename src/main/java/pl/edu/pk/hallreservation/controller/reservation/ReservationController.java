@@ -1,15 +1,19 @@
 package pl.edu.pk.hallreservation.controller.reservation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.reservation.vm.AvailableReservationVM;
+import pl.edu.pk.hallreservation.controller.reservation.vm.ReservationVM;
 import pl.edu.pk.hallreservation.controller.reservation.vm.SaveReservationVM;
-import pl.edu.pk.hallreservation.service.reservation.ReservationMapper;
+import pl.edu.pk.hallreservation.service.reservation.mapper.ReservationMapper;
 import pl.edu.pk.hallreservation.service.reservation.ReservationService;
 import pl.edu.pk.hallreservation.service.reservation.dto.AvailableReservationDTO;
+import pl.edu.pk.hallreservation.service.reservation.dto.ReservationDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -45,6 +49,14 @@ public class ReservationController {
         List<AvailableReservationDTO> dtos =
                 reservationService.search(dateFrom, dateTo, duration, hallIds);
 
-        return new ResponseEntity<>(reservationMapper.asVMs(dtos),HttpStatus.OK);
+        return new ResponseEntity<>(reservationMapper.asAvailableReservationsVM(dtos),HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Page<ReservationVM>> search(Pageable pageable, @RequestParam String status) {
+
+        Page<ReservationDTO> dtos = reservationService.getPage(pageable, status);
+
+        return new ResponseEntity<>(dtos.map(reservationMapper::asVM),HttpStatus.OK);
     }
 }

@@ -10,7 +10,7 @@ import {
   MatMenuModule, MatNativeDateModule,
   MatOptionModule,
   MatSelectModule,
-  MatSidenavModule, MatSlideToggleModule,
+  MatSidenavModule, MatSlideToggleModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -40,7 +40,8 @@ import {
     MatSlideToggleModule,
     MatExpansionModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule {

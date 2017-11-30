@@ -26,12 +26,22 @@
             <column name="EMAIL" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
+            <column name="EXPIRATION_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ENABLED" type="boolean">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
 
     <changeSet author="Konrad" id="6">
         <addUniqueConstraint columnNames="USERNAME" constraintName="USER_USERNAME_UK" tableName="USERS"/>
+    </changeSet>
+
+    <changeSet author="Konrad" id="65564">
+        <addUniqueConstraint columnNames="EMAIL" constraintName="USER_EMAIL_UK" tableName="USERS"/>
     </changeSet>
 
 </databaseChangeLog>

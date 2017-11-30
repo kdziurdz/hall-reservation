@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,6 +41,14 @@ public class User implements UserDetails {
     @Column(name = "EMAIL")
     private String email;
 
+    @NotNull
+    @Column(name = "EXPIRATION_DATE")
+    private LocalDate expirationDate;
+
+    @NotNull
+    @Column(name = "ENABLED")
+    private Boolean enabled;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "USER_AUTHORITIES",
             joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),
@@ -49,12 +58,15 @@ public class User implements UserDetails {
 
     protected User() {}
 
-    public User(String firstName, String username, String lastName, String password, String email, Set<UserAuthority> authorities) {
+    public User(String firstName, String username, String lastName, String password,
+                String email, LocalDate expirationDate, Boolean enabled, Set<UserAuthority> authorities) {
         this.firstName = firstName;
         this.username = username;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
+        this.expirationDate = expirationDate;
+        this.enabled = enabled;
         this.authorities = authorities;
     }
 
@@ -68,10 +80,6 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -118,7 +126,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return expirationDate.isAfter(LocalDate.now());
     }
 
     @Override
@@ -133,7 +141,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 
     @Override
@@ -145,5 +153,21 @@ public class User implements UserDetails {
                 .append("password", password)
                 .append("email", email)
                 .toString();
+    }
+
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -6,4 +6,8 @@ public class ObjectNotFoundException extends RuntimeException {
     public ObjectNotFoundException(String resourceName, Long id) {
         super(String.format("Cannot find %s with id %d", resourceName, id));
     }
+
+    public ObjectNotFoundException(String message) {
+        super(message);
+    }
 }

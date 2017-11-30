@@ -1,4 +1,4 @@
-package pl.edu.pk.hallreservation.controller;
+package pl.edu.pk.hallreservation.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.model.user.UserAuthority;
 import pl.edu.pk.hallreservation.repository.UserRepository;
-import pl.edu.pk.hallreservation.service.UserService;
+import pl.edu.pk.hallreservation.service.user.UserService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -37,9 +37,7 @@ public class UserController {
         Set<UserAuthority> authorities = new HashSet<>();
         authorities.add(new UserAuthority("R_USER"));
 
-        User user = userService.createUser(new User("firstname", "username", "lastname",
-                "password", "wesda@asd", authorities));
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("count")

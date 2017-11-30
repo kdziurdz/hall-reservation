@@ -34,6 +34,16 @@ public class Reservation {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "CANCLLER_ID")
+    private User cancellerId;
+
+    @Column(name = "CANCLLED")
+    private Boolean cancelled = false;
+
+    @Column(name = "CANCELLATION_REASON")
+    private String cancellationReason;
+
     @ManyToOne
     @JoinTable(name = "HALLS_RESERVATIONS",
             inverseJoinColumns = @JoinColumn(name = "HALL_ID"),
@@ -96,5 +106,29 @@ public class Reservation {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public User getCancellerId() {
+        return cancellerId;
+    }
+
+    public void setCancellerId(User cancellerId) {
+        this.cancellerId = cancellerId;
+    }
+
+    public Boolean getCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(Boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
+    public String getCancellationReason() {
+        return cancellationReason;
+    }
+
+    public void setCancellationReason(String cancellationReason) {
+        this.cancellationReason = cancellationReason;
     }
 }
