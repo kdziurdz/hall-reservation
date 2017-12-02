@@ -1,22 +1,35 @@
-<hr-planned-reservation-search-form (onSearchParamsChanged)="onSearchParamsChanged($event)"></hr-planned-reservation-search-form>
+<hr-planned-reservation-search-form
+  (onSearchParamsChanged)="onSearchParamsChanged($event)"></hr-planned-reservation-search-form>
 
 <mat-card class="m-1 d-block" *ngIf="page && page.content.length > 0">
   <mat-card-content fxLayout="column">
     <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
 
       <ng-container matColumnDef="date">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Data</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.date}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="lessonNumbers">
-        <mat-header-cell *matHeaderCellDef> Numery lekcji </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.lessonNumbers}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Numery lekcji</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.lessonNumbers}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="hall">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Sala </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.hall.name}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Sala</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.hall.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1">
+          <button class="mat-raised-button mat-warn" *ngIf="!element.cancelled && !isBeforeToday(element.date)"
+                  type="button" role="button" (click)="cancel(element)">Odwołaj
+          </button>
+          <button *ngIf="element.cancelled" class="mat-raised-button mat-primary" role="button" color="primary"
+                  type="button" role="button" (click)="info(element)">Info
+          </button>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

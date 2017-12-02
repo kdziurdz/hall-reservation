@@ -42,10 +42,10 @@ export class ReservationService {
       params = params.set('sort', searchParams.sort);
     }
     if (searchParams.pageNumber) {
-      params = params.set('pageNumber', String(searchParams.pageNumber));
+      params = params.set('page', String(searchParams.pageNumber));
     }
     if (searchParams.pageSize) {
-      params = params.set('pageSize', String(searchParams.pageSize));
+      params = params.set('size', String(searchParams.pageSize));
     }
     params = params.set('status', searchParams.status.toString());
     return this.httpClient.get<Page<PlannedReservation>>(`${RESERVATION_URL}`, {params: params});

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatSortable, MatTableDataSource, PageEvent, Sort } from '@angular/material';
 import { PlannedReservation } from '../planned-reservations';
 import { ReservationService } from '../../reservation.service';
@@ -9,16 +9,21 @@ import { PlannedReservationSearchParams } from './planned-reservation-search-for
   selector: 'hr-planned-reservations-viewer',
   templateUrl: './planned-reservations-viewer.component.html'
 })
-export class PlannedReservationsViewerComponent implements OnChanges, AfterViewInit {
+export class PlannedReservationsViewerComponent implements OnChanges, AfterViewInit, OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['date', 'lessonNumbers', 'hall'];
+  displayedColumns = ['date', 'lessonNumbers', 'hall', 'actions'];
   page: Page<PlannedReservation>;
   dataSource = new MatTableDataSource<PlannedReservation>([]);
   actualSearchParams: PlannedReservationSearchParams;
+  todayDate: Date;
 
   constructor(private dialog: MatDialog, private reservationService: ReservationService) {
+  }
+
+  ngOnInit() {
+    this.todayDate = new Date();
   }
 
   ngAfterViewInit() {
@@ -32,11 +37,13 @@ export class PlannedReservationsViewerComponent implements OnChanges, AfterViewI
   }
 
   onPageChange(pageEvent: PageEvent){
-    console.log(pageEvent);
+    this.actualSearchParams.pageSize = pageEvent.pageSize;
+    this.actualSearchParams.pageNumber = pageEvent.pageIndex;
+    this.onSearchParamsChanged(this.actualSearchParams);
   }
 
   onSortChange(sort: Sort){
-    this.actualSearchParams.sort =sort.active+','+sort.direction
+    this.actualSearchParams.sort =sort.active+','+sort.direction;
     this.onSearchParamsChanged(this.actualSearchParams);
   }
 
@@ -46,5 +53,16 @@ export class PlannedReservationsViewerComponent implements OnChanges, AfterViewI
       this.page = searchResults;
       this.dataSource.data = searchResults.content;
     });
+  }
+  cancel(element: PlannedReservation) {
+    console.log(element);
+  }
+  info(element: PlannedReservation) {
+    console.log(element);
+  }
+
+  isBeforeToday(date: string){
+    let givenDate = new Date(date);
+    return givenDate <= this.todayDate;
   }
 }
