@@ -9,10 +9,10 @@ import { SearchFormComponent } from './reservation-creator/search-form/search-fo
 import { SearchResultsViewerComponent } from './reservation-creator/search-results-viewer/search-results-viewer.component';
 import { ReservationConfirmationDialog } from './reservation-creator/search-results-viewer/reservation-confirmation-dialog/reservation-confirmation-dialog.component';
 import { MyReservationsComponent } from './my-reservations/my-reservatons.component';
-import { ReservationListComponent } from './my-reservations/reservation-list/reservation-list.component';
 import { FutureReservationsComponent } from './my-reservations/future-reservations/future-reservations.component';
 import { PlannedReservationSearchFormComponent } from './my-reservations/search-reservations/planned-reservation-search-form/planned-reservation-search-form.component';
 import { PlannedReservationsViewerComponent } from './my-reservations/search-reservations/planned-reservations-viewer.component';
+import { ReservationCancellationDialog } from './my-reservations/search-reservations/dialogs/reservation-cancellation-dialog/reservation-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +21,14 @@ import { PlannedReservationsViewerComponent } from './my-reservations/search-res
     SearchResultsViewerComponent,
     ReservationConfirmationDialog,
     MyReservationsComponent,
-    ReservationListComponent,
     FutureReservationsComponent,
     PlannedReservationSearchFormComponent,
-    PlannedReservationsViewerComponent
+    PlannedReservationsViewerComponent,
+    ReservationCancellationDialog
   ],
   entryComponents: [
-    ReservationConfirmationDialog
+    ReservationConfirmationDialog,
+    ReservationCancellationDialog
   ],
   providers: [
     ReservationService

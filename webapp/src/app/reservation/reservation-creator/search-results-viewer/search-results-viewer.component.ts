@@ -5,11 +5,12 @@ import {
   LESSON_NUMBER_TIME_END,
   LESSON_NUMBER_TIME_START,
   LESSON_START_IDENTIFIER_PREFIX
-} from '../../reservation.consts';
+} from '../../../core/reservation.consts';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ReservationConfirmationDialog } from './reservation-confirmation-dialog/reservation-confirmation-dialog.component';
 import { SaveReservation } from '../../model/save-reservation';
 import { ReservationService } from '../../reservation.service';
+import { LessonDateTimeService } from '../../../core/service/lesson-date-time.service';
 
 
 @Component({
@@ -20,24 +21,19 @@ export class SearchResultsViewerComponent {
 
   @Input() searchResults: Array<AvailableReservation>;
 
-  private timeStart = LESSON_NUMBER_TIME_START;
-  private timeEnd = LESSON_NUMBER_TIME_END;
-
-  constructor(private dialog: MatDialog, private reservationService: ReservationService) {
-
+  constructor(private dialog: MatDialog, private reservationService: ReservationService,
+              private lessonDateTimeService: LessonDateTimeService) {
   }
 
-  getLessonNumberStart(lessonNumber: number) {
-    return this.timeStart[LESSON_START_IDENTIFIER_PREFIX + lessonNumber];
+  getReservationTimeAsString(chosenLessonNumbers: number[]){
+    this.lessonDateTimeService.getReservationTimeAsString(chosenLessonNumbers);
   }
 
-  getLessonNumberEnd(lessonNumber: number) {
-    return this.timeEnd[LESSON_END_IDENTIFIER_PREFIX + lessonNumber];
-  }
 
   onAvailableReservationChosen(availableReservation: AvailableReservation, chosenLessonNumbers: number[]) {
     let conf: MatDialogConfig = new MatDialogConfig();
-    conf.data = {date: availableReservation.date, hours: this.getReservationTimeAsString(chosenLessonNumbers)};
+    conf.data = {date: availableReservation.date,
+      hours: this.lessonDateTimeService.getReservationTimeAsString(chosenLessonNumbers)};
     conf.width = '300px';
 
 
@@ -56,7 +52,5 @@ export class SearchResultsViewerComponent {
     });
   }
 
-  getReservationTimeAsString(chosenLessonNumbers: number[]) {
-    return this.getLessonNumberStart(chosenLessonNumbers[0]) + ' - ' + this.getLessonNumberEnd(chosenLessonNumbers[chosenLessonNumbers.length - 1]);
-  }
+
 }

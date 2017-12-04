@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
+import { LessonDateTimeService } from './service/lesson-date-time.service';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LoginGuard } from './auth/login.guard';
   providers: [
     AuthService,
     AuthGuard,
-    LoginGuard
+    LoginGuard,
+    LessonDateTimeService
   ],
   imports: [
     SharedModule
@@ -32,6 +34,7 @@ export class CoreModule {
         AuthGuard,
         AuthService,
         LoginGuard,
+        LessonDateTimeService,
         {
           provide: HTTP_INTERCEPTORS,
           useClass: TokenInterceptor,

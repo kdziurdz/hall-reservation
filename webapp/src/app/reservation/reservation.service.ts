@@ -62,4 +62,8 @@ export class ReservationService {
   reserve(reservation: SaveReservation): Observable<any> {
     return this.httpClient.post(RESERVATION_URL, reservation);
   }
+
+  cancelReservation(id: number) {
+    return this.httpClient.patch<Array<Hall>>(`${RESERVATION_URL}/${id}/cancel`, null);
+  }
 }

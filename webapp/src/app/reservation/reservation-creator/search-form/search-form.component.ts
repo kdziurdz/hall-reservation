@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Hall } from '../../model/hall';
-import { AVAILABLE_RESERVATION_DURATION_HOURS } from '../../reservation.consts';
+import { AVAILABLE_RESERVATION_DURATION_HOURS } from '../../../core/reservation.consts';
 import { ReservationService } from '../../reservation.service';
 import { AvailableReservationSlotSearchParams } from './available-reservation-slot-search-params';
 
