@@ -24,4 +24,8 @@ export class LessonDateTimeService {
     return this.getLessonNumberStart(chosenLessonNumbers[0]) + ' - ' + this.getLessonNumberEnd(chosenLessonNumbers[chosenLessonNumbers.length - 1]);
   }
 
+  getDateAsString(date: Date): string {
+   return date.toISOString().slice(0,10);
+  }
+
 }

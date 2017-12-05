@@ -1,5 +1,6 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject, OnInit } from '@angular/core';
+import { CancellationCreds } from './cancellation-creds';
 
 @Component({
   selector: 'reservation-cancellation-dialog',
@@ -10,6 +11,7 @@ export class ReservationCancellationDialog implements OnInit {
   date: string;
   hours: string;
   hall: string;
+  reason: string;
 
   constructor(
     public dialogRef: MatDialogRef<ReservationCancellationDialog>,
@@ -19,15 +21,22 @@ export class ReservationCancellationDialog implements OnInit {
   ngOnInit() {
     this.date = this.data.date;
     this.hours = this.data.hours;
-    this.hall = this.data.hallName;
+    this.hall = this.data.hall;
   }
 
   dismiss(): void {
-    this.dialogRef.close(false);
+    let result: CancellationCreds = {
+      resolved: false,
+    };
+    this.dialogRef.close(result);
   }
 
   submit(): void {
-    this.dialogRef.close(true);
+    let result: CancellationCreds = {
+      resolved: true,
+      reason: this.reason
+    };
+    this.dialogRef.close(result);
   }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
+import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
 import pl.edu.pk.hallreservation.service.hall.HallService;
 import pl.edu.pk.hallreservation.service.reservation.dto.ReservationDTO;
@@ -179,7 +180,19 @@ public class ReservationService {
                 }
             }
         }
+    }
 
-
+    public void cancel(Long reservationId, String reason) {
+        Reservation reservation = reservationRepository.getOneById(reservationId);
+        User user = userService.getActualUser();
+        if(!reservation.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException(String.format("User with ID %d is not owner of reservation with id %d",
+                    user.getId(), reservationId));
+        } else {
+            reservation.setCancelled(true);
+            reservation.setCanceller(user);
+            reservation.setCancellationReason(reason);
+            reservationRepository.save(reservation);
+        }
     }
 }

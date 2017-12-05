@@ -1,0 +1,16 @@
+<h1 class="mat-dialog-title">Info</h1>
+<mat-divider></mat-divider>
+<div class="mat-dialog-content">
+  <p>Odwołana rezerwacja</p>
+  <p>Data: {{date}}</p>
+  <p>Czas: {{hours}}</p>
+  <p>Sala: {{hall}}</p>
+  <p>Powód: {{reason}}</p>
+  <p>Odwołał: {{canceller.firstName + ' ' + canceller.lastName}}</p>
+</div>
+<mat-divider></mat-divider>
+<div fxLayout="row" fxLayoutAlign="center center" class="mt-1">
+  <button class="mat-raised-button mat-primary"
+          type="button" role="button" (click)="dismiss()">OK
+  </button>
+</div>

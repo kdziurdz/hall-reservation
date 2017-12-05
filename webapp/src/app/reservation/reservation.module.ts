@@ -12,7 +12,8 @@ import { MyReservationsComponent } from './my-reservations/my-reservatons.compon
 import { FutureReservationsComponent } from './my-reservations/future-reservations/future-reservations.component';
 import { PlannedReservationSearchFormComponent } from './my-reservations/search-reservations/planned-reservation-search-form/planned-reservation-search-form.component';
 import { PlannedReservationsViewerComponent } from './my-reservations/search-reservations/planned-reservations-viewer.component';
-import { ReservationCancellationDialog } from './my-reservations/search-reservations/dialogs/reservation-cancellation-dialog/reservation-confirmation-dialog.component';
+import { CancellationInfoDialog } from './my-reservations/dialogs/cancellation-info-dialog/cancellation-info-dialog.component';
+import { ReservationCancellationDialog } from './my-reservations/dialogs/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,13 @@ import { ReservationCancellationDialog } from './my-reservations/search-reservat
     FutureReservationsComponent,
     PlannedReservationSearchFormComponent,
     PlannedReservationsViewerComponent,
-    ReservationCancellationDialog
+    ReservationCancellationDialog,
+    CancellationInfoDialog
   ],
   entryComponents: [
     ReservationConfirmationDialog,
-    ReservationCancellationDialog
+    ReservationCancellationDialog,
+    CancellationInfoDialog
   ],
   providers: [
     ReservationService

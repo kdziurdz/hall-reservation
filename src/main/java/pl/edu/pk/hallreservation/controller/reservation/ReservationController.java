@@ -52,6 +52,14 @@ public class ReservationController {
         return new ResponseEntity<>(reservationMapper.asAvailableReservationsVM(dtos),HttpStatus.OK);
     }
 
+    @PatchMapping("{id}/cancel")
+    public ResponseEntity<HttpStatus> cancel(@PathVariable Long id, @RequestParam(required = false) String reason) {
+
+        reservationService.cancel(id, reason);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("")
     public ResponseEntity<Page<ReservationVM>> search(Pageable pageable, @RequestParam List<String> status,
                                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,

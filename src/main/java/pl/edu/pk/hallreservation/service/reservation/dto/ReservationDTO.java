@@ -70,11 +70,11 @@ public class ReservationDTO {
         this.user = user;
     }
 
-    public UserDTO getcanceller() {
+    public UserDTO getCanceller() {
         return canceller;
     }
 
-    public void setcanceller(UserDTO canceller) {
+    public void setCanceller(UserDTO canceller) {
         this.canceller = canceller;
     }
 

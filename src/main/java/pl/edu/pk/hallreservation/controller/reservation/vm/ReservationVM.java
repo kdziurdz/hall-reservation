@@ -73,11 +73,11 @@ public class ReservationVM {
         this.user = user;
     }
 
-    public UserVM getcanceller() {
+    public UserVM getCanceller() {
         return canceller;
     }
 
-    public void setcanceller(UserVM canceller) {
+    public void setCanceller(UserVM canceller) {
         this.canceller = canceller;
     }
 

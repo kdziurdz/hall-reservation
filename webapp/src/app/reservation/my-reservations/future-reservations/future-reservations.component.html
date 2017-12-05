@@ -1,36 +1,48 @@
-<mat-table #table [dataSource]="dataSource" matSort>
+<mat-card class="m-1 d-block" *ngIf="page && page.content.length > 0">
+  <mat-card-content fxLayout="column">
+    <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Data</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.date}}</mat-cell>
+      </ng-container>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-  </ng-container>
+      <ng-container matColumnDef="lessonNumbers">
+        <mat-header-cell *matHeaderCellDef> Numery lekcji</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.lessonNumbers}}</mat-cell>
+      </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-  </ng-container>
+      <ng-container matColumnDef="hall">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Sala</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.hall.name}}</mat-cell>
+      </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-  </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1">
+          <button class="mat-raised-button mat-warn" *ngIf="!element.cancelled && !isBeforeToday(element.date)"
+                  type="button" role="button" (click)="cancel(element)">Odwołaj
+          </button>
+          <button *ngIf="element.cancelled" class="mat-raised-button mat-primary" role="button" color="primary"
+                  type="button" role="button" (click)="info(element)">Info
+          </button>
+        </mat-cell>
+      </ng-container>
 
-  <!-- Color Column -->
-  <ng-container matColumnDef="symbol">
-    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-  </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
-<mat-paginator #paginator
-               [pageSize]="10"
-               [pageSizeOptions]="[5, 10, 20]">
-</mat-paginator>
+    <mat-paginator #paginator
+                   [pageSize]="page.size"
+                   [length]="page.totalElements"
+                   [pageIndex]="page.number"
+                   (page)="onPageChange($event)"
+                   [pageSizeOptions]="[10, 20, 30]">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="m-1 d-block" *ngIf="page && page.content.length == 0;">
+  <mat-card-content>Brak dopasowań. Zmień kryteria wyszukiwania</mat-card-content>
+</mat-card>

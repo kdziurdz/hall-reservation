@@ -63,7 +63,11 @@ export class ReservationService {
     return this.httpClient.post(RESERVATION_URL, reservation);
   }
 
-  cancelReservation(id: number) {
-    return this.httpClient.patch<Array<Hall>>(`${RESERVATION_URL}/${id}/cancel`, null);
+  cancelReservation(id: number, reason?: string) {
+    let params: HttpParams = new HttpParams();
+    if(reason) {
+      params = params.set('reason', reason);
+    }
+    return this.httpClient.patch<Array<Hall>>(`${RESERVATION_URL}/${id}/cancel`, null, {params: params});
   }
 }

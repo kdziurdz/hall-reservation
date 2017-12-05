@@ -6,7 +6,7 @@ import {
   LESSON_NUMBER_TIME_START,
   LESSON_START_IDENTIFIER_PREFIX
 } from '../../../core/reservation.consts';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ReservationConfirmationDialog } from './reservation-confirmation-dialog/reservation-confirmation-dialog.component';
 import { SaveReservation } from '../../model/save-reservation';
 import { ReservationService } from '../../reservation.service';
@@ -22,7 +22,7 @@ export class SearchResultsViewerComponent {
   @Input() searchResults: Array<AvailableReservation>;
 
   constructor(private dialog: MatDialog, private reservationService: ReservationService,
-              private lessonDateTimeService: LessonDateTimeService) {
+              private lessonDateTimeService: LessonDateTimeService, private snackBar: MatSnackBar) {
   }
 
   getReservationTimeAsString(chosenLessonNumbers: number[]){
@@ -46,10 +46,30 @@ export class SearchResultsViewerComponent {
           hallId: availableReservation.hallId,
           date: availableReservation.date, lessonNumbers: chosenLessonNumbers
         }))).subscribe(() => {
-          availableReservation.lessonNumbers.splice(availableReservation.lessonNumbers.indexOf(chosenLessonNumbers), 1);
+
+          let snackConfig: MatSnackBarConfig = new MatSnackBarConfig();
+          snackConfig.duration = 2000;
+
+          this.snackBar.open("Pomyślnie zarezerwowano salę", null, snackConfig);
+
+          availableReservation.lessonNumbers = availableReservation.lessonNumbers.filter((lessonNumbers: number[]) => {
+            let result = !this.arrayContainsAnyItemFromAnotherArray(lessonNumbers, chosenLessonNumbers);
+            console.log('result dla ' + lessonNumbers, result);
+            return result;
+          });
         });
       }
     });
+  }
+
+  private arrayContainsAnyItemFromAnotherArray(a: number[], b: number[]): boolean {
+
+    for(let i = 0; i < b.length; i++) {
+      if(a.indexOf(b[i]) !== -1) {
+        return true;
+      }
+    }
+    return false;
   }
 
 

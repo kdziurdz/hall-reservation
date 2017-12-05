@@ -7,6 +7,10 @@
   <p>Sala: {{hall}}</p>
 </div>
 <mat-divider></mat-divider>
+<mat-form-field class="hr-w-100">
+  <textarea matInput [(ngModel)]="reason" placeholder="Powód (opcjonalny)"></textarea>
+</mat-form-field>
+<mat-divider></mat-divider>
 <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-1">
   <button class="mat-raised-button"
           type="button" role="button" (click)="dismiss()">Anuluj

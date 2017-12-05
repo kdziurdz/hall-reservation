@@ -33,14 +33,14 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(request).do((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
-        console.log('event instanceof HttpResponse');
+
       }
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
           console.log('401 UNATHORIZED REQUEST');
         } else {
-          console.log('ERROR RESPONSE status:', err.status);
+
         }
       }
     });

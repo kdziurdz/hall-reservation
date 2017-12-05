@@ -108,11 +108,11 @@ public class Reservation {
         this.date = date;
     }
 
-    public User getcanceller() {
+    public User getCanceller() {
         return canceller;
     }
 
-    public void setcanceller(User canceller) {
+    public void setCanceller(User canceller) {
         this.canceller = canceller;
     }
 

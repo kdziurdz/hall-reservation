@@ -6,7 +6,7 @@ export interface AvailableReservationCredentials extends AbstractReservationCred
 
 export class AvailableReservation extends AbstractReservation{
   readonly hallName;
-  readonly lessonNumbers;
+  lessonNumbers: Array<Array<number>>;
 
 
   constructor(cred: AvailableReservationCredentials) {
