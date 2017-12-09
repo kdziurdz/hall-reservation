@@ -1,6 +1,65 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
     <div>Zarządzanie użytkownikami</div>
+    <button mat-icon-button class="mat-icon-button">
+      <mat-icon>note_add</mat-icon>
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
+
+<mat-card class="m-1 d-block" *ngIf="page && page?.content?.length > 0">
+  <mat-card-content fxLayout="column">
+    <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Imie i nazwisko</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.firstName + ' ' + element.lastName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Adres e-mail</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.email}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="enabled">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.enabled}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="expirationDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Data wygaśnięcia</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> {{element.expirationDate}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1">
+          <button mat-icon-button class="mat-icon-button" [matMenuTriggerFor]="userActionsMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [pageSize]="page.size"
+                   [length]="page.totalElements"
+                   [pageIndex]="page.number"
+                   (page)="onPageChange($event)"
+                   [pageSizeOptions]="[10, 20, 30]">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="m-1 d-block" *ngIf="page && page?.content?.length == 0;">
+  <mat-card-content>Brak dopasowań. Zmień kryteria wyszukiwania</mat-card-content>
+</mat-card>
+
+<mat-menu #userActionsMenu="matMenu">
+  <button mat-menu-item>Aktywuj</button>
+  <button mat-menu-item>Dezaktywuj</button>
+  <button mat-menu-item>Zmień ważność</button>
+</mat-menu>

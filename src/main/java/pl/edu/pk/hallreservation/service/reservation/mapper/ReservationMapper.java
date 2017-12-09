@@ -15,7 +15,7 @@ import pl.edu.pk.hallreservation.service.user.mapper.UserDTOMapper;
 import java.util.List;
 
 
-@Mapper(componentModel = "spring", uses = {UserDTOMapper.class, UserMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface ReservationMapper {
 
     SaveReservationDTO asDTO(SaveReservationVM vm);

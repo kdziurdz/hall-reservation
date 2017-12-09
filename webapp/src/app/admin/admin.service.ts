@@ -5,8 +5,11 @@ import { Observable } from 'rxjs/Observable';
 import { Page } from '../core/model/page';
 import { PlannedReservation } from '../core/model/planned-reservations';
 import { PlannedReservationSearchWithUserIdParams } from './model/planned-reservation-search-with-user-id-params';
+import { SearchUsersParams } from './manage-users/search-users-params';
+import { UserDetails } from './manage-users/user-details';
 
 export const ADMIN_URL = 'api/admin';
+export const USERS_URL = 'api/user';
 
 @Injectable()
 export class AdminService {
@@ -39,11 +42,21 @@ export class AdminService {
     return this.httpClient.get<Page<PlannedReservation>>(`${ADMIN_URL}`, {params: params});
   }
 
-  cancelReservation(id: number, reason?: string) {
+  searchUsers(searchParams: SearchUsersParams): Observable<Page<UserDetails>> {
     let params: HttpParams = new HttpParams();
-    if(reason) {
-      params = params.set('reason', reason);
+
+    if (searchParams.query) {
+      params = params.set('query', searchParams.query);
     }
-    return this.httpClient.patch(`${ADMIN_URL}/${id}/cancel`, null, {params: params});
+    if (searchParams.sort) {
+      params = params.set('sort', searchParams.sort);
+    }
+    if (searchParams.pageNumber) {
+      params = params.set('page', String(searchParams.pageNumber));
+    }
+    if (searchParams.pageSize) {
+      params = params.set('size', String(searchParams.pageSize));
+    }
+    return this.httpClient.get<Page<UserDetails>>(`${USERS_URL}`, {params: params});
   }
 }

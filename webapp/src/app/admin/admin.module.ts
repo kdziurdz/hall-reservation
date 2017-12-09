@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
+import { AdminService } from './admin.service';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ManageReservationsComponent } from './manage-reservations/manage-reserv
   entryComponents: [
   ],
   providers: [
+    AdminService
   ],
   imports: [
     AdminRoutingModule,

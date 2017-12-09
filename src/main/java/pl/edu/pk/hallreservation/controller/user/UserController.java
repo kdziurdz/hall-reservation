@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.user.mapper.UserMapper;
+import pl.edu.pk.hallreservation.controller.user.vm.UserDetailsVM;
 import pl.edu.pk.hallreservation.controller.user.vm.UserVM;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.model.user.UserAuthority;
@@ -43,10 +44,10 @@ public class UserController {
 
     @Secured("R_ADMIN")
     @GetMapping("")
-    public ResponseEntity<Page<UserVM>> getAll(Pageable pageable, @RequestParam(required = false) String query) {
+    public ResponseEntity<Page<UserDetailsVM>> getAll(Pageable pageable, @RequestParam(required = false) String query) {
 
         Page<UserDTO> userDTOPage = userService.getPage(pageable, query);
 
-        return new ResponseEntity<>(userDTOPage.map(userMapper::asVM), HttpStatus.OK);
+        return new ResponseEntity<>(userDTOPage.map(userMapper::asDetailsVM), HttpStatus.OK);
     }
 }
