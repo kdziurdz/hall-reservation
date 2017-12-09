@@ -6,8 +6,8 @@ import { AvailableReservation } from './model/available-reservation';
 import { AvailableReservationSlotSearchParams } from './reservation-creator/search-form/available-reservation-slot-search-params';
 import { SaveReservation } from './model/save-reservation';
 import { Page } from '../core/model/page';
-import { PlannedReservation } from './my-reservations/planned-reservations';
-import { PlannedReservationSearchParams } from './my-reservations/search-reservations/planned-reservation-search-form/planned-reservation-search-params';
+import { PlannedReservation } from '../core/model/planned-reservations';
+import { PlannedReservationSearchParams } from '../core/model/planned-reservation-search-params';
 
 export const RESERVATION_URL = 'api/reservation';
 

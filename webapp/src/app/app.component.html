@@ -11,19 +11,17 @@
     </div>
     <ng-container *hrHasRole="'R_ADMIN'">
 
-      <div class="hr-w-100" >
-        <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','users']"
+      <div class="hr-w-100">
+        <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','manage-users']"
            routerLinkActive="active">Użytkownicy</a>
       </div>
+      <div class="hr-w-100">
+        <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin', 'manage-reservations']"
+           routerLinkActive="active">Zarządzaj</a>
+      </div>
+
     </ng-container>
-    <div class="hr-w-100" *hrHasRole="'R_ADMIN'">
-      <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','search-reservations']"
-         routerLinkActive="active">Szukaj rezerwacji</a>
-    </div>
-    <div class="hr-w-100" *hrHasRole="'R_ADMIN'">
-      <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','halls']"
-         routerLinkActive="active">Sale</a>
-    </div>
+
   </mat-sidenav>
   <router-outlet></router-outlet>
   <mat-toolbar color="primary" class="in-content-footer">

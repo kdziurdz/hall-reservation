@@ -10,9 +10,12 @@ const appRoutes: Routes = [
   {path: 'page-not-found', component: PageNotFoundComponent},
   {path: 'reservation',
     loadChildren: 'app/reservation/reservation.module#ReservationModule',
+    pathMatch: 'prefix'},
+  {path: 'admin',
+    loadChildren: 'app/admin/admin.module#AdminModule',
     pathMatch: 'prefix', canActivate: [AuthGuard]},
-  {path: '', redirectTo: '/reservation', pathMatch: 'full'},
-  {path: '**', redirectTo: 'page-not-found'},
+  //{path: '', redirectTo: '/reservation', pathMatch: 'full'},
+  //{path: '**', redirectTo: 'page-not-found'},
 ];
 
 @NgModule({

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { JwtHelper } from 'angular2-jwt';
 import { TokenDecoded } from './user/user';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 const LOGIN_URL = 'api/login';
@@ -16,7 +17,7 @@ const AUTHORIZATION_HEADER = 'Authorization';
 @Injectable()
 export class AuthService {
 
-  private isAuthenticatedSubject: Subject<boolean>;
+  private isAuthenticatedSubject: BehaviorSubject<boolean>;
 
   constructor(private httpClient: HttpClient, private router: Router) {
   }
@@ -41,8 +42,7 @@ export class AuthService {
 
   isStillAuthenticated(): Observable<boolean> {
     if(!this.isAuthenticatedSubject) {
-      this.isAuthenticatedSubject = new Subject();
-      this.isAuthenticatedSubject.next(this.isAuthenticated());
+      this.isAuthenticatedSubject = new BehaviorSubject(this.isAuthenticated());
     }
     return this.isAuthenticatedSubject.asObservable();
   }

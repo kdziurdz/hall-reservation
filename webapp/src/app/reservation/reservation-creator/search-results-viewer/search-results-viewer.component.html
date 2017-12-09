@@ -19,12 +19,12 @@
                 <h4 mat-line>{{lessonNumberArray}}</h4>
                 <p mat-line>{{getReservationTimeAsString(lessonNumberArray)}}</p>
 
-            <!--*hrHasRole="'R_USER'"-->
-                <button class="mat-raised-button mat-accent"
-                        type="button" role="button" (click)="onAvailableReservationChosen(availableSlot, lessonNumberArray)">Rezerwuj
+                <button class="mat-raised-button mat-accent" *hrHasRole="'R_USER'"
+                        type="button" role="button"
+                        (click)="onAvailableReservationChosen(availableSlot, lessonNumberArray)">Rezerwuj
                 </button>
+            <mat-divider></mat-divider>
           </mat-list-item>
-          <mat-divider></mat-divider>
         </mat-list>
       </div>
     </div>

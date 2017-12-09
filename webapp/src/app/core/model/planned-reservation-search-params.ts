@@ -1,4 +1,4 @@
-import { ReservationStatus } from '../../reservation-status.enum';
+import { ReservationStatus } from '../../reservation/my-reservations/reservation-status.enum';
 
 export interface PlannedReservationSearchParams {
   dateFrom: string;

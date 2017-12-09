@@ -14,7 +14,6 @@ export class HasRoleDirective {
   }
 
   @Input() set hrHasRole(roles: string) {
-
     this.authService.isStillAuthenticated().subscribe(isAuthenticated => {
       if(isAuthenticated) {
         roles = roles.replace(/ /g, '');

@@ -3,8 +3,8 @@ import {
   MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatSort, MatTableDataSource, PageEvent,
   Sort
 } from '@angular/material';
-import { PlannedReservationSearchParams } from '../search-reservations/planned-reservation-search-form/planned-reservation-search-params';
-import { PlannedReservation } from '../planned-reservations';
+import { PlannedReservationSearchParams } from '../../../core/model/planned-reservation-search-params';
+import { PlannedReservation } from '../../../core/model/planned-reservations';
 import { Page } from '../../../core/model/page';
 import { ReservationService } from '../../reservation.service';
 import { LessonDateTimeService } from '../../../core/service/lesson-date-time.service';

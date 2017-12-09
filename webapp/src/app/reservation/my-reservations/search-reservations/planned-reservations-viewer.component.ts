@@ -3,10 +3,10 @@ import {
   MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatSort, MatTableDataSource, PageEvent,
   Sort
 } from '@angular/material';
-import { PlannedReservation } from '../planned-reservations';
+import { PlannedReservation } from '../../../core/model/planned-reservations';
 import { ReservationService } from '../../reservation.service';
 import { Page } from '../../../core/model/page';
-import { PlannedReservationSearchParams } from './planned-reservation-search-form/planned-reservation-search-params';
+import { PlannedReservationSearchParams } from '../../../core/model/planned-reservation-search-params';
 import { LessonDateTimeService } from '../../../core/service/lesson-date-time.service';
 import { CancellationInfoDialog } from '../dialogs/cancellation-info-dialog/cancellation-info-dialog.component';
 import { ReservationCancellationDialog } from '../dialogs/reservation-cancellation-dialog/reservation-cancellation-dialog.component';

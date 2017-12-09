@@ -1,5 +1,5 @@
-import { User, UserCredentials } from '../../core/model/user';
-import { Hall, HallCredentials } from '../model/hall';
+import { User, UserCredentials } from './user';
+import { Hall, HallCredentials } from '../../reservation/model/hall';
 export interface PlannedReservationCredentials {
   id: number;
   lessonNumbers: Array<number>;
