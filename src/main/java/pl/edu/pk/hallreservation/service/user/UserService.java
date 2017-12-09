@@ -1,6 +1,8 @@
 package pl.edu.pk.hallreservation.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -11,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.repository.UserRepository;
+import pl.edu.pk.hallreservation.service.user.dto.UserDTO;
+import pl.edu.pk.hallreservation.service.user.mapper.UserDTOMapper;
 
 import javax.transaction.Transactional;
 
@@ -18,10 +22,12 @@ import javax.transaction.Transactional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final UserDTOMapper userDTOMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserDTOMapper userDTOMapper) {
         this.userRepository = userRepository;
+        this.userDTOMapper = userDTOMapper;
     }
 
     @Override
@@ -41,5 +47,16 @@ public class UserService implements UserDetailsService {
         } else {
             throw new AuthenticationCredentialsNotFoundException("User is not authenticated");
         }
+    }
+
+    public Page<UserDTO> getPage(Pageable pageable, String query) {
+        Page<User> users;
+        if(query != null) {
+            users = userRepository.findAllByFirstNameContainingOrLastNameContaining(pageable, query, query);
+        } else {
+            users = userRepository.findAll(pageable);
+        }
+
+        return users.map(userDTOMapper::asDTO);
     }
 }

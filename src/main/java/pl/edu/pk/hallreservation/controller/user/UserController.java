@@ -1,38 +1,39 @@
 package pl.edu.pk.hallreservation.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pk.hallreservation.controller.user.mapper.UserMapper;
+import pl.edu.pk.hallreservation.controller.user.vm.UserVM;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.model.user.UserAuthority;
-import pl.edu.pk.hallreservation.repository.UserRepository;
 import pl.edu.pk.hallreservation.service.user.UserService;
+import pl.edu.pk.hallreservation.service.user.dto.UserDTO;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping("user")
 public class UserController {
 
-    private final UserRepository userRepository;
     private final UserService userService;
+    private final UserMapper userMapper;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserController(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                          UserService userService) {
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @PostMapping("sign-up")
-    public ResponseEntity<User> signUp() {
+    public ResponseEntity<User> createUser() {
 
         Set<UserAuthority> authorities = new HashSet<>();
         authorities.add(new UserAuthority("R_USER"));
@@ -40,19 +41,12 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("count")
-    public Long count() {
-
-        Iterable<User> users = userRepository.findAll();
-
-        System.out.println(users.hashCode());
-
-        return userRepository.count();
-    }
-
+    @Secured("R_ADMIN")
     @GetMapping("")
-    public List<User> getAll() {
+    public ResponseEntity<Page<UserVM>> getAll(Pageable pageable, @RequestParam(required = false) String query) {
 
-        return userRepository.findAll();
+        Page<UserDTO> userDTOPage = userService.getPage(pageable, query);
+
+        return new ResponseEntity<>(userDTOPage.map(userMapper::asVM), HttpStatus.OK);
     }
 }
