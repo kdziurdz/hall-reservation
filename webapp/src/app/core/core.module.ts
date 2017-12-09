@@ -8,6 +8,9 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
 import { LessonDateTimeService } from './service/lesson-date-time.service';
+import { HasAnyRoleDirective } from '../shared/directives/has-any-role/has-any-role.directive';
+import { HasRoleDirective } from '../shared/directives/has-role/has-role.directive';
+import { UserService } from './auth/user/user.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,8 @@ import { LessonDateTimeService } from './service/lesson-date-time.service';
     AuthService,
     AuthGuard,
     LoginGuard,
-    LessonDateTimeService
+    LessonDateTimeService,
+    UserService
   ],
   imports: [
     SharedModule
@@ -35,6 +39,7 @@ export class CoreModule {
         AuthService,
         LoginGuard,
         LessonDateTimeService,
+        UserService,
         {
           provide: HTTP_INTERCEPTORS,
           useClass: TokenInterceptor,

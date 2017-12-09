@@ -5,9 +5,24 @@
       <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['reservation','search']"
          routerLinkActive="active">Szukaj</a>
     </div>
-    <div class="hr-w-100">
+    <div class="hr-w-100" *hrHasRole="'R_USER'">
       <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['reservation','my']"
          routerLinkActive="active">Moje rezerwacje</a>
+    </div>
+    <ng-container *hrHasRole="'R_ADMIN'">
+
+      <div class="hr-w-100" >
+        <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','users']"
+           routerLinkActive="active">Użytkownicy</a>
+      </div>
+    </ng-container>
+    <div class="hr-w-100" *hrHasRole="'R_ADMIN'">
+      <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','search-reservations']"
+         routerLinkActive="active">Szukaj rezerwacji</a>
+    </div>
+    <div class="hr-w-100" *hrHasRole="'R_ADMIN'">
+      <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','halls']"
+         routerLinkActive="active">Sale</a>
     </div>
   </mat-sidenav>
   <router-outlet></router-outlet>
