@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     component: ManageReservationsComponent,
   },
   {
-    path: '', redirectTo: '/manage-users', pathMatch: 'full'
+    path: '',   redirectTo: 'manage-users', pathMatch: 'full'
   },
 ];
 @NgModule({

@@ -30,10 +30,7 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: '', redirectTo: 'search', pathMatch: 'full'
-  },
-  {
-    path: '**', redirectTo: 'search' // todo wtf
+    path: '',   redirectTo: 'search', pathMatch: 'full'
   },
 ];
 @NgModule({

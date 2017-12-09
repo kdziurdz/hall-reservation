@@ -14,14 +14,14 @@ const appRoutes: Routes = [
   {path: 'admin',
     loadChildren: 'app/admin/admin.module#AdminModule',
     pathMatch: 'prefix', canActivate: [AuthGuard]},
-  //{path: '', redirectTo: '/reservation', pathMatch: 'full'},
-  //{path: '**', redirectTo: 'page-not-found'},
+  {path: '', redirectTo: 'reservation', pathMatch: 'full'},
+  {path: '**', redirectTo: 'page-not-found'},
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(
-      appRoutes, {enableTracing: false}
+      appRoutes, {enableTracing: true}
     )
   ],
   exports: [
