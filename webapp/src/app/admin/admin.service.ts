@@ -59,4 +59,26 @@ export class AdminService {
     }
     return this.httpClient.get<Page<UserDetails>>(`${USERS_URL}`, {params: params});
   }
+
+  enable(userId: number) {
+    return this.httpClient.patch(`${USERS_URL}/${userId}/enable`, null);
+  }
+
+  disable(userId: number) {
+    return this.httpClient.patch(`${USERS_URL}/${userId}/disable`, null);
+  }
+
+  remove(userId: number) {
+    return this.httpClient.patch(`${USERS_URL}/${userId}/remove`, null);
+  }
+
+  setExpirationDate(newDate: string, userId: number) {
+    let params: HttpParams = new HttpParams();
+
+    if (newDate) {
+      params = params.set('expirationDate', newDate);
+    }
+    return this.httpClient.patch(`${USERS_URL}/${userId}/expirationDate`, null,
+      {params: params});
+  }
 }

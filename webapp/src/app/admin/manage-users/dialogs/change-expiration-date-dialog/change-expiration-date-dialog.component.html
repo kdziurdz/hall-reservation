@@ -1,0 +1,22 @@
+<h1 class="mat-dialog-title">Zmień datę wygaśnięcia konta</h1>
+<mat-divider></mat-divider>
+<div class="mat-dialog-content">
+  <p>Aktualna data: {{oldDate}}</p>
+</div>
+<mat-divider></mat-divider>
+<mat-form-field class="hr-w-100">
+  <input matInput [formControl]="newDate" [min]="todayDate" [matDatepicker]="dateToInput"
+         placeholder="Data do">
+  <mat-datepicker-toggle matSuffix [for]="dateToInput"></mat-datepicker-toggle>
+  <mat-datepicker #dateToInput></mat-datepicker>
+</mat-form-field>
+<mat-divider></mat-divider>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="mt-1">
+  <button class="mat-raised-button"
+          type="button" role="button" (click)="dismiss()">Anuluj
+  </button>
+  <button class="mat-raised-button mat-primary"
+          type="button" role="button" (click)="submit()"
+          [disabled]="newDate.invalid">OK
+  </button>
+</div>

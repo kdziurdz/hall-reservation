@@ -1,0 +1,14 @@
+<h1 class="mat-dialog-title">Usuń użytkownika</h1>
+<mat-divider></mat-divider>
+<div class="mat-dialog-content">
+  <p>Usunąć użytkownika {{name}}</p>
+</div>
+<mat-divider></mat-divider>
+<div fxLayout="row" fxLayoutAlign="space-around center" class="mt-1">
+  <button class="mat-raised-button"
+          type="button" role="button" (click)="dismiss()">Anuluj
+  </button>
+  <button class="mat-raised-button mat-primary"
+          type="button" role="button" (click)="submit()">OK
+  </button>
+</div>

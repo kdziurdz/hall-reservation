@@ -14,28 +14,43 @@
 
       <ng-container matColumnDef="lastName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Imie i nazwisko</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="p-1"> {{element.firstName + ' ' + element.lastName}}</mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstName + ' ' + element.lastName}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef>Adres e-mail</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="p-1"> {{element.email}}</mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="enabled">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="p-1"> {{element.enabled}}</mat-cell>
+        <mat-cell *matCellDef="let element">
+          <span *ngIf="element.enabled">Aktywny</span>
+          <span *ngIf="!element.enabled">Niekatywny</span>
+          <span *ngIf="isBeforeToday(element.expirationDate)">Wygasły</span>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="expirationDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Data wygaśnięcia</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="p-1"> {{element.expirationDate}}</mat-cell>
+        <mat-cell *matCellDef="let element">
+          <span>
+            {{element.expirationDate}}
+          </span>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element" class="p-1">
+        <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="60px">
           <button mat-icon-button class="mat-icon-button" [matMenuTriggerFor]="userActionsMenu">
             <mat-icon>more_vert</mat-icon>
+            <mat-menu #userActionsMenu="matMenu">
+              <button mat-menu-item (click)="showReservations(element)">Pokaż rezerwacje</button>
+              <button mat-menu-item *ngIf="!element.enabled" (click)="enable(element)">Aktywuj</button>
+              <button mat-menu-item *ngIf="element.enabled" (click)="disable(element)">Dezaktywuj</button>
+              <button mat-menu-item (click)="changeExpirationDate(element)">Zmień ważność</button>
+              <button mat-menu-item (click)="remove(element)">Usuń</button>
+            </mat-menu>
           </button>
         </mat-cell>
       </ng-container>
@@ -57,9 +72,3 @@
 <mat-card class="m-1 d-block" *ngIf="page && page?.content?.length == 0;">
   <mat-card-content>Brak dopasowań. Zmień kryteria wyszukiwania</mat-card-content>
 </mat-card>
-
-<mat-menu #userActionsMenu="matMenu">
-  <button mat-menu-item>Aktywuj</button>
-  <button mat-menu-item>Dezaktywuj</button>
-  <button mat-menu-item>Zmień ważność</button>
-</mat-menu>
