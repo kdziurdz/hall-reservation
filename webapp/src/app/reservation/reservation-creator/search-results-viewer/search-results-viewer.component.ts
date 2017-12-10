@@ -54,7 +54,6 @@ export class SearchResultsViewerComponent {
 
           availableReservation.lessonNumbers = availableReservation.lessonNumbers.filter((lessonNumbers: number[]) => {
             let result = !this.arrayContainsAnyItemFromAnotherArray(lessonNumbers, chosenLessonNumbers);
-            console.log('result dla ' + lessonNumbers, result);
             return result;
           });
         });

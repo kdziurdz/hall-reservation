@@ -8,17 +8,20 @@ import { ManageReservationsComponent } from './manage-reservations/manage-reserv
 import { AdminService } from './admin.service';
 import { ChangeExpirationDateDialogComponent } from './manage-users/dialogs/change-expiration-date-dialog/change-expiration-date-dialog.component';
 import { RemoveUserConfirmationDialogComponent } from './manage-users/dialogs/remove-user-confirmation-dialog/remove-user-confirmation-dialog.component';
+import { ManageRolesDialogComponent } from './manage-users/dialogs/manage-roles-dialog/manage-roles-dialog.component';
 
 @NgModule({
   declarations: [
     ManageUsersComponent,
     ManageReservationsComponent,
     ChangeExpirationDateDialogComponent,
-    RemoveUserConfirmationDialogComponent
+    RemoveUserConfirmationDialogComponent,
+    ManageRolesDialogComponent
   ],
   entryComponents: [
     ChangeExpirationDateDialogComponent,
-    RemoveUserConfirmationDialogComponent
+    RemoveUserConfirmationDialogComponent,
+    ManageRolesDialogComponent
   ],
   providers: [
     AdminService

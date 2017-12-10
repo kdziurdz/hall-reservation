@@ -81,4 +81,8 @@ export class AdminService {
     return this.httpClient.patch(`${USERS_URL}/${userId}/expirationDate`, null,
       {params: params});
   }
+
+  updateRoles(roles: string[], userId: number) {
+    return this.httpClient.patch(`${USERS_URL}/${userId}/roles`, roles);
+  }
 }

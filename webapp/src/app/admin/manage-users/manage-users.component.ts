@@ -10,6 +10,7 @@ import { AdminService } from '../admin.service';
 import { LessonDateTimeService } from '../../core/service/lesson-date-time.service';
 import { ChangeExpirationDateDialogComponent } from './dialogs/change-expiration-date-dialog/change-expiration-date-dialog.component';
 import { RemoveUserConfirmationDialogComponent } from './dialogs/remove-user-confirmation-dialog/remove-user-confirmation-dialog.component';
+import { ManageRolesDialogComponent } from './dialogs/manage-roles-dialog/manage-roles-dialog.component';
 
 @Component({
   selector: 'hr-manage-users',
@@ -71,8 +72,26 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
   }
 
   manageRoles(userDetails: UserDetails) {
-    console.log(userDetails);
+    let conf: MatDialogConfig = new MatDialogConfig();
+    conf.data = {
+      oldRoles: userDetails.roles
+    };
+
+    conf.width = '300px';
+
+    let dialogRef = this.dialog.open(ManageRolesDialogComponent, conf);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.adminService.updateRoles(result, userDetails.id)
+        .subscribe(() => {
+          this.showSnack('Pomyślnie zaktualizowano role użytkownika');
+          this.onSearchParamsChanged(this.actualSearchParams);
+        });
+      }
+    });
   }
+
 
   enable(userDetails: UserDetails) {
     this.adminService.enable(userDetails.id).subscribe(() => {
