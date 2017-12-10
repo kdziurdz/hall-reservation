@@ -3,6 +3,7 @@ package pl.edu.pk.hallreservation.controller.user.vm;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class UserDetailsVM {
 
@@ -19,17 +20,28 @@ public class UserDetailsVM {
 
     private String lastName;
 
-    public UserDetailsVM() {
-    }
+    private List<String> roles;
 
-    public UserDetailsVM(String email, LocalDate expirationDate, Boolean enabled,
-                         Long id, String firstName, String lastName) {
+    public UserDetailsVM(String email, LocalDate expirationDate, Boolean enabled, Long id, String firstName,
+                         String lastName, List<String> roles) {
         this.email = email;
         this.expirationDate = expirationDate;
         this.enabled = enabled;
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.roles = roles;
+    }
+
+    public UserDetailsVM() {
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {

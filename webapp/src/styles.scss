@@ -95,3 +95,10 @@ body {
 .d-block {
   display: block;
 }
+
+
+mat-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -11,9 +11,7 @@ import pl.edu.pk.hallreservation.service.user.dto.UserDTO;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @BeanMapping(resultType = UserVM.class)
     UserVM asVM(UserDTO userDTO);
 
-    @BeanMapping(resultType = UserDetailsVM.class)
     UserDetailsVM asDetailsVM(UserDTO userDTO);
 }

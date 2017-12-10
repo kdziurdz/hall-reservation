@@ -70,6 +70,10 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
     console.log(userDetails);
   }
 
+  manageRoles(userDetails: UserDetails) {
+    console.log(userDetails);
+  }
+
   enable(userDetails: UserDetails) {
     this.adminService.enable(userDetails.id).subscribe(() => {
       this.showSnack('PomyshowSnacke aktywowano użytkownika');

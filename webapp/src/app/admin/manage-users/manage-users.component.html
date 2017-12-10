@@ -22,6 +22,17 @@
         <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
       </ng-container>
 
+      <!--<ng-container matColumnDef="roles">-->
+        <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>-->
+        <!--<mat-cell *matCellDef="let element">-->
+          <!--<mat-chip-list>-->
+            <!--<mat-chip *ngFor="let role of element.roles">-->
+              <!--{{role}}-->
+            <!--</mat-chip>-->
+          <!--</mat-chip-list>-->
+        <!--</mat-cell>-->
+      <!--</ng-container>-->
+
       <ng-container matColumnDef="enabled">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
         <mat-cell *matCellDef="let element">
@@ -46,6 +57,7 @@
             <mat-icon>more_vert</mat-icon>
             <mat-menu #userActionsMenu="matMenu">
               <button mat-menu-item (click)="showReservations(element)">Pokaż rezerwacje</button>
+              <button mat-menu-item (click)="manageRoles(element)">Role</button>
               <button mat-menu-item *ngIf="!element.enabled" (click)="enable(element)">Aktywuj</button>
               <button mat-menu-item *ngIf="element.enabled" (click)="disable(element)">Dezaktywuj</button>
               <button mat-menu-item (click)="changeExpirationDate(element)">Zmień ważność</button>

@@ -1,6 +1,7 @@
 package pl.edu.pk.hallreservation.service.user.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class UserDTO {
     private Long id;
@@ -17,8 +18,10 @@ public class UserDTO {
 
     private Boolean enabled;
 
-    public UserDTO(Long id, String firstName, String username, String lastName,
-                   String email, LocalDate expirationDate, Boolean enabled) {
+    private List<String> roles;
+
+    public UserDTO(Long id, String firstName, String username, String lastName, String email,
+                   LocalDate expirationDate, Boolean enabled, List<String> roles) {
         this.id = id;
         this.firstName = firstName;
         this.username = username;
@@ -26,6 +29,15 @@ public class UserDTO {
         this.email = email;
         this.expirationDate = expirationDate;
         this.enabled = enabled;
+        this.roles = roles;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public UserDTO() {
