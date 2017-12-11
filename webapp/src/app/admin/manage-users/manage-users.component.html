@@ -81,6 +81,20 @@
   </mat-card-content>
 </mat-card>
 
+
 <mat-card class="m-1 d-block" *ngIf="page && page?.content?.length == 0;">
   <mat-card-content>Brak dopasowań. Zmień kryteria wyszukiwania</mat-card-content>
 </mat-card>
+
+<mat-card class="m-1">
+  <mat-card-content>
+    <mat-chip-list>
+      <mat-chip color="warn" selected="true">secondChip</mat-chip>
+    </mat-chip-list>
+    <mat-chip-list>
+      <mat-chip color="primary" selected="true">Primary fish</mat-chip>
+      <mat-chip color="accent" selected="true">Accent fish</mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+</mat-card>
+

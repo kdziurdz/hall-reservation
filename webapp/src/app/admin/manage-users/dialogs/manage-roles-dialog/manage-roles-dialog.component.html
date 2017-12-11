@@ -1,22 +1,5 @@
 <h1 class="mat-dialog-title">Wybierz role użytkownika</h1>
-<mat-divider></mat-divider>
-<div class="mat-dialog-content">
-  <p>Dostępne role</p>
-  <mat-chip-list>
-    <mat-chip *ngFor="let role of possibleRoles">
-      {{role}}
-    </mat-chip>
-  </mat-chip-list>
-</div>
-<mat-divider></mat-divider>
-<p>Wybrane role</p>
-<mat-chip-list>
-  <mat-chip class="mat-primary" *ngFor="let role of newRoles.controls" [removable]="true"
-            (remove)="removeRole(role)">
-    {{role.value}}
-    <mat-icon matChipRemove>cancel</mat-icon>
-  </mat-chip>
-</mat-chip-list>
+<hr-manage-roles [roles]="newRoles"></hr-manage-roles>
 <mat-divider></mat-divider>
 <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-1">
   <button class="mat-raised-button"

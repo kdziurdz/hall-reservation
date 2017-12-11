@@ -1,0 +1,18 @@
+<p>Dostepne role:</p>
+<mat-chip-list selectable="true" multiple="true">
+  <mat-chip #chip *ngFor="let role of possibleRoles" selectable="true"
+            (click)="onChipSelect(role)">
+    {{role}}
+  </mat-chip>
+</mat-chip-list>
+<p>Wybrane role:</p>
+<mat-chip-list
+               (change)="onChange($event)">
+  <mat-chip #chip *ngFor="let role of roles.controls" selectable="true" [removable]="true"
+            color="primary" [selected]="true" (remove)="removeRole(role)">
+    {{role.value}}
+    <mat-icon matChipRemove>cancel</mat-icon>
+  </mat-chip>
+</mat-chip-list>
+
+
