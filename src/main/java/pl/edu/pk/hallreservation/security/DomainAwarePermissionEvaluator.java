@@ -22,7 +22,7 @@ class DomainAwarePermissionEvaluator implements PermissionEvaluator {
 //            }
 //        }
 
-        return true;
+        return true; // todo wtf
     }
 
     @Override

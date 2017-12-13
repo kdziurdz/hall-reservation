@@ -40,17 +40,16 @@ public class ReservationService {
     }
 
     public void create(@NotNull SaveReservationDTO saveReservationDTO) {
-        throw new ObjectNotFoundException("XXXX");
-//        HallDTO hall = hallService.getOne(saveReservationDTO.getHallId());
-//
-//        checkLessonHourAvailability(hall.getLectures(), saveReservationDTO.getDate(),
-//                saveReservationDTO.getLessonNumbers());
-//        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers(), hall);
-//
-//        Reservation reservation = new Reservation(new HashSet<>(saveReservationDTO.getLessonNumbers()),
-//                saveReservationDTO.getDate(), userService.getActualUser(), hallService.getOneEntity(hall.getId()));
-//
-//        reservationRepository.save(reservation);
+        HallDTO hall = hallService.getOne(saveReservationDTO.getHallId());
+
+        checkLessonHourAvailability(hall.getLectures(), saveReservationDTO.getDate(),
+                saveReservationDTO.getLessonNumbers());
+        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers(), hall);
+
+        Reservation reservation = new Reservation(new HashSet<>(saveReservationDTO.getLessonNumbers()),
+                saveReservationDTO.getDate(), userService.getActualUser(), hallService.getOneEntity(hall.getId()));
+
+        reservationRepository.save(reservation);
     }
 
     public List<AvailableReservationDTO> search(LocalDate dateFrom, LocalDate dateTo, Integer duration, List<Long> hallIds) {

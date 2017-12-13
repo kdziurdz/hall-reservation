@@ -1,8 +1,5 @@
 package pl.edu.pk.hallreservation.security;
 
-/**
- * Created by Konrad on 01.11.2017.
- */
 public class AccountCredentials {
 
     private String username;

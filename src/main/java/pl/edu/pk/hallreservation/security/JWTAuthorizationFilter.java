@@ -2,20 +2,13 @@ package pl.edu.pk.hallreservation.security;
 
 
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.event.AuthenticationFailureDisabledEvent;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
-import pl.edu.pk.hallreservation.exception.UserExpired;
-import pl.edu.pk.hallreservation.exception.UserNotEnabled;
-import pl.edu.pk.hallreservation.model.user.User;
-import pl.edu.pk.hallreservation.service.user.UserService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,9 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static pl.edu.pk.hallreservation.security.SecurityConstants.HEADER_STRING;
-import static pl.edu.pk.hallreservation.security.SecurityConstants.SECRET;
-import static pl.edu.pk.hallreservation.security.SecurityConstants.TOKEN_PREFIX;
+import static pl.edu.pk.hallreservation.security.SecurityConstants.*;
 
 @Configuration
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {

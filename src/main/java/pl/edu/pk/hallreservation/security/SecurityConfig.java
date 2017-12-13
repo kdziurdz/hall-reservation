@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = false, securedEnabled = false) //todo turn on
+@EnableGlobalMethodSecurity(securedEnabled = true) //todo turn on
 class SecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Autowired
