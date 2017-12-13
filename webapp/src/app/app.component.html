@@ -5,11 +5,11 @@
       <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['reservation','search']"
          routerLinkActive="active">Szukaj</a>
     </div>
-    <div class="hr-w-100" *hrHasRole="'R_USER'">
+    <div class="hr-w-100" *hrHasRole="'ROLE_USER'">
       <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['reservation','my']"
          routerLinkActive="active">Moje rezerwacje</a>
     </div>
-    <ng-container *hrHasRole="'R_ADMIN'">
+    <ng-container *hrHasRole="'ROLE_ADMIN'">
 
       <div class="hr-w-100">
         <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','manage-users']"

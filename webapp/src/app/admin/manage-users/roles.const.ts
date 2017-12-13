@@ -1,4 +1,4 @@
 export const Roles: string[] = [
-  'R_ADMIN',
-  'R_USER'
+  'ROLE_ADMIN',
+  'ROLE_USER'
 ];

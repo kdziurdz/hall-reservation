@@ -31,15 +31,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
         http.cors().and().headers().frameOptions().disable().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                .antMatchers("/hall").permitAll() // TODO delete those
-//                .antMatchers("/hall/**").permitAll()
-//                .antMatchers("/reservation").permitAll()
-//                .antMatchers("/reservation/**").permitAll()
                 .antMatchers(H2_CONSOLE_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), userDetailsService))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

@@ -16,7 +16,7 @@ export class ManageRolesDialogComponent implements OnInit {
     this.newRoles = new FormArray(this.data.oldRoles.map(oldRole => new FormControl(oldRole)),
       Validators.required);
   }
-  
+
   dismiss(): void {
     this.dialogRef.close();
   }

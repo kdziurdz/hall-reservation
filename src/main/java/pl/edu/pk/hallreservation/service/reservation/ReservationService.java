@@ -3,6 +3,7 @@ package pl.edu.pk.hallreservation.service.reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
@@ -39,16 +40,17 @@ public class ReservationService {
     }
 
     public void create(@NotNull SaveReservationDTO saveReservationDTO) {
-        HallDTO hall = hallService.getOne(saveReservationDTO.getHallId());
-
-        checkLessonHourAvailability(hall.getLectures(), saveReservationDTO.getDate(),
-                saveReservationDTO.getLessonNumbers());
-        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers(), hall);
-
-        Reservation reservation = new Reservation(new HashSet<>(saveReservationDTO.getLessonNumbers()),
-                saveReservationDTO.getDate(), userService.getActualUser(), hallService.getOneEntity(hall.getId()));
-
-        reservationRepository.save(reservation);
+        throw new ObjectNotFoundException("XXXX");
+//        HallDTO hall = hallService.getOne(saveReservationDTO.getHallId());
+//
+//        checkLessonHourAvailability(hall.getLectures(), saveReservationDTO.getDate(),
+//                saveReservationDTO.getLessonNumbers());
+//        checkLessonHourReservationAvailability(saveReservationDTO.getDate(), saveReservationDTO.getLessonNumbers(), hall);
+//
+//        Reservation reservation = new Reservation(new HashSet<>(saveReservationDTO.getLessonNumbers()),
+//                saveReservationDTO.getDate(), userService.getActualUser(), hallService.getOneEntity(hall.getId()));
+//
+//        reservationRepository.save(reservation);
     }
 
     public List<AvailableReservationDTO> search(LocalDate dateFrom, LocalDate dateTo, Integer duration, List<Long> hallIds) {

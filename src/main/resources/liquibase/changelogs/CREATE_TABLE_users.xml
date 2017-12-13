@@ -37,7 +37,7 @@
 
 
     <changeSet author="Konrad" id="6">
-        <addUniqueConstraint columnNames="USERNAME" constraintName="USER_USERNAME_UK" tableName="USERS"/>
+        <addUniqueConstraint columnNames="USERNAME" constraintName="USEROLE_USERNAME_UK" tableName="USERS"/>
     </changeSet>
 
     <changeSet author="Konrad" id="65564">

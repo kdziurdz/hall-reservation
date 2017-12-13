@@ -12,11 +12,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.edu.pk.hallreservation.model.user.User;
+import pl.edu.pk.hallreservation.model.user.UserAuthority;
 import pl.edu.pk.hallreservation.repository.UserRepository;
 import pl.edu.pk.hallreservation.service.user.dto.UserDTO;
 import pl.edu.pk.hallreservation.service.user.mapper.UserDTOMapper;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -58,5 +61,32 @@ public class UserService implements UserDetailsService {
         }
 
         return users.map(userDTOMapper::asDTO);
+    }
+
+    public void updateRoles(Long userId, List<String> newRoles) {
+        User user = userRepository.getOneById(userId);
+        user.setAuthorities(newRoles.stream()
+                .map(UserAuthority::new).collect(Collectors.toSet()));
+        userRepository.save(user);
+    }
+
+    public void remove(Long id) {
+        userRepository.delete(id);
+    }
+
+    public void enable(Long id) {
+        User user = userRepository.getOneById(id);
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
+
+    public void disable(Long id) {
+        User user = userRepository.getOneById(id);
+        user.setEnabled(false);
+        userRepository.save(user);
+    }
+
+    public User getByUsername(String username) {
+        return userRepository.getOneByUsername(username);
     }
 }

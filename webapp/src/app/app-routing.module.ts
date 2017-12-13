@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     pathMatch: 'prefix'},
   {path: 'admin',
     loadChildren: 'app/admin/admin.module#AdminModule',
-    pathMatch: 'prefix', canActivate: [AuthGuard]},
+    pathMatch: 'prefix'},
   {path: '', redirectTo: 'reservation', pathMatch: 'full'},
   {path: '**', redirectTo: 'page-not-found'},
 ];
