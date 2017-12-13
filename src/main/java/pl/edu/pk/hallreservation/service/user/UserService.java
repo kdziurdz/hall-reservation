@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.edu.pk.hallreservation.exception.InvalidDateException;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.model.user.UserAuthority;
 import pl.edu.pk.hallreservation.repository.UserRepository;
@@ -18,6 +19,7 @@ import pl.edu.pk.hallreservation.service.user.dto.UserDTO;
 import pl.edu.pk.hallreservation.service.user.mapper.UserDTOMapper;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,11 +38,6 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findOneByUsername(username);
-    }
-
-    @Transactional
-    public User createUser(User user) {
-        return userRepository.save(user);
     }
 
     public User getActualUser() {
@@ -86,7 +83,20 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public User getByUsername(String username) {
-        return userRepository.getOneByUsername(username);
+    public void setExpirationDate(Long id, LocalDate newDate) {
+        if(newDate.isBefore(LocalDate.now())) {
+            throw new InvalidDateException("Invalid date");
+        }
+        User user = userRepository.getOneById(id);
+        user.setExpirationDate(newDate);
+        userRepository.save(user);
+    }
+
+    public void create(UserDTO userDTO) {
+        User user = new User(userDTO.getFirstName(), userDTO.getUsername(), userDTO.getLastName(), userDTO.getPassword(),
+                userDTO.getEmail(), userDTO.getExpirationDate(), userDTO.getEnabled(), userDTO.getRoles().stream()
+                .map(UserAuthority::new).collect(Collectors.toSet()), true);
+
+        userRepository.save(user);
     }
 }

@@ -12,6 +12,8 @@ public class UserDTO {
 
     private String lastName;
 
+    private String password;
+
     private String email;
 
     private LocalDate expirationDate;
@@ -20,12 +22,13 @@ public class UserDTO {
 
     private List<String> roles;
 
-    public UserDTO(Long id, String firstName, String username, String lastName, String email,
-                   LocalDate expirationDate, Boolean enabled, List<String> roles) {
+    public UserDTO(Long id, String firstName, String username, String lastName,
+                   String password, String email, LocalDate expirationDate, Boolean enabled, List<String> roles) {
         this.id = id;
         this.firstName = firstName;
         this.username = username;
         this.lastName = lastName;
+        this.password = password;
         this.email = email;
         this.expirationDate = expirationDate;
         this.enabled = enabled;
@@ -96,5 +99,13 @@ public class UserDTO {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

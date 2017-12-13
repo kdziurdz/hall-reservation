@@ -49,6 +49,10 @@ public class User implements UserDetails {
     @Column(name = "ENABLED")
     private Boolean enabled;
 
+    @NotNull
+    @Column(name = "FIRST_LOGIN")
+    private Boolean firstLogin;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "USER_AUTHORITIES",
             joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),
@@ -59,7 +63,8 @@ public class User implements UserDetails {
     protected User() {}
 
     public User(String firstName, String username, String lastName, String password,
-                String email, LocalDate expirationDate, Boolean enabled, Set<UserAuthority> authorities) {
+                String email, LocalDate expirationDate, Boolean enabled, Set<UserAuthority> authorities,
+                Boolean firstLogin) {
         this.firstName = firstName;
         this.username = username;
         this.lastName = lastName;
@@ -68,6 +73,7 @@ public class User implements UserDetails {
         this.expirationDate = expirationDate;
         this.enabled = enabled;
         this.authorities = authorities;
+        this.firstLogin = firstLogin;
     }
 
     public void setUsername(String username) {
@@ -131,7 +137,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.firstLogin;
     }
 
     @Override
@@ -169,5 +175,13 @@ public class User implements UserDetails {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Boolean getFirstLogin() {
+        return firstLogin;
+    }
+
+    public void setFirstLogin(Boolean firstLogin) {
+        this.firstLogin = firstLogin;
     }
 }

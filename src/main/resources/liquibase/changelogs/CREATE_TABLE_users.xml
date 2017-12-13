@@ -32,6 +32,9 @@
             <column name="ENABLED" type="boolean">
                 <constraints nullable="false"/>
             </column>
+            <column name="FIRST_LOGIN" type="boolean">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 

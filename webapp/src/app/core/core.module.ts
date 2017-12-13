@@ -8,13 +8,17 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
 import { LessonDateTimeService } from './service/lesson-date-time.service';
-import { HasAnyRoleDirective } from '../shared/directives/has-any-role/has-any-role.directive';
-import { HasRoleDirective } from '../shared/directives/has-role/has-role.directive';
 import { UserService } from './auth/user/user.service';
+import { FirstLoginDialogComponent } from './auth/first-login-dialog/first-login-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    ToolbarComponent
+    ToolbarComponent,
+    FirstLoginDialogComponent,
+  ],
+  entryComponents: [
+    FirstLoginDialogComponent
   ],
   providers: [
     AuthService,
@@ -24,7 +28,9 @@ import { UserService } from './auth/user/user.service';
     UserService
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     ToolbarComponent
@@ -45,7 +51,7 @@ export class CoreModule {
           useClass: TokenInterceptor,
           multi: true
         }
-       ]
+      ]
     };
   }
 }

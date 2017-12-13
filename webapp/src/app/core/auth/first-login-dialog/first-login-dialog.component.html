@@ -1,0 +1,27 @@
+<h1 class="mat-dialog-title">Pierwsze logowanie</h1>
+<mat-divider></mat-divider>
+<div class="mat-dialog-content">
+  <p>Ustaw hasło</p>
+</div>
+<mat-divider></mat-divider>
+<form [formGroup]="firstLoginFormGroup" novalidate>
+
+  <mat-form-field class="hr-w-100">
+    <input matInput placeholder="Hasło" formControlName="password">
+  </mat-form-field>
+
+  <mat-form-field class="hr-w-100">
+    <input matInput placeholder="Powtórz hasło" formControlName="repeatPassword">
+  </mat-form-field>
+
+  <mat-divider></mat-divider>
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="mt-1">
+    <button class="mat-raised-button mat-primary"
+            type="button" role="button" (click)="submit()"
+            [disabled]="firstLoginFormGroup.invalid">OK
+    </button>
+  </div>
+</form>
+
+
