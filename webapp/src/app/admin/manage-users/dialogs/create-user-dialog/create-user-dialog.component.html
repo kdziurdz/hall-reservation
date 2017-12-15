@@ -1,0 +1,67 @@
+<h1 class="mat-dialog-title">Dodaj użytkownika</h1>
+<mat-divider></mat-divider>
+<div class="mat-dialog-content">
+
+  <form [formGroup]="createUserFormGroup" novalidate (ngSubmit)="submit()">
+
+    <div fxLayout="row" fxLayout.lt-sm="column">
+
+      <div ngClass.lt-sm="mr-0" class="mr-1">
+        <mat-form-field class="hr-w-100">
+          <input matInput placeholder="Login"
+                 formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field class="hr-w-100">
+          <input matInput placeholder="Hasło pierwszego logowania" type="password"
+                 formControlName="password">
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+
+        <mat-form-field class="hr-w-100">
+          <input matInput placeholder="Potwierź hasło" type="password"
+                 formControlName="confirmPassword">
+        </mat-form-field>
+
+        <mat-form-field class="hr-w-100">
+          <input matInput placeholder="Adres e-mail"
+                 formControlName="email" type="email">
+        </mat-form-field>
+      </div>
+      <div  ngClass.lt-sm="ml-0" class="ml-1">
+        <mat-form-field class="hr-w-100">
+          <input matInput placeholder="Imię"
+                 formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field class="hr-w-100">
+          <input matInput placeholder="Nazwisko"
+                 formControlName="lastName">
+        </mat-form-field>
+
+        <mat-form-field class="hr-w-100">
+          <input matInput formControlName="expirationDate" #expirationDate
+                 [matDatepicker]="expirationDate" placeholder="Data wygaśnięcia konta">
+          <mat-datepicker-toggle matSuffix [for]="expirationDate"></mat-datepicker-toggle>
+          <mat-datepicker #expirationDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-slide-toggle formControlName="enabled" labelPosition="before">Konto aktywne</mat-slide-toggle>
+        <hr-manage-roles [roles]="createUserFormGroup.get('roles')"></hr-manage-roles>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-1">
+      <button class="mat-raised-button"
+              type="button" role="button" (click)="dismiss()">Anuluj
+      </button>
+      <button class="mat-raised-button mat-primary"
+              type="submit" role="button" (click)="submit()"
+              [disabled]="createUserFormGroup.invalid">OK
+      </button>
+    </div>
+  </form>
+</div>
+

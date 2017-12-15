@@ -7,6 +7,7 @@ import { PlannedReservation } from '../core/model/planned-reservations';
 import { PlannedReservationSearchWithUserIdParams } from './model/planned-reservation-search-with-user-id-params';
 import { SearchUsersParams } from './manage-users/search-users-params';
 import { UserDetails } from './manage-users/user-details';
+import { CreateUserDialogCreds } from './manage-users/dialogs/create-user-dialog/create-user-dialog-result';
 
 export const ADMIN_URL = 'api/admin';
 export const USERS_URL = 'api/user';
@@ -84,5 +85,9 @@ export class AdminService {
 
   updateRoles(roles: string[], userId: number) {
     return this.httpClient.patch(`${USERS_URL}/${userId}/roles`, roles);
+  }
+
+  createUser(createUserCreds: CreateUserDialogCreds) {
+    return this.httpClient.post(`${USERS_URL}`, createUserCreds);
   }
 }

@@ -10,6 +10,7 @@ import { ChangeExpirationDateDialogComponent } from './manage-users/dialogs/chan
 import { RemoveUserConfirmationDialogComponent } from './manage-users/dialogs/remove-user-confirmation-dialog/remove-user-confirmation-dialog.component';
 import { ManageRolesDialogComponent } from './manage-users/dialogs/manage-roles-dialog/manage-roles-dialog.component';
 import { ManageRolesComponent } from './manage-users/dialogs/manage-roles.component';
+import { CreateUserDialogComponent } from './manage-users/dialogs/create-user-dialog/create-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,14 @@ import { ManageRolesComponent } from './manage-users/dialogs/manage-roles.compon
     ChangeExpirationDateDialogComponent,
     RemoveUserConfirmationDialogComponent,
     ManageRolesDialogComponent,
-    ManageRolesComponent
+    ManageRolesComponent,
+    CreateUserDialogComponent
   ],
   entryComponents: [
     ChangeExpirationDateDialogComponent,
     RemoveUserConfirmationDialogComponent,
-    ManageRolesDialogComponent
+    ManageRolesDialogComponent,
+    CreateUserDialogComponent
   ],
   providers: [
     AdminService

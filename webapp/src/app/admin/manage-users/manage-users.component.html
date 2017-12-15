@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
     <div>Zarządzanie użytkownikami</div>
-    <button mat-icon-button class="mat-icon-button">
+    <button mat-icon-button class="mat-icon-button" (click)="createUser()">
       <mat-icon>note_add</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -21,17 +21,6 @@
         <mat-header-cell *matHeaderCellDef>Adres e-mail</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
       </ng-container>
-
-      <!--<ng-container matColumnDef="roles">-->
-        <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element">-->
-          <!--<mat-chip-list>-->
-            <!--<mat-chip *ngFor="let role of element.roles">-->
-              <!--{{role}}-->
-            <!--</mat-chip>-->
-          <!--</mat-chip-list>-->
-        <!--</mat-cell>-->
-      <!--</ng-container>-->
 
       <ng-container matColumnDef="enabled">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>

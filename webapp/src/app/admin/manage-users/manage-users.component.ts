@@ -11,6 +11,8 @@ import { LessonDateTimeService } from '../../core/service/lesson-date-time.servi
 import { ChangeExpirationDateDialogComponent } from './dialogs/change-expiration-date-dialog/change-expiration-date-dialog.component';
 import { RemoveUserConfirmationDialogComponent } from './dialogs/remove-user-confirmation-dialog/remove-user-confirmation-dialog.component';
 import { ManageRolesDialogComponent } from './dialogs/manage-roles-dialog/manage-roles-dialog.component';
+import { CreateUserDialogCreds } from './dialogs/create-user-dialog/create-user-dialog-result';
+import { CreateUserDialogComponent } from './dialogs/create-user-dialog/create-user-dialog.component';
 
 @Component({
   selector: 'hr-manage-users',
@@ -69,6 +71,20 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
 
   showReservations(userDetails: UserDetails) {
     console.log(userDetails);
+  }
+
+  createUser() {
+    let dialogRef = this.dialog.open(CreateUserDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result: CreateUserDialogCreds) => {
+      if (result) {
+        this.adminService.createUser(result)
+        .subscribe(() => {
+          this.showSnack('Pomyślnie utworzono użytkownika');
+          this.onSearchParamsChanged(this.actualSearchParams);
+        });
+      }
+    });
   }
 
   manageRoles(userDetails: UserDetails) {
