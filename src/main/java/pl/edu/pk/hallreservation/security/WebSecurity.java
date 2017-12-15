@@ -13,6 +13,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import static pl.edu.pk.hallreservation.security.SecurityConstants.CREATE_PASSWORD_URL;
 import static pl.edu.pk.hallreservation.security.SecurityConstants.H2_CONSOLE_URL;
 import static pl.edu.pk.hallreservation.security.SecurityConstants.SIGN_UP_URL;
 
@@ -31,6 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
         http.cors().and().headers().frameOptions().disable().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.POST, CREATE_PASSWORD_URL).permitAll()
                 .antMatchers(H2_CONSOLE_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()

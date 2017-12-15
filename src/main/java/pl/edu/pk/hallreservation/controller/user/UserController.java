@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.user.mapper.UserMapper;
 import pl.edu.pk.hallreservation.controller.user.vm.BaseUserDetailsVM;
+import pl.edu.pk.hallreservation.controller.user.vm.NewPasswordCreds;
 import pl.edu.pk.hallreservation.controller.user.vm.SaveUserVM;
 import pl.edu.pk.hallreservation.controller.user.vm.UserDetailsVM;
 import pl.edu.pk.hallreservation.model.user.User;
@@ -108,6 +109,15 @@ public class UserController {
     public ResponseEntity<HttpStatus> createUser(@RequestBody SaveUserVM saveUser) {
 
         userService.create(userMapper.asDTO(saveUser));
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/create-password")
+    public ResponseEntity<HttpStatus> createPassword(@RequestBody NewPasswordCreds newPasswordCreds) {
+
+        userService.createPassword(newPasswordCreds.getUsername(), newPasswordCreds.getOldPassword(),
+                newPasswordCreds.getNewPassword());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

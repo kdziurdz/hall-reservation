@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import 'rxjs/add/operator/do';
 import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { FirstLoginDialogComponent } from './first-login-dialog/first-login-dialog.component';
+import { FirstLoginDialogCreds } from './first-login-dialog/first-login-dialog-result';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -46,8 +47,7 @@ export class TokenInterceptor implements HttpInterceptor {
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
-          this.showSnack('Brak autentykacji');
-          if (err.message.indexOf('locked')) {
+          if (err.error.message.indexOf('locked') != -1) {
             this.showFirstLoginDialog();
           }
           this.showSnack('Brak autentykacji');
@@ -72,10 +72,12 @@ export class TokenInterceptor implements HttpInterceptor {
   private showFirstLoginDialog() {
     let dialogRef = this.dialog.open(FirstLoginDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: FirstLoginDialogCreds) => {
       if (result) {
-
-        this.showSnack('i tutaj call do serwisu z pass: ' + result);
+        this.authService.createPassword(result).subscribe(() => {
+          this.showSnack("Pomyślnie ustawiono hasło");
+          this.authService.logout();
+        });
       }
     });
   }

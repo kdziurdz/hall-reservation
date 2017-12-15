@@ -7,6 +7,8 @@ import { Subject } from 'rxjs/Subject';
 import { JwtHelper } from 'angular2-jwt';
 import { TokenDecoded } from './user/user';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { FirstLoginDialogCreds } from './first-login-dialog/first-login-dialog-result';
+import { USERS_URL } from '../../admin/admin.service';
 
 
 const LOGIN_URL = 'api/login';
@@ -73,5 +75,9 @@ export class AuthService {
   private decodeToken() {
     let jwtHelper: JwtHelper = new JwtHelper();
     return jwtHelper.decodeToken(this.getToken());
+  }
+
+  createPassword(result: FirstLoginDialogCreds): Observable<any> {
+    return this.httpClient.post(`${USERS_URL}/create-password`, result)
   }
 }

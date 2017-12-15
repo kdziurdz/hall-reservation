@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.edu.pk.hallreservation.exception.ConflictDataException;
 import pl.edu.pk.hallreservation.exception.InvalidDateException;
+import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.model.user.UserAuthority;
 import pl.edu.pk.hallreservation.repository.UserRepository;
@@ -97,6 +99,21 @@ public class UserService implements UserDetailsService {
                 userDTO.getEmail(), userDTO.getExpirationDate(), userDTO.getEnabled(), userDTO.getRoles().stream()
                 .map(UserAuthority::new).collect(Collectors.toSet()), true);
 
+        userRepository.save(user);
+    }
+
+    public void createPassword(String username, String oldPassword, String newPassword) {
+        User user = userRepository.getOneByUsername(username);
+        if(!user.getPassword().equals(oldPassword)) {
+            throw new ObjectNotFoundException("User Credentials does not match");
+        }
+
+        if(user.isAccountNonLocked()) {
+            throw new ConflictDataException("User is not locked");
+        }
+
+        user.setPassword(newPassword);
+        user.setFirstLogin(false);
         userRepository.save(user);
     }
 }

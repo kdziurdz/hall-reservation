@@ -7,11 +7,25 @@
 <form [formGroup]="firstLoginFormGroup" novalidate>
 
   <mat-form-field class="hr-w-100">
-    <input matInput placeholder="Hasło" formControlName="password">
+    <input matInput placeholder="Login"
+           formControlName="username">
   </mat-form-field>
 
   <mat-form-field class="hr-w-100">
-    <input matInput placeholder="Powtórz hasło" formControlName="repeatPassword">
+    <input matInput placeholder="Hasło" type="password"
+           formControlName="oldPassword">
+  </mat-form-field>
+
+  <mat-divider></mat-divider>
+
+  <mat-form-field class="hr-w-100">
+    <input matInput placeholder="Nowe hasło" type="password"
+           formControlName="newPassword">
+  </mat-form-field>
+
+  <mat-form-field class="hr-w-100">
+    <input matInput placeholder="Powtórz hasło" type="password"
+           formControlName="newPasswordConfirm">
   </mat-form-field>
 
   <mat-divider></mat-divider>

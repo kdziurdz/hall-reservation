@@ -1,6 +1,7 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FirstLoginDialogCreds } from './first-login-dialog-result';
 
 @Component({
   selector: 'hr-first-login-dialog',
@@ -15,8 +16,10 @@ export class FirstLoginDialogComponent implements OnInit {
 
   ngOnInit() {
     this.firstLoginFormGroup = new FormGroup({
-      password: new FormControl(null, Validators.required),
-      repeatPassword: new FormControl(null, Validators.required)
+      username: new FormControl(null, Validators.required),
+      oldPassword: new FormControl(null, Validators.required),
+      newPassword: new FormControl(null, Validators.required),
+      newPasswordConfirm: new FormControl(null, Validators.required)
     }, this.MatchPassword);
   }
 
@@ -25,18 +28,16 @@ export class FirstLoginDialogComponent implements OnInit {
   }
 
   submit(): void {
-    let values = this.firstLoginFormGroup.getRawValue();
-    this.dialogRef.close(values.password);
+    let values: FirstLoginDialogCreds = this.firstLoginFormGroup.getRawValue();
+    this.dialogRef.close(values);
   }
 
   private MatchPassword(AC: AbstractControl) {
-    let password = AC.get('password').value; // to get value in input tag
-    let repeatPassword = AC.get('repeatPassword').value; // to get value in input tag
+    let password = AC.get('newPassword').value;
+    let repeatPassword = AC.get('newPasswordConfirm').value;
     if(password != repeatPassword) {
-      console.log('false');
-      AC.get('repeatPassword').setErrors( {MatchPassword: true} )
+      AC.get('newPasswordConfirm').setErrors( {MatchPassword: true} )
     } else {
-      console.log('true');
       return null
     }
   }
