@@ -11,6 +11,7 @@ import { LessonDateTimeService } from './service/lesson-date-time.service';
 import { UserService } from './auth/user/user.service';
 import { FirstLoginDialogComponent } from './auth/first-login-dialog/first-login-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserService
   ],
   imports: [
+    CommonModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule
