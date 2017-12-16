@@ -1,7 +1,7 @@
 <p>Dostepne role:</p>
 <mat-chip-list selectable="true" multiple="true">
   <mat-chip #chip *ngFor="let role of possibleRoles" selectable="true"
-            (click)="onChipSelect(role)">
+            (click)="onChipSelect(role)" class="hr-cursor-pointer">
     {{role}}
   </mat-chip>
 </mat-chip-list>

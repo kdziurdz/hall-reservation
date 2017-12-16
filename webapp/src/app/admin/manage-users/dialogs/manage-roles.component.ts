@@ -13,7 +13,6 @@ export class ManageRolesComponent implements OnInit, AfterViewInit {
   possibleRoles: string[] = Roles;
 
   ngOnInit() {
-    console.log('takie mam role: ', this.roles);
     if (!this.roles) {
       this.roles = new FormArray([], Validators.required);
     }

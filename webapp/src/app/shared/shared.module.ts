@@ -6,13 +6,15 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HasAnyRoleDirective } from './directives/has-any-role/has-any-role.directive';
 import { HasRoleDirective } from './directives/has-role/has-role.directive';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
     LoginFormComponent,
     PageNotFoundComponent,
     HasAnyRoleDirective,
-    HasRoleDirective
+    HasRoleDirective,
+    AboutComponent
   ],
   imports: [
     FlexLayoutModule,
@@ -26,7 +28,8 @@ import { HasRoleDirective } from './directives/has-role/has-role.directive';
     LoginFormComponent,
     PageNotFoundComponent,
     HasAnyRoleDirective,
-    HasRoleDirective
+    HasRoleDirective,
+    AboutComponent
   ]
 })
 export class SharedModule {

@@ -4,9 +4,11 @@ import { LoginFormComponent } from './shared/components/login-form/login-form.co
 import { AuthGuard } from './core/auth/auth.guard';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { LoginGuard } from './core/auth/login.guard';
+import {AboutComponent} from "./shared/components/about/about.component";
 
 const appRoutes: Routes = [
   {path: 'login', canActivate: [LoginGuard], component: LoginFormComponent},
+  {path: 'about', component: AboutComponent },
   {path: 'page-not-found', component: PageNotFoundComponent},
   {path: 'reservation',
     loadChildren: 'app/reservation/reservation.module#ReservationModule',

@@ -9,7 +9,7 @@
     </div>
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item *ngIf="isLogged">Moje konto</button>
-      <button mat-menu-item>O Aplikacji</button>
+      <button mat-menu-item [routerLink]="['about']" >O Aplikacji</button>
       <button mat-menu-item (click)="logout()" *ngIf="isLogged">Wyloguj</button>
       <button mat-menu-item (click)="logout()" *ngIf="!isLogged">Zaloguj</button>
     </mat-menu>
