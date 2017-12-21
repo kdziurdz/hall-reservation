@@ -4,3 +4,22 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<mat-card class="d-block m-1">
+  <mat-card-content>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
+         routerLink="by-halls"
+         routerLinkActive #byHalls="routerLinkActive"
+         [active]="byHalls.isActive">
+        Według sali
+      </a>
+      <a mat-tab-link
+         routerLink="by-users"
+         routerLinkActive #byUsers="routerLinkActive"
+         [active]="byUsers.isActive">
+        Według użytkowników
+      </a>
+    </nav>
+    <router-outlet></router-outlet>
+  </mat-card-content>
+</mat-card>

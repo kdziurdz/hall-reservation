@@ -1,0 +1,66 @@
+reservation by user search form
+
+<!--<form [formGroup]="searchFormGroup" novalidate (ngSubmit)="submit()">-->
+  <!--<mat-accordion class="m-1 d-block">-->
+    <!--<mat-expansion-panel [expanded]="true">-->
+      <!--<mat-expansion-panel-header>-->
+
+      <!--</mat-expansion-panel-header>-->
+      <!--<div>-->
+        <!--<div fxLayout="row" fxLayout.lt-sm="column">-->
+          <!--<mat-form-field ngClass.gt-xs="mr-2">-->
+            <!--<input matInput formControlName="dateFrom" #dateFrom [max]="searchFormGroup.get('dateTo').value"-->
+                   <!--[matDatepicker]="dateFrom" placeholder="Data od">-->
+            <!--<mat-datepicker-toggle matSuffix  [for]="dateFrom"></mat-datepicker-toggle>-->
+            <!--<mat-datepicker #dateFrom></mat-datepicker>-->
+          <!--</mat-form-field>-->
+          <!--<mat-form-field>-->
+            <!--<input matInput formControlName="dateTo" [min]="searchFormGroup.get('dateFrom').value" [matDatepicker]="dateTo" placeholder="Data do">-->
+            <!--<mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>-->
+            <!--<mat-datepicker #dateTo></mat-datepicker>-->
+          <!--</mat-form-field>-->
+        <!--</div>-->
+
+        <!--<div fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start center" fxLayout="column" fxLayoutAlign="center start">-->
+          <!--<mat-slide-toggle [formControl]="allHalls" labelPosition="before" class="mr-2">Wszystkie sale</mat-slide-toggle>-->
+          <!--<div fxLayout="row" fxLayoutAlign="start center">-->
+            <!--<mat-form-field>-->
+              <!--<input type="text" placeholder="Sala" matInput [formControl]="hallSearchQuery" [matAutocomplete]="auto">-->
+            <!--</mat-form-field>-->
+            <!--<mat-autocomplete #auto="matAutocomplete" (optionSelected)="hallSelected($event); hallSearchQuery.reset()"-->
+                              <!--[displayWith]="hallSearchDisplayTransform">-->
+              <!--<mat-option *ngFor="let hall of querriedHalls | async" [value]="hall">-->
+                <!--{{ hall.name }}-->
+              <!--</mat-option>-->
+            <!--</mat-autocomplete>-->
+
+            <!--<div formArrayName="hallIds">-->
+              <!--<mat-chip-list>-->
+                <!--<mat-chip *ngFor="let hall of searchFormGroup.get('hallIds').controls" color="accent"-->
+                          <!--[removable]="!allHalls.value" (remove)="removeHallFromArray(hall)" [disabled]="allHalls.value"-->
+                          <!--[selectable]="!allHalls.value" [ngClass]="{'disabled-chips': allHalls.value}">-->
+                  <!--{{hall.value.name}}-->
+                  <!--<mat-icon matChipRemove>cancel</mat-icon>-->
+                <!--</mat-chip>-->
+              <!--</mat-chip-list>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div fxLayout="row">-->
+          <!--<mat-form-field>-->
+            <!--<mat-select placeholder="Status" formControlName="status" multiple>-->
+              <!--<mat-option [value]="reservationStatuses.ACTIVE">Aktywne</mat-option>-->
+              <!--<mat-option [value]="reservationStatuses.CANCELLED">Anulowane</mat-option>-->
+            <!--</mat-select>-->
+          <!--</mat-form-field>-->
+        <!--</div>-->
+
+        <!--<div fxLayout="row" fxLayoutAlign="end center">-->
+          <!--<button class="mat-raised-button mat-primary" color="primary"-->
+                  <!--type="submit" [disabled]="searchFormGroup.invalid" role="button">Szukaj-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</mat-expansion-panel>-->
+  <!--</mat-accordion>-->
+<!--</form>-->

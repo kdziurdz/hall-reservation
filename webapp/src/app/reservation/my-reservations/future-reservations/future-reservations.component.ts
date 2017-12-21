@@ -6,11 +6,11 @@ import {
 import { PlannedReservationSearchParams } from '../../../core/model/planned-reservation-search-params';
 import { PlannedReservation } from '../../../core/model/planned-reservations';
 import { Page } from '../../../core/model/page';
-import { ReservationService } from '../../reservation.service';
+import { ReservationService } from '../../../core/service/reservation.service';
 import { LessonDateTimeService } from '../../../core/service/lesson-date-time.service';
 import { ReservationStatus } from '../reservation-status.enum';
-import { ReservationCancellationDialog } from '../dialogs/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
-import { CancellationInfoDialog } from '../dialogs/cancellation-info-dialog/cancellation-info-dialog.component';
+import { ReservationCancellationDialog } from '../../../shared/components/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
+import { CancellationInfoDialog } from '../../../shared/components/cancellation-info-dialog/cancellation-info-dialog.component';
 
 @Component({
   selector: 'hr-future-reservations',

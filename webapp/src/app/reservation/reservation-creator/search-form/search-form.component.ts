@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Hall } from '../../model/hall';
 import { AVAILABLE_RESERVATION_DURATION_HOURS } from '../../../core/reservation.consts';
-import { ReservationService } from '../../reservation.service';
+import { ReservationService } from '../../../core/service/reservation.service';
 import { AvailableReservationSlotSearchParams } from './available-reservation-slot-search-params';
 
 @Component({

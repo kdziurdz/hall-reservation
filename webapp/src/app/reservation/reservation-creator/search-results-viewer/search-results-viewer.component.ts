@@ -9,7 +9,7 @@ import {
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ReservationConfirmationDialog } from './reservation-confirmation-dialog/reservation-confirmation-dialog.component';
 import { SaveReservation } from '../../model/save-reservation';
-import { ReservationService } from '../../reservation.service';
+import { ReservationService } from '../../../core/service/reservation.service';
 import { LessonDateTimeService } from '../../../core/service/lesson-date-time.service';
 
 

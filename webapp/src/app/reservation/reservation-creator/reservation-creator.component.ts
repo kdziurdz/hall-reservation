@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReservationService } from '../reservation.service';
+import { ReservationService } from '../../core/service/reservation.service';
 import { AvailableReservationSlotSearchParams } from './search-form/available-reservation-slot-search-params';
 import { AvailableReservation } from '../model/available-reservation';
 

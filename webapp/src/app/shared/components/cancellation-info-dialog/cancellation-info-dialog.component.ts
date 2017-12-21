@@ -1,6 +1,6 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject, OnInit } from '@angular/core';
-import { User } from '../../../../core/model/user';
+import { User } from '../../../core/model/user';
 
 @Component({
   selector: 'cancellation-info-dialog',

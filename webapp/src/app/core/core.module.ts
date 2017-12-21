@@ -13,6 +13,7 @@ import { FirstLoginDialogComponent } from './auth/first-login-dialog/first-login
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ReservationService } from './service/reservation.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { RouterModule } from '@angular/router';
     AuthGuard,
     LoginGuard,
     LessonDateTimeService,
-    UserService
+    UserService,
+    ReservationService
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ export class CoreModule {
         LoginGuard,
         LessonDateTimeService,
         UserService,
+        ReservationService,
         {
           provide: HTTP_INTERCEPTORS,
           useClass: TokenInterceptor,

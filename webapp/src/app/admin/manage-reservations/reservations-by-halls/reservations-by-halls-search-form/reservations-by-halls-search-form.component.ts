@@ -3,19 +3,17 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { PlannedReservationSearchParams } from '../../../../core/model/planned-reservation-search-params';
-import { Hall } from '../../../model/hall';
-import { ReservationStatus } from '../../reservation-status.enum';
+import { Hall } from '../../../../reservation/model/hall';
+import { ReservationStatus } from '../../../../reservation/my-reservations/reservation-status.enum';
 import { ReservationService } from '../../../../core/service/reservation.service';
 
 @Component({
-  selector: 'hr-planned-reservation-search-form',
-  templateUrl: './planned-reservation-search-form.component.html',
-  styleUrls: ['./planned-reservation-search-form.component.scss']
+  selector: 'hr-reservations-by-halls-search-form',
+  templateUrl: './reservations-by-halls-search-form.component.html'
 })
-export class PlannedReservationSearchFormComponent implements OnInit {
+export class ReservationsByHallsSearchFormComponent implements OnInit {
   searchFormGroup: FormGroup;
   hallSearchQuery: FormControl;
-  allHalls: FormControl;
   querriedHalls: Observable<Array<Hall>>;
   reservationStatuses = ReservationStatus;
 
@@ -25,42 +23,21 @@ export class PlannedReservationSearchFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allHalls = new FormControl(true);
-    this.hallSearchQuery = new FormControl({value: null, disabled: this.allHalls.value});
-
-
     this.searchFormGroup = new FormGroup({
       dateFrom: new FormControl(null, Validators.required),
       dateTo: new FormControl(null, Validators.required),
-      hallIds: new FormArray([], Validators.required),
+      hallIds: new FormControl(null, Validators.required),
       status: new FormControl(null, Validators.required)
     });
-
-    if (this.allHalls.value) {
-      this.searchFormGroup.get('hallIds').disable();
-    }
 
     this.hallSearchQuery.valueChanges.subscribe(value => {
       this.querriedHalls = this.searchHall(value);
     });
-
-    this.allHalls.valueChanges.subscribe(value => {
-      if (value) {
-        this.hallSearchQuery.disable();
-        this.searchFormGroup.get('hallIds').disable();
-      } else {
-        this.hallSearchQuery.enable();
-        this.searchFormGroup.get('hallIds').enable();
-      }
-
-    });
   }
 
   hallSelected(event: MatAutocompleteSelectedEvent) {
-    let halls: FormArray = this.searchFormGroup.get('hallIds') as FormArray;
-    if (!halls.controls.find(hall => hall.value.id === event.option.value.id)) {
-      halls.push(new FormControl(event.option.value));
-    }
+    console.log('event', event);
+    this.searchFormGroup.get('hallIds').setValue(event.option.value);
   }
 
   searchHall(query): Observable<Array<Hall>> {
@@ -71,18 +48,13 @@ export class PlannedReservationSearchFormComponent implements OnInit {
     return value ? value.name : null;
   };
 
-  removeHallFromArray(hall) {
-    let halls: FormArray = this.searchFormGroup.get('hallIds') as FormArray;
-    halls.removeAt(halls.controls.indexOf(hall));
-  }
-
   submit() {
     let values = this.searchFormGroup.getRawValue();
 
     let searchParams: PlannedReservationSearchParams = {
       dateFrom: this.formatDate(values.dateFrom),
       dateTo: this.formatDate(values.dateTo),
-      hallIds: this.searchFormGroup.get('hallIds').disabled ? null : values.hallIds.map(hall => hall.id),
+      hallIds: Array.of(values.hallIds),
       status: values.status
     };
 

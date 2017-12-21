@@ -4,18 +4,17 @@ import {
   Sort
 } from '@angular/material';
 import { PlannedReservation } from '../../../core/model/planned-reservations';
-import { ReservationService } from '../../../core/service/reservation.service';
 import { Page } from '../../../core/model/page';
 import { PlannedReservationSearchParams } from '../../../core/model/planned-reservation-search-params';
 import { LessonDateTimeService } from '../../../core/service/lesson-date-time.service';
-import { CancellationInfoDialog } from '../../../shared/components/cancellation-info-dialog/cancellation-info-dialog.component';
 import { ReservationCancellationDialog } from '../../../shared/components/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
+import { ReservationService } from '../../../core/service/reservation.service';
 
 @Component({
-  selector: 'hr-planned-reservations-viewer',
-  templateUrl: './planned-reservations-viewer.component.html'
+  selector: 'hr-reservations-by-users',
+  templateUrl: './reservations-by-users.component.html'
 })
-export class PlannedReservationsViewerComponent implements AfterViewInit, OnInit {
+export class ReservationsByUsersComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 

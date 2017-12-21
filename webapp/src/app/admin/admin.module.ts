@@ -11,6 +11,10 @@ import { RemoveUserConfirmationDialogComponent } from './manage-users/dialogs/re
 import { ManageRolesDialogComponent } from './manage-users/dialogs/manage-roles-dialog/manage-roles-dialog.component';
 import { ManageRolesComponent } from './manage-users/dialogs/manage-roles.component';
 import { CreateUserDialogComponent } from './manage-users/dialogs/create-user-dialog/create-user-dialog.component';
+import { ReservationsByHallsComponent } from './manage-reservations/reservations-by-halls/reservations-by-halls.component';
+import { ReservationsByHallsSearchFormComponent } from './manage-reservations/reservations-by-halls/reservations-by-halls-search-form/reservations-by-halls-search-form.component';
+import { ReservationsByUsersSearchFormComponent } from './manage-reservations/reservations-by-users/reservations-by-users-search-form/reservations-by-users-search-form.component';
+import { ReservationsByUsersComponent } from './manage-reservations/reservations-by-users/reservations-by-users.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { CreateUserDialogComponent } from './manage-users/dialogs/create-user-di
     RemoveUserConfirmationDialogComponent,
     ManageRolesDialogComponent,
     ManageRolesComponent,
-    CreateUserDialogComponent
+    CreateUserDialogComponent,
+    ReservationsByHallsComponent,
+    ReservationsByHallsSearchFormComponent,
+    ReservationsByUsersSearchFormComponent,
+    ReservationsByUsersComponent
   ],
   entryComponents: [
     ChangeExpirationDateDialogComponent,

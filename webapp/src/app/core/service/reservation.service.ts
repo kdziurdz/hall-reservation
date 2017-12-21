@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Hall } from './model/hall';
-import { AvailableReservation } from './model/available-reservation';
-import { AvailableReservationSlotSearchParams } from './reservation-creator/search-form/available-reservation-slot-search-params';
-import { SaveReservation } from './model/save-reservation';
-import { Page } from '../core/model/page';
-import { PlannedReservation } from '../core/model/planned-reservations';
-import { PlannedReservationSearchParams } from '../core/model/planned-reservation-search-params';
+import { Hall } from '../../reservation/model/hall';
+import { AvailableReservation } from '../../reservation/model/available-reservation';
+import { AvailableReservationSlotSearchParams } from '../../reservation/reservation-creator/search-form/available-reservation-slot-search-params';
+import { SaveReservation } from '../../reservation/model/save-reservation';
+import { Page } from '../model/page';
+import { PlannedReservation } from '../model/planned-reservations';
+import { PlannedReservationSearchParams } from '../model/planned-reservation-search-params';
 
 export const RESERVATION_URL = 'api/reservation';
 
