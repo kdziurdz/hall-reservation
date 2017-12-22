@@ -35,9 +35,36 @@
             <div formArrayName="hallIds">
               <mat-chip-list>
                 <mat-chip *ngFor="let hall of searchFormGroup.get('hallIds').controls" color="accent"
-                          [removable]="!allHalls.value" (remove)="removeHallFromArray(hall)" [disabled]="allHalls.value"
+                          [removable]="!allHalls.value" (remove)="removeEntityFormArray(hall, searchFormGroup.get('hallIds'))"
+                          [disabled]="allHalls.value"
                           [selectable]="!allHalls.value" [ngClass]="{'disabled-chips': allHalls.value}">
                   {{hall.value.name}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+        </div>
+
+        <div fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start center" fxLayout="column" fxLayoutAlign="center start">
+          <mat-slide-toggle [formControl]="allUsers" labelPosition="before" class="mr-2">Wszyscy użytkownicy</mat-slide-toggle>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-form-field>
+              <input type="text" placeholder="Użytkownik" matInput [formControl]="usersSearchQuery" [matAutocomplete]="auto">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userSelected($event); usersSearchQuery.reset()"
+                              [displayWith]="userSearchDisplayTransform">
+              <mat-option *ngFor="let user of querriedUsers | async" [value]="user">
+                {{ user.firstName + ' ' + user.lastName }}
+              </mat-option>
+            </mat-autocomplete>
+
+            <div formArrayName="hallIds">
+              <mat-chip-list>
+                <mat-chip *ngFor="let user of searchFormGroup.get('userIds').controls" color="accent"
+                          [removable]="!allUsers.value" (remove)="removeEntityFormArray(user, searchFormGroup.get('userIds'))" [disabled]="allUsers.value"
+                          [selectable]="!allUsers.value" [ngClass]="{'disabled-chips': allUsers.value}">
+                  {{user.firstName + ' ' + user.lastName}}
                   <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>
               </mat-chip-list>

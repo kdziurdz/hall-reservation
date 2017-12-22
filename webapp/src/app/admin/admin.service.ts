@@ -8,6 +8,7 @@ import { PlannedReservationSearchWithUserIdParams } from './model/planned-reserv
 import { SearchUsersParams } from './manage-users/search-users-params';
 import { UserDetails } from './manage-users/user-details';
 import { CreateUserDialogCreds } from './manage-users/dialogs/create-user-dialog/create-user-dialog-result';
+import { User } from '../core/model/user';
 
 export const ADMIN_URL = 'api/admin';
 export const USERS_URL = 'api/user';
@@ -89,5 +90,13 @@ export class AdminService {
 
   createUser(createUserCreds: CreateUserDialogCreds) {
     return this.httpClient.post(`${USERS_URL}`, createUserCreds);
+  }
+
+  querySearchUsers(query: any): Observable<Array<User>> {
+    if (query) {
+      return this.httpClient.get<Array<User>>(`/api/admin/users/search?query=${query}`);
+    } else {
+      return Observable.of([]);
+    }
   }
 }

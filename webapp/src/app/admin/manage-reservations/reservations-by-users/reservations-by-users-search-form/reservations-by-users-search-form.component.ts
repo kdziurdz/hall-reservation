@@ -24,35 +24,35 @@ export class ReservationsByUsersSearchFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allHalls = new FormControl(true);
-    this.hallSearchQuery = new FormControl({value: null, disabled: this.allHalls.value});
-
-
-    this.searchFormGroup = new FormGroup({
-      dateFrom: new FormControl(null, Validators.required),
-      dateTo: new FormControl(null, Validators.required),
-      hallIds: new FormArray([], Validators.required),
-      status: new FormControl(null, Validators.required)
-    });
-
-    if (this.allHalls.value) {
-      this.searchFormGroup.get('hallIds').disable();
-    }
-
-    this.hallSearchQuery.valueChanges.subscribe(value => {
-      this.querriedHalls = this.searchHall(value);
-    });
-
-    this.allHalls.valueChanges.subscribe(value => {
-      if (value) {
-        this.hallSearchQuery.disable();
-        this.searchFormGroup.get('hallIds').disable();
-      } else {
-        this.hallSearchQuery.enable();
-        this.searchFormGroup.get('hallIds').enable();
-      }
-
-    });
+    // this.allHalls = new FormControl(true);
+    // this.hallSearchQuery = new FormControl({value: null, disabled: this.allHalls.value});
+    //
+    //
+    // this.searchFormGroup = new FormGroup({
+    //   dateFrom: new FormControl(null, Validators.required),
+    //   dateTo: new FormControl(null, Validators.required),
+    //   hallIds: new FormArray([], Validators.required),
+    //   status: new FormControl(null, Validators.required)
+    // });
+    //
+    // if (this.allHalls.value) {
+    //   this.searchFormGroup.get('hallIds').disable();
+    // }
+    //
+    // this.hallSearchQuery.valueChanges.subscribe(value => {
+    //   this.querriedHalls = this.searchHall(value);
+    // });
+    //
+    // this.allHalls.valueChanges.subscribe(value => {
+    //   if (value) {
+    //     this.hallSearchQuery.disable();
+    //     this.searchFormGroup.get('hallIds').disable();
+    //   } else {
+    //     this.hallSearchQuery.enable();
+    //     this.searchFormGroup.get('hallIds').enable();
+    //   }
+    //
+    // });
   }
 
   hallSelected(event: MatAutocompleteSelectedEvent) {
