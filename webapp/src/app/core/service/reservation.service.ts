@@ -8,6 +8,7 @@ import { SaveReservation } from '../../reservation/model/save-reservation';
 import { Page } from '../model/page';
 import { PlannedReservation } from '../model/planned-reservations';
 import { PlannedReservationSearchParams } from '../model/planned-reservation-search-params';
+import { ManageReservationsSearchParams } from '../../admin/manage-reservations/manage-reservations-search-form/manage-reservations-search-params';
 
 export const RESERVATION_URL = 'api/reservation';
 
@@ -37,6 +38,30 @@ export class ReservationService {
     params = params.set('dateTo', searchParams.dateTo);
     if (searchParams.hallIds) {
       params = params.set('hallIds', searchParams.hallIds.toString());
+    }
+    if (searchParams.sort) {
+      params = params.set('sort', searchParams.sort);
+    }
+    if (searchParams.pageNumber) {
+      params = params.set('page', String(searchParams.pageNumber));
+    }
+    if (searchParams.pageSize) {
+      params = params.set('size', String(searchParams.pageSize));
+    }
+    params = params.set('status', searchParams.status.toString());
+    return this.httpClient.get<Page<PlannedReservation>>(`${RESERVATION_URL}`, {params: params});
+  }
+
+  searchPlannedReservationsByUsers(searchParams: ManageReservationsSearchParams): Observable<Page<PlannedReservation>> {
+    let params: HttpParams = new HttpParams();
+
+    params = params.set('dateFrom', searchParams.dateFrom);
+    params = params.set('dateTo', searchParams.dateTo);
+    if (searchParams.hallIds) {
+      params = params.set('hallIds', searchParams.hallIds.toString());
+    }
+    if (searchParams.userIds) {
+      params = params.set('userIds', searchParams.hallIds.toString());
     }
     if (searchParams.sort) {
       params = params.set('sort', searchParams.sort);

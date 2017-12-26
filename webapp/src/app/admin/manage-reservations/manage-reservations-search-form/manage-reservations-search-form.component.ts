@@ -2,18 +2,18 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
-import { PlannedReservationSearchParams } from '../../../../core/model/planned-reservation-search-params';
-import { Hall } from '../../../../reservation/model/hall';
-import { ReservationStatus } from '../../../../reservation/my-reservations/reservation-status.enum';
-import { ReservationService } from '../../../../core/service/reservation.service';
-import { User } from '../../../../core/model/user';
-import { AdminService } from '../../../admin.service';
+import { Hall } from '../../../reservation/model/hall';
+import { User } from '../../../core/model/user';
+import { ReservationStatus } from '../../../reservation/my-reservations/reservation-status.enum';
+import { ReservationService } from '../../../core/service/reservation.service';
+import { AdminService } from '../../admin.service';
+import { ManageReservationsSearchParams } from './manage-reservations-search-params';
 
 @Component({
-  selector: 'hr-reservations-by-halls-search-form',
-  templateUrl: './reservations-by-halls-search-form.component.html'
+  selector: 'hr-manage-reservations-search-form',
+  templateUrl: './manage-reservations-search-form.component.html'
 })
-export class ReservationsByHallsSearchFormComponent implements OnInit {
+export class ManageReservationsSearchFormComponent implements OnInit {
   searchFormGroup: FormGroup;
   hallSearchQuery: FormControl;
   usersSearchQuery: FormControl;
@@ -23,7 +23,7 @@ export class ReservationsByHallsSearchFormComponent implements OnInit {
   allUsers: FormControl;
   reservationStatuses = ReservationStatus;
 
-  @Output() onSearchParamsChanged: EventEmitter<PlannedReservationSearchParams> = new EventEmitter<PlannedReservationSearchParams>();
+  @Output() onSearchParamsChanged: EventEmitter<ManageReservationsSearchParams> = new EventEmitter<ManageReservationsSearchParams>();
 
   constructor(private reservationService: ReservationService, private adminService: AdminService) {
   }
@@ -113,10 +113,11 @@ export class ReservationsByHallsSearchFormComponent implements OnInit {
   submit() {
     let values = this.searchFormGroup.getRawValue();
 
-    let searchParams: PlannedReservationSearchParams = {
+    let searchParams: ManageReservationsSearchParams = {
       dateFrom: this.formatDate(values.dateFrom),
       dateTo: this.formatDate(values.dateTo),
       hallIds: Array.of(values.hallIds),
+      userIds: Array.of(values.userIds),
       status: values.status
     };
 
