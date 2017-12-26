@@ -55,6 +55,8 @@ export class ReservationService {
   searchPlannedReservationsByUsers(searchParams: ManageReservationsSearchParams): Observable<Page<PlannedReservation>> {
     let params: HttpParams = new HttpParams();
 
+    console.log('przed request', searchParams);
+
     params = params.set('dateFrom', searchParams.dateFrom);
     params = params.set('dateTo', searchParams.dateTo);
     if (searchParams.hallIds) {
@@ -73,7 +75,7 @@ export class ReservationService {
       params = params.set('size', String(searchParams.pageSize));
     }
     params = params.set('status', searchParams.status.toString());
-    return this.httpClient.get<Page<PlannedReservation>>(`${RESERVATION_URL}`, {params: params});
+    return this.httpClient.get<Page<PlannedReservation>>(`${RESERVATION_URL}/by-users`, {params: params});
   }
 
   searchHalls(query: any): Observable<Array<Hall>> {

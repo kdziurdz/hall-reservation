@@ -7,6 +7,7 @@ import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.hall.Hall;
 import pl.edu.pk.hallreservation.model.user.User;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,4 +28,6 @@ public interface UserRepository extends BaseRepository<User> {
         }
         return user;
     }
+
+    List<User> findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(String query, String query1);
 }

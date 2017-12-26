@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PlannedReservationSearchParams } from '../core/model/planned-reservation-search-params';
 import { Observable } from 'rxjs/Observable';
 import { Page } from '../core/model/page';
-import { PlannedReservation } from '../core/model/planned-reservations';
-import { PlannedReservationSearchWithUserIdParams } from './model/planned-reservation-search-with-user-id-params';
 import { SearchUsersParams } from './manage-users/search-users-params';
 import { UserDetails } from './manage-users/user-details';
 import { CreateUserDialogCreds } from './manage-users/dialogs/create-user-dialog/create-user-dialog-result';
@@ -18,30 +15,6 @@ export class AdminService {
 
   constructor(private httpClient: HttpClient) {
 
-  }
-
-  searchPlannedReservations(searchParams: PlannedReservationSearchWithUserIdParams): Observable<Page<PlannedReservation>> {
-    let params: HttpParams = new HttpParams();
-
-    params = params.set('dateFrom', searchParams.dateFrom);
-    params = params.set('dateTo', searchParams.dateTo);
-    if (searchParams.hallIds) {
-      params = params.set('hallIds', searchParams.hallIds.toString());
-    }
-    if (searchParams.userId) {
-      params = params.set('userId', searchParams.userId.toString());
-    }
-    if (searchParams.sort) {
-      params = params.set('sort', searchParams.sort);
-    }
-    if (searchParams.pageNumber) {
-      params = params.set('page', String(searchParams.pageNumber));
-    }
-    if (searchParams.pageSize) {
-      params = params.set('size', String(searchParams.pageSize));
-    }
-    params = params.set('status', searchParams.status.toString());
-    return this.httpClient.get<Page<PlannedReservation>>(`${ADMIN_URL}`, {params: params});
   }
 
   searchUsers(searchParams: SearchUsersParams): Observable<Page<UserDetails>> {
@@ -94,9 +67,7 @@ export class AdminService {
 
   querySearchUsers(query: any): Observable<Array<User>> {
     if (query) {
-      return this.httpClient.get<Array<User>>(`/api/admin/users/search?query=${query}`);
-    } else {
-      return Observable.of([]);
+      return this.httpClient.get<Array<User>>(`${USERS_URL}/search?query=${query}`);
     }
   }
 }

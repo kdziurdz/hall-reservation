@@ -15,11 +15,26 @@ public interface ReservationRepository extends BaseRepository<Reservation> {
 
     List<Reservation> findAllByDateAndHall_IdAndCancelled(LocalDate date, Long hall_Id, Boolean cancelled);
 
-    Page<Reservation> findAllByUser_idAndDateBetween(Pageable pageable, Long user_id,LocalDate dateAfter, LocalDate dateBefore);
+    Page<Reservation> findAllByUser_idInAndDateBetween(Pageable pageable, List<Long> userIds, LocalDate dateAfter, LocalDate dateBefore);
 
-    Page<Reservation> findAllByUser_idAndCancelledAndDateBetween(Pageable pageable, Long user_id, Boolean cancelled,
-                                                               LocalDate dateAfter, LocalDate dateBefore);
-    default Reservation getOneById(Long id){
+    Page<Reservation> findAllByUser_idInAndDateBetweenAndHall_IdIn(Pageable pageable, List<Long> userIds, LocalDate dateAfter, LocalDate dateBefore, List<Long> hallIds);
+
+    Page<Reservation> findAllByUser_idInAndCancelledAndDateBetween(Pageable pageable, List<Long> userIds, Boolean cancelled,
+                                                                 LocalDate dateAfter, LocalDate dateBefore);
+
+    default Reservation getOneById(Long id) {
         return findOneById(id).orElseThrow(() -> new ObjectNotFoundException("Reservation", id));
     }
+
+    Page<Reservation> findAllByUser_idInAndCancelledAndDateBetweenAndHall_IdIn(Pageable pageable, List<Long> ids, boolean b,
+                                                                             LocalDate dateFrom, LocalDate dateTo,
+                                                                             List<Long> hallIds);
+
+    Page<Reservation> findAllByAndDateBetween(Pageable pageable, LocalDate dateFrom, LocalDate dateTo);
+
+    Page<Reservation> findAllByAndCancelledAndDateBetween(Pageable pageable, boolean b, LocalDate dateFrom, LocalDate dateTo);
+
+    Page<Reservation> findAllByHall_idInAndCancelledAndDateBetween(Pageable pageable, List<Long> hallIds, boolean cancelled, LocalDate dateFrom, LocalDate dateTo);
+
+    Page<Reservation> findAllByHall_idInAndDateBetween(Pageable pageable, List<Long> hallIds, LocalDate dateFrom, LocalDate dateTo);
 }

@@ -8,6 +8,7 @@ import { ReservationStatus } from '../../../reservation/my-reservations/reservat
 import { ReservationService } from '../../../core/service/reservation.service';
 import { AdminService } from '../../admin.service';
 import { ManageReservationsSearchParams } from './manage-reservations-search-params';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'hr-manage-reservations-search-form',
@@ -25,10 +26,15 @@ export class ManageReservationsSearchFormComponent implements OnInit {
 
   @Output() onSearchParamsChanged: EventEmitter<ManageReservationsSearchParams> = new EventEmitter<ManageReservationsSearchParams>();
 
-  constructor(private reservationService: ReservationService, private adminService: AdminService) {
+  constructor(private reservationService: ReservationService, private adminService: AdminService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    let routeUserIds = this.route.snapshot.params;
+
+    console.log('takie paramsy', routeUserIds);
+
     this.allHalls = new FormControl(true);
     this.allUsers = new FormControl(true);
     this.hallSearchQuery = new FormControl({value: null, disabled: this.allHalls.value});
@@ -82,12 +88,11 @@ export class ManageReservationsSearchFormComponent implements OnInit {
     });
   }
 
-  hallSelected(event: MatAutocompleteSelectedEvent) {
-    this.searchFormGroup.get('hallIds').setValue(event.option.value);
-  }
-
-  userSelected(event: MatAutocompleteSelectedEvent) {
-    this.searchFormGroup.get('userIds').setValue(event.option.value);
+  addEntityToFormArray(event: MatAutocompleteSelectedEvent, array: FormArray) {
+    console.log('dodaje do', array);
+    console.log('wartosc', event.option.value);
+    array.push(new FormControl(event.option.value));
+    console.log('dodalem');
   }
 
   searchHall(query): Observable<Array<Hall>> {
@@ -103,7 +108,7 @@ export class ManageReservationsSearchFormComponent implements OnInit {
   };
 
   userSearchDisplayTransform = (value: any) => {
-    return value ? value.firstName + value.lastName: null;
+    return value ? value.firstName + ' ' + value.lastName : null;
   };
 
   removeEntityFormArray(entity, formArray: FormArray) {
@@ -116,8 +121,8 @@ export class ManageReservationsSearchFormComponent implements OnInit {
     let searchParams: ManageReservationsSearchParams = {
       dateFrom: this.formatDate(values.dateFrom),
       dateTo: this.formatDate(values.dateTo),
-      hallIds: Array.of(values.hallIds),
-      userIds: Array.of(values.userIds),
+      hallIds: values.hallIds && values.hallIds.length > 0 ? values.hallIds : null,
+      userIds: values.userIds && values.userIds.length > 0 ? values.userIds : null,
       status: values.status
     };
 

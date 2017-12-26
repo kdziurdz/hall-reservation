@@ -3,7 +3,6 @@ import {
   MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig, MatSort, MatTableDataSource, PageEvent,
   Sort
 } from '@angular/material';
-import { PlannedReservationSearchParams } from '../../core/model/planned-reservation-search-params';
 import { PlannedReservation } from '../../core/model/planned-reservations';
 import { Page } from '../../core/model/page';
 import { ReservationService } from '../../core/service/reservation.service';
@@ -11,17 +10,18 @@ import { LessonDateTimeService } from '../../core/service/lesson-date-time.servi
 import { ReservationStatus } from '../../reservation/my-reservations/reservation-status.enum';
 import { ReservationCancellationDialog } from '../../shared/components/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
 import { CancellationInfoDialog } from '../../shared/components/cancellation-info-dialog/cancellation-info-dialog.component';
+import { ManageReservationsSearchParams } from './manage-reservations-search-form/manage-reservations-search-params';
 
 @Component({
-  selector: 'hr-reservations-by-halls',
-  templateUrl: './reservations-by-halls.component.html'
+  selector: 'hr-manage-reservations',
+  templateUrl: './manage-reservations.component.html'
 })
-export class ReservationsByHallsComponent implements OnInit, AfterViewInit {
+export class ManageReservationsComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['date', 'lessonNumbers', 'hall', 'actions'];
   page: Page<PlannedReservation>;
   dataSource = new MatTableDataSource<PlannedReservation>([]);
-  actualSearchParams: PlannedReservationSearchParams;
+  actualSearchParams: ManageReservationsSearchParams;
   todayDate: Date;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -37,20 +37,21 @@ export class ReservationsByHallsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
 
-    let inTwoWeeks = new Date();
-    inTwoWeeks.setDate(inTwoWeeks.getDate() + 14);
-
-
-    let params: PlannedReservationSearchParams = {
-      dateFrom: this.lessonDateTimeService.getDateAsString(this.todayDate),
-      dateTo: this.lessonDateTimeService.getDateAsString(inTwoWeeks),
-      hallIds: null,
-      sort: 'date,asc',
-      pageSize: 10,
-      pageNumber: 0,
-      status: [ReservationStatus.ACTIVE, ReservationStatus.CANCELLED]
-    };
-    this.onSearchParamsChanged(params);
+    // let inTwoWeeks = new Date();
+    // inTwoWeeks.setDate(inTwoWeeks.getDate() + 14);
+    //
+    //
+    // let params: ManageReservationsSearchParams = {
+    //   dateFrom: this.lessonDateTimeService.getDateAsString(this.todayDate),
+    //   dateTo: this.lessonDateTimeService.getDateAsString(inTwoWeeks),
+    //   hallIds: null,
+    //   userIds: null,
+    //   sort: 'date,asc',
+    //   pageSize: 10,
+    //   pageNumber: 0,
+    //   status: [ReservationStatus.ACTIVE, ReservationStatus.CANCELLED]
+    // };
+    // this.onSearchParamsChanged(params);
   }
 
 
@@ -65,11 +66,9 @@ export class ReservationsByHallsComponent implements OnInit, AfterViewInit {
     this.onSearchParamsChanged(this.actualSearchParams);
   }
 
-  onSearchParamsChanged(params: PlannedReservationSearchParams) {
-    console.log('onSearchParamsChanged');
+  onSearchParamsChanged(params: ManageReservationsSearchParams) {
     this.actualSearchParams = params;
-    this.reservationService.searchPlannedReservations(params).subscribe(searchResults => {
-      console.log(searchResults);
+    this.reservationService.searchPlannedReservationsByUsers(params).subscribe(searchResults => {
       this.page = searchResults;
       this.dataSource.data = searchResults.content;
     });

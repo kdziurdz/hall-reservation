@@ -75,24 +75,49 @@ public class ReservationService {
 
     public Page<ReservationDTO> getPage(Pageable pageable, List<String> statuses, LocalDate dateFrom, LocalDate dateTo, List<Long> hallIds) {
 
+        List<Long> userIds = Collections.singletonList(userService.getActualUser().getId());
+
+        return getPage(pageable, statuses, dateFrom, dateTo, hallIds, userIds);
+    }
+
+    public Page<ReservationDTO> getPage(Pageable pageable, List<String> statuses, LocalDate dateFrom, LocalDate dateTo,
+                                        List<Long> hallIds, List<Long> userIds) {
+
         Page<Reservation> page;
 
-        if(hallIds == null) {
-            if(statuses.size() == 2) {
-                page = reservationRepository.findAllByUser_idAndDateBetween(pageable,
-                        userService.getActualUser().getId(), dateFrom, dateTo);
-            } else if(statuses.size() == 1 && statuses.get(0).equals("CANCELLED")) {
-                page = reservationRepository.findAllByUser_idAndCancelledAndDateBetween(pageable,
-                        userService.getActualUser().getId(), true, dateFrom, dateTo);
+
+        if (userIds == null && hallIds == null) {
+            if (statuses.size() == 2) {
+                page = reservationRepository.findAllByAndDateBetween(pageable, dateFrom, dateTo);
             } else {
-                page = reservationRepository.findAllByUser_idAndCancelledAndDateBetween(pageable,
-                        userService.getActualUser().getId(), false, dateFrom, dateTo);
+                page = reservationRepository.findAllByAndCancelledAndDateBetween(pageable,
+                        statuses.get(0).equals("CANCELLED"), dateFrom, dateTo);
+            }
+        } else if (hallIds == null) {
+            if (statuses.size() == 2) {
+                page = reservationRepository.findAllByUser_idInAndDateBetween(pageable,
+                        userIds, dateFrom, dateTo);
+            } else {
+                page = reservationRepository.findAllByUser_idInAndCancelledAndDateBetween(pageable,
+                        userIds, statuses.get(0).equals("CANCELLED"), dateFrom, dateTo);
+            }
+        } else if (userIds == null) {
+            if (statuses.size() == 2) {
+                page = reservationRepository.findAllByHall_idInAndDateBetween(pageable,
+                        hallIds, dateFrom, dateTo);
+            } else {
+                page = reservationRepository.findAllByHall_idInAndCancelledAndDateBetween(pageable,
+                        hallIds, statuses.get(0).equals("CANCELLED"), dateFrom, dateTo);
             }
         } else {
-            return null;
+            if (statuses.size() == 2) {
+                page = reservationRepository.findAllByUser_idInAndDateBetweenAndHall_IdIn(pageable,
+                        userIds, dateFrom, dateTo, hallIds);
+            } else {
+                page = reservationRepository.findAllByUser_idInAndCancelledAndDateBetweenAndHall_IdIn(pageable,
+                        userIds, statuses.get(0).equals("CANCELLED"), dateFrom, dateTo, hallIds);
+            }
         }
-
-
 
         return page.map(reservationMapper::asDTO);
 
@@ -186,7 +211,7 @@ public class ReservationService {
     public void cancel(Long reservationId, String reason) {
         Reservation reservation = reservationRepository.getOneById(reservationId);
         User user = userService.getActualUser();
-        if(!reservation.getUser().getId().equals(user.getId())) {
+        if (!reservation.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException(String.format("User with ID %d is not owner of reservation with id %d",
                     user.getId(), reservationId));
         } else {

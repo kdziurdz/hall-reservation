@@ -10,10 +10,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.user.mapper.UserMapper;
-import pl.edu.pk.hallreservation.controller.user.vm.BaseUserDetailsVM;
-import pl.edu.pk.hallreservation.controller.user.vm.NewPasswordCreds;
-import pl.edu.pk.hallreservation.controller.user.vm.SaveUserVM;
-import pl.edu.pk.hallreservation.controller.user.vm.UserDetailsVM;
+import pl.edu.pk.hallreservation.controller.user.vm.*;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.model.user.UserAuthority;
 import pl.edu.pk.hallreservation.service.user.UserService;
@@ -23,6 +20,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("user")
@@ -111,6 +109,14 @@ public class UserController {
         userService.create(userMapper.asDTO(saveUser));
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserVM>> search(@RequestParam String query) {
+        List<UserDTO> userDTOS = userService.search(query);
+
+        return new ResponseEntity<>(userDTOS.stream().map(userMapper::asVM).collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 
     @PostMapping("/create-password")

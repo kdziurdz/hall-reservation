@@ -116,4 +116,9 @@ public class UserService implements UserDetailsService {
         user.setFirstLogin(false);
         userRepository.save(user);
     }
+
+    public List<UserDTO> search(String query) {
+        List<User> foundUsers = userRepository.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(query, query);
+        return foundUsers.stream().map(userDTOMapper::asDTO).collect(Collectors.toList());
+    }
 }

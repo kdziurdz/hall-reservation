@@ -23,9 +23,10 @@
           <mat-slide-toggle [formControl]="allHalls" labelPosition="before" class="mr-2">Wszystkie sale</mat-slide-toggle>
           <div fxLayout="row" fxLayoutAlign="start center">
             <mat-form-field>
-              <input type="text" placeholder="Sala" matInput [formControl]="hallSearchQuery" [matAutocomplete]="auto">
+              <input type="text" placeholder="Sala" matInput [formControl]="hallSearchQuery" [matAutocomplete]="autoHall">
             </mat-form-field>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="hallSelected($event); hallSearchQuery.reset()"
+            <mat-autocomplete #autoHall="matAutocomplete" (optionSelected)="addEntityToFormArray($event,
+             searchFormGroup.get('hallIds')); hallSearchQuery.reset()"
                               [displayWith]="hallSearchDisplayTransform">
               <mat-option *ngFor="let hall of querriedHalls | async" [value]="hall">
                 {{ hall.name }}
@@ -50,16 +51,17 @@
           <mat-slide-toggle [formControl]="allUsers" labelPosition="before" class="mr-2">Wszyscy użytkownicy</mat-slide-toggle>
           <div fxLayout="row" fxLayoutAlign="start center">
             <mat-form-field>
-              <input type="text" placeholder="Użytkownik" matInput [formControl]="usersSearchQuery" [matAutocomplete]="auto">
+              <input type="text" placeholder="Użytkownik" matInput [formControl]="usersSearchQuery" [matAutocomplete]="autoUser">
             </mat-form-field>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userSelected($event); usersSearchQuery.reset()"
+            <mat-autocomplete #autoUser="matAutocomplete" (optionSelected)="addEntityToFormArray($event, searchFormGroup.get('userIds'));
+                              usersSearchQuery.reset()"
                               [displayWith]="userSearchDisplayTransform">
               <mat-option *ngFor="let user of querriedUsers | async" [value]="user">
                 {{ user.firstName + ' ' + user.lastName }}
               </mat-option>
             </mat-autocomplete>
 
-            <div formArrayName="hallIds">
+            <div formArrayName="userIds">
               <mat-chip-list>
                 <mat-chip *ngFor="let user of searchFormGroup.get('userIds').controls" color="accent"
                           [removable]="!allUsers.value" (remove)="removeEntityFormArray(user, searchFormGroup.get('userIds'))" [disabled]="allUsers.value"

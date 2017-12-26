@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.reservation.vm.AvailableReservationVM;
 import pl.edu.pk.hallreservation.controller.reservation.vm.ReservationVM;
@@ -49,7 +50,7 @@ public class ReservationController {
         List<AvailableReservationDTO> dtos =
                 reservationService.search(dateFrom, dateTo, duration, hallIds);
 
-        return new ResponseEntity<>(reservationMapper.asAvailableReservationsVM(dtos),HttpStatus.OK);
+        return new ResponseEntity<>(reservationMapper.asAvailableReservationsVM(dtos), HttpStatus.OK);
     }
 
     @PatchMapping("{id}/cancel")
@@ -68,6 +69,19 @@ public class ReservationController {
 
         Page<ReservationDTO> dtos = reservationService.getPage(pageable, status, dateFrom, dateTo, hallIds);
 
-        return new ResponseEntity<>(dtos.map(reservationMapper::asVM),HttpStatus.OK);
+        return new ResponseEntity<>(dtos.map(reservationMapper::asVM), HttpStatus.OK);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("by-users")
+    public ResponseEntity<Page<ReservationVM>> searchByUsers(Pageable pageable, @RequestParam List<String> status,
+                                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFrom,
+                                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateTo,
+                                                             @RequestParam(required = false) List<Long> userIds,
+                                                             @RequestParam(required = false) List<Long> hallIds) {
+
+        Page<ReservationDTO> dtos = reservationService.getPage(pageable, status, dateFrom, dateTo, hallIds, userIds);
+
+        return new ResponseEntity<>(dtos.map(reservationMapper::asVM), HttpStatus.OK);
     }
 }
