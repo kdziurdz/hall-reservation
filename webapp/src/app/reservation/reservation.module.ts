@@ -24,13 +24,9 @@ import { ReservationCancellationDialog } from '../shared/components/reservation-
     FutureReservationsComponent,
     PlannedReservationSearchFormComponent,
     PlannedReservationsViewerComponent,
-    ReservationCancellationDialog,
-    CancellationInfoDialog
   ],
   entryComponents: [
     ReservationConfirmationDialog,
-    ReservationCancellationDialog,
-    CancellationInfoDialog
   ],
   imports: [
     ReservationRoutingModule,

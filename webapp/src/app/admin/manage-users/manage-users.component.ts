@@ -13,6 +13,7 @@ import { RemoveUserConfirmationDialogComponent } from './dialogs/remove-user-con
 import { ManageRolesDialogComponent } from './dialogs/manage-roles-dialog/manage-roles-dialog.component';
 import { CreateUserDialogCreds } from './dialogs/create-user-dialog/create-user-dialog-result';
 import { CreateUserDialogComponent } from './dialogs/create-user-dialog/create-user-dialog.component';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'hr-manage-users',
@@ -28,8 +29,9 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private adminService: AdminService,
-              private snackBar: MatSnackBar, private lessonDateTimeService: LessonDateTimeService) {
+  constructor(private dialog: MatDialog, private adminService: AdminService, private router: Router,
+              private snackBar: MatSnackBar, private activatedRoute: ActivatedRoute,
+              private lessonDateTimeService: LessonDateTimeService) {
   }
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
     let params: SearchUsersParams = {
       sort: 'lastName,asc',
       pageSize: 10,
-      pageNumber: 0,
+      pageNumber: 0
     };
     this.onSearchParamsChanged(params);
   }
@@ -71,6 +73,18 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
 
   showReservations(userDetails: UserDetails) {
     console.log(userDetails);
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        id: userDetails.id
+      },
+      relativeTo: this.activatedRoute
+    };
+
+    // Navigate to the login page with extras
+    this.router.navigate(['../', 'manage-reservations'], navigationExtras);
   }
 
   createUser() {
@@ -79,10 +93,10 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe((result: CreateUserDialogCreds) => {
       if (result) {
         this.adminService.createUser(result)
-        .subscribe(() => {
-          this.showSnack('Pomyślnie utworzono użytkownika');
-          this.onSearchParamsChanged(this.actualSearchParams);
-        });
+          .subscribe(() => {
+            this.showSnack('Pomyślnie utworzono użytkownika');
+            this.onSearchParamsChanged(this.actualSearchParams);
+          });
       }
     });
   }
@@ -100,10 +114,10 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.adminService.updateRoles(result, userDetails.id)
-        .subscribe(() => {
-          this.showSnack('Pomyślnie zaktualizowano role użytkownika');
-          this.onSearchParamsChanged(this.actualSearchParams);
-        });
+          .subscribe(() => {
+            this.showSnack('Pomyślnie zaktualizowano role użytkownika');
+            this.onSearchParamsChanged(this.actualSearchParams);
+          });
       }
     });
   }
@@ -137,9 +151,9 @@ export class ManageUsersComponent implements AfterViewInit, OnInit {
       if (result) {
         this.adminService.setExpirationDate(this.lessonDateTimeService.getDateAsString(result), userDetails.id)
           .subscribe(() => {
-          this.showSnack('Pomyślnie zmieniono datę ważności konta');
-          this.onSearchParamsChanged(this.actualSearchParams);
-        });
+            this.showSnack('Pomyślnie zmieniono datę ważności konta');
+            this.onSearchParamsChanged(this.actualSearchParams);
+          });
       }
     });
   }

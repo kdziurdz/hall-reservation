@@ -66,7 +66,7 @@
                 <mat-chip *ngFor="let user of searchFormGroup.get('userIds').controls" color="accent"
                           [removable]="!allUsers.value" (remove)="removeEntityFormArray(user, searchFormGroup.get('userIds'))" [disabled]="allUsers.value"
                           [selectable]="!allUsers.value" [ngClass]="{'disabled-chips': allUsers.value}">
-                  {{user.firstName + ' ' + user.lastName}}
+                  {{user.value.firstName + ' ' + user.value.lastName}}
                   <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>
               </mat-chip-list>

@@ -63,7 +63,8 @@ export class ReservationService {
       params = params.set('hallIds', searchParams.hallIds.toString());
     }
     if (searchParams.userIds) {
-      params = params.set('userIds', searchParams.hallIds.toString());
+      console.log(searchParams.userIds);
+      params = params.set('userIds', searchParams.userIds.toString());
     }
     if (searchParams.sort) {
       params = params.set('sort', searchParams.sort);

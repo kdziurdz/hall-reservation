@@ -31,12 +31,13 @@ export class ManageReservationsSearchFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let routeUserIds = this.route.snapshot.params;
-
-    console.log('takie paramsy', routeUserIds);
+    let queryUserId = this.route.snapshot.queryParamMap.get('id');
+    let queryUserFirstName = this.route.snapshot.queryParamMap.get('firstName');
+    let queryUserLastName = this.route.snapshot.queryParamMap.get('lastName');
+    let userGiven: boolean = !!queryUserFirstName && !!queryUserLastName && !!queryUserId;
 
     this.allHalls = new FormControl(true);
-    this.allUsers = new FormControl(true);
+    this.allUsers = new FormControl(!userGiven);
     this.hallSearchQuery = new FormControl({value: null, disabled: this.allHalls.value});
     this.usersSearchQuery = new FormControl({value: null, disabled: this.allUsers.value});
 
@@ -48,6 +49,11 @@ export class ManageReservationsSearchFormComponent implements OnInit {
       userIds: new FormArray([], Validators.required),
       status: new FormControl(null, Validators.required)
     });
+
+    if(userGiven) {
+      (this.searchFormGroup.get('userIds') as FormArray)
+        .push(new FormControl({firstName: queryUserFirstName, lastName: queryUserLastName, id: queryUserId}));
+    }
 
     if (this.allHalls.value) {
       this.searchFormGroup.get('hallIds').disable();
@@ -121,8 +127,8 @@ export class ManageReservationsSearchFormComponent implements OnInit {
     let searchParams: ManageReservationsSearchParams = {
       dateFrom: this.formatDate(values.dateFrom),
       dateTo: this.formatDate(values.dateTo),
-      hallIds: values.hallIds && values.hallIds.length > 0 ? values.hallIds : null,
-      userIds: values.userIds && values.userIds.length > 0 ? values.userIds : null,
+      hallIds: values.hallIds && values.hallIds.length > 0 ? values.hallIds.map(hall => hall.id) : null,
+      userIds: values.userIds && values.userIds.length > 0 ? values.userIds.map(user => user.id) : null,
       status: values.status
     };
 

@@ -7,7 +7,6 @@ import { PlannedReservation } from '../../core/model/planned-reservations';
 import { Page } from '../../core/model/page';
 import { ReservationService } from '../../core/service/reservation.service';
 import { LessonDateTimeService } from '../../core/service/lesson-date-time.service';
-import { ReservationStatus } from '../../reservation/my-reservations/reservation-status.enum';
 import { ReservationCancellationDialog } from '../../shared/components/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
 import { CancellationInfoDialog } from '../../shared/components/cancellation-info-dialog/cancellation-info-dialog.component';
 import { ManageReservationsSearchParams } from './manage-reservations-search-form/manage-reservations-search-params';
@@ -18,7 +17,7 @@ import { ManageReservationsSearchParams } from './manage-reservations-search-for
 })
 export class ManageReservationsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['date', 'lessonNumbers', 'hall', 'actions'];
+  displayedColumns = ['date', 'lessonNumbers', 'hall', 'owner', 'actions'];
   page: Page<PlannedReservation>;
   dataSource = new MatTableDataSource<PlannedReservation>([]);
   actualSearchParams: ManageReservationsSearchParams;
@@ -36,22 +35,6 @@ export class ManageReservationsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-
-    // let inTwoWeeks = new Date();
-    // inTwoWeeks.setDate(inTwoWeeks.getDate() + 14);
-    //
-    //
-    // let params: ManageReservationsSearchParams = {
-    //   dateFrom: this.lessonDateTimeService.getDateAsString(this.todayDate),
-    //   dateTo: this.lessonDateTimeService.getDateAsString(inTwoWeeks),
-    //   hallIds: null,
-    //   userIds: null,
-    //   sort: 'date,asc',
-    //   pageSize: 10,
-    //   pageNumber: 0,
-    //   status: [ReservationStatus.ACTIVE, ReservationStatus.CANCELLED]
-    // };
-    // this.onSearchParamsChanged(params);
   }
 
 
@@ -91,7 +74,7 @@ export class ManageReservationsComponent implements OnInit, AfterViewInit {
           let snackConfig: MatSnackBarConfig = new MatSnackBarConfig();
           snackConfig.duration = 2000;
 
-          this.snackBar.open("Pomyślnie odwołano rezerwację", null, snackConfig);
+          this.snackBar.open('Pomyślnie odwołano rezerwację', null, snackConfig);
           this.onSearchParamsChanged(this.actualSearchParams);
         });
       }

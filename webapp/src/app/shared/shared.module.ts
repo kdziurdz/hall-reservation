@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HasAnyRoleDirective } from './directives/has-any-role/has-any-role.directive';
 import { HasRoleDirective } from './directives/has-role/has-role.directive';
 import { AboutComponent } from './components/about/about.component';
+import { ReservationCancellationDialog } from './components/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
+import { CancellationInfoDialog } from './components/cancellation-info-dialog/cancellation-info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,13 @@ import { AboutComponent } from './components/about/about.component';
     PageNotFoundComponent,
     HasAnyRoleDirective,
     HasRoleDirective,
-    AboutComponent
+    AboutComponent,
+    ReservationCancellationDialog,
+    CancellationInfoDialog
+  ],
+  entryComponents: [
+    ReservationCancellationDialog,
+    CancellationInfoDialog
   ],
   imports: [
     FlexLayoutModule,

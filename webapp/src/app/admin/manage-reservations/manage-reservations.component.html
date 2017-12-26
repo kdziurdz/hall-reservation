@@ -6,28 +6,36 @@
     <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
 
       <ng-container matColumnDef="date">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Data</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Data</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.date}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="lessonNumbers">
-        <mat-header-cell *matHeaderCellDef> Numery lekcji</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Numery lekcji</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.lessonNumbers}}</mat-cell>
       </ng-container>
 
+
+      <ng-container matColumnDef="owner">
+        <mat-header-cell *matHeaderCellDef>Zarezerwował</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.user.firstName + ' ' + element.user.lastName}}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="hall">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Sala</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.hall.name}}</mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="60px"> Sala</mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="60px">{{element.hall.name}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button class="mat-raised-button mat-warn" *ngIf="!element.cancelled && !isBeforeToday(element.date)"
-                  type="button" role="button" (click)="cancel(element)">Odwołaj
-          </button>
-          <button *ngIf="element.cancelled" class="mat-raised-button mat-primary" role="button" color="primary"
-                  type="button" role="button" (click)="info(element)">Info
+        <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="60px">
+          <button mat-icon-button class="mat-icon-button" [matMenuTriggerFor]="manageReservationsActionsMenu">
+            <mat-icon>more_vert</mat-icon>
+            <mat-menu #manageReservationsActionsMenu="matMenu">
+              <button mat-menu-item *ngIf="!element.cancelled && !isBeforeToday(element.date)"
+                      (click)="cancel(element)">Odwołaj</button>
+              <button mat-menu-item *ngIf="element.cancelled" (click)="info(element)">Info</button>
+            </mat-menu>
           </button>
         </mat-cell>
       </ng-container>
