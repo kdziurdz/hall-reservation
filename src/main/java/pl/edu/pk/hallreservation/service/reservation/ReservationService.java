@@ -7,6 +7,7 @@ import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
+import pl.edu.pk.hallreservation.service.classesperiod.ClassPeriodService;
 import pl.edu.pk.hallreservation.service.hall.HallService;
 import pl.edu.pk.hallreservation.service.reservation.dto.ReservationDTO;
 import pl.edu.pk.hallreservation.service.reservation.mapper.ReservationMapper;
@@ -28,15 +29,18 @@ import java.util.stream.Collectors;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final HallService hallService;
+    private final ClassPeriodService classPeriodService;
     private final UserService userService;
     private final ReservationMapper reservationMapper;
 
     public ReservationService(ReservationRepository reservationRepository, HallService hallService,
-                              UserService userService, ReservationMapper reservationMapper) {
+                              UserService userService, ReservationMapper reservationMapper,
+                              ClassPeriodService classPeriodService) {
         this.reservationRepository = reservationRepository;
         this.hallService = hallService;
         this.userService = userService;
         this.reservationMapper = reservationMapper;
+        this.classPeriodService = classPeriodService;
     }
 
     public void create(@NotNull SaveReservationDTO saveReservationDTO) {
@@ -133,31 +137,34 @@ public class ReservationService {
     }
 
     private void checkLessonHourAvailability(Set<LectureDTO> lectures, LocalDate date, List<Integer> lessonNumbers) {
-        boolean isEven = isWeekEven(date);
-        int dayOfWeek = date.getDayOfWeek().getValue();
+        if(classPeriodService.isClassPeriod(date)){
+            boolean isEven = isWeekEven(date);
+            int dayOfWeek = date.getDayOfWeek().getValue();
 
-        Set<LectureDTO> desiredLectures = lectures.stream()
-                .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek
-                        && lecture.getEven().equals(isEven)
-                        && lecture.getFree()).collect(Collectors.toSet());
+            Set<LectureDTO> desiredLectures = lectures.stream()
+                    .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek
+                            && lecture.getEven().equals(isEven)
+                            && lecture.getFree()).collect(Collectors.toSet());
 
-        for (Integer lessonNumber : lessonNumbers) {
-            boolean isFree = desiredLectures.stream().anyMatch(lecture -> Objects.equals(lecture.getLessonNumber(), lessonNumber));
+            for (Integer lessonNumber : lessonNumbers) {
+                boolean isFree = desiredLectures.stream().anyMatch(lecture -> Objects.equals(lecture.getLessonNumber(), lessonNumber));
 
-            if (!isFree) {
-                throw new IllegalArgumentException(String
-                        .format("Lesson %d, at %tD is not free. Week is even: %b", lessonNumber, date, isEven));
+                if (!isFree) {
+                    throw new IllegalArgumentException(String
+                            .format("Lesson %d, at %tD is not free. Week is even: %b", lessonNumber, date, isEven));
+                }
             }
         }
     }
 
     private List<List<LectureDTO>> getAvailableSlots(Set<LectureDTO> lectures, LocalDate date, Integer duration, HallDTO hall) {
 
+        boolean isClassesPeriod = classPeriodService.isClassPeriod(date);
         boolean isEven = isWeekEven(date);
         int dayOfWeek = date.getDayOfWeek().getValue();
 
         List<LectureDTO> freeHoursAtGivenDay = lectures.stream()
-                .filter(LectureDTO::getFree)
+                .filter(lecture -> !isClassesPeriod || lecture.getFree())
                 .filter(lecture -> lecture.getDayOfWeek().getNumberOfDay() == dayOfWeek)
                 .filter(lecture -> lecture.getEven().equals(isEven))
                 .filter(lecture -> isLessonNumberNotReserved(date, lecture.getLessonNumber(), hall))

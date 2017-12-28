@@ -1,10 +1,13 @@
 package pl.edu.pk.hallreservation.repository;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Repository;
 import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.ClassesPeriod;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 public interface ClassPeriodRepository extends BaseRepository<ClassesPeriod> {
@@ -12,5 +15,9 @@ public interface ClassPeriodRepository extends BaseRepository<ClassesPeriod> {
         return findOneById(id).orElseThrow(() -> new ObjectNotFoundException("ClassesPeriod", id));
     }
 
-    List<ClassesPeriod > findAll();
+//    List<ClassesPeriod> findAll();
+
+    boolean existsByDateFromAfterAndAndDateToAfter(LocalDate dateFrom, LocalDate dateTo);
+
+//    Stream<ClassesPeriod> streamAll();
 }

@@ -14,7 +14,7 @@ import pl.edu.pk.hallreservation.service.classesperiod.dto.ClassesPeriodDTO;
 import java.util.List;
 
 @RestController
-@Secured("ROLE_ADMIN")
+//@Secured("ROLE_ADMIN")
 @RequestMapping("classes-period")
 public class ClassesPeriodController {
 

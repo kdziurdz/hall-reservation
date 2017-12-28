@@ -6,6 +6,7 @@ import pl.edu.pk.hallreservation.repository.ClassPeriodRepository;
 import pl.edu.pk.hallreservation.service.classesperiod.dto.ClassesPeriodDTO;
 import pl.edu.pk.hallreservation.service.classesperiod.mapper.ClassPeriodDTOMapper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -30,5 +31,9 @@ public class ClassPeriodService {
 
     public List<ClassesPeriodDTO> getAll() {
         return classPeriodDTOMapper.asDTOs(classPeriodRepository.findAll());
+    }
+
+    public boolean isClassPeriod(LocalDate date) {
+        return classPeriodRepository.existsByDateFromAfterAndAndDateToAfter(date.plusDays(1), date.minusDays(1));
     }
 }
