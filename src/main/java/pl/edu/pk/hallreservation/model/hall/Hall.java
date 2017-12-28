@@ -1,8 +1,6 @@
 package pl.edu.pk.hallreservation.model.hall;
 
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;

@@ -14,4 +14,5 @@
     <include file="classpath:liquibase/changelogs/CREATE_TABLE_HALLS_LECTURES.xml"/>
     <include file="classpath:liquibase/changelogs/CREATE_TABLE_HALLS_RESERVATIONS.xml"/>
     <include file="classpath:liquibase/changelogs/CREATE_COLLECTION_TABLE_lesson_numbers.xml"/>
+    <include file="classpath:liquibase/changelogs/CREATE_TABLE_CLASSES_PERIOD.xml"/>
 </databaseChangeLog>
