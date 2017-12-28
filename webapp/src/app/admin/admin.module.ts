@@ -12,9 +12,9 @@ import { ManageRolesDialogComponent } from './manage-users/dialogs/manage-roles-
 import { ManageRolesComponent } from './manage-users/dialogs/manage-roles.component';
 import { CreateUserDialogComponent } from './manage-users/dialogs/create-user-dialog/create-user-dialog.component';
 import { ManageReservationsSearchFormComponent } from './manage-reservations/manage-reservations-search-form/manage-reservations-search-form.component';
-import { RemoveClassesPeriodConfirmationDialogComponent } from './settings/remove-classes-period-confirmation-dialog/remove-classes-period-confirmation-dialog.component';
-import { SettingsComponent } from './settings/settings.component';
-import { CreateClassesPeriodDialogComponent } from './settings/create-classes-period-dialog/create-classes-period-dialog.component';
+import { RemoveClassesPeriodConfirmationDialogComponent } from './classes-periods/remove-classes-period-confirmation-dialog/remove-classes-period-confirmation-dialog.component';
+import { ClassesPeriodsComponent } from './classes-periods/classes-periods.component';
+import { CreateClassesPeriodDialogComponent } from './classes-periods/create-classes-period-dialog/create-classes-period-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { CreateClassesPeriodDialogComponent } from './settings/create-classes-pe
     CreateUserDialogComponent,
     ManageReservationsComponent,
     RemoveClassesPeriodConfirmationDialogComponent,
-    SettingsComponent,
+    ClassesPeriodsComponent,
     CreateClassesPeriodDialogComponent
   ],
   entryComponents: [

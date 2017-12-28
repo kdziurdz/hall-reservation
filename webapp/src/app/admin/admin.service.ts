@@ -6,8 +6,8 @@ import { SearchUsersParams } from './manage-users/search-users-params';
 import { UserDetails } from './manage-users/user-details';
 import { CreateUserDialogCreds } from './manage-users/dialogs/create-user-dialog/create-user-dialog-result';
 import { User } from '../core/model/user';
-import { ClassesPeriod } from './settings/classes-period';
-import { CreateClassesPeriodDialogResult } from './settings/create-classes-period-dialog/create-classes-period-dialog-result';
+import { ClassesPeriod } from './classes-periods/classes-period';
+import { CreateClassesPeriodDialogResult } from './classes-periods/create-classes-period-dialog/create-classes-period-dialog-result';
 
 export const CLASSES_PERIODS_URL = 'api/classes-period';
 export const USERS_URL = 'api/user';

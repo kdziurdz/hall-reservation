@@ -7,10 +7,10 @@ import { CreateClassesPeriodDialogComponent } from './create-classes-period-dial
 import { CreateClassesPeriodDialogResult } from './create-classes-period-dialog/create-classes-period-dialog-result';
 
 @Component({
-  selector: 'hr-manage-users',
-  templateUrl: './settings.component.html'
+  selector: 'hr-classes-periods',
+  templateUrl: './classes-periods.component.html'
 })
-export class SettingsComponent implements OnInit {
+export class ClassesPeriodsComponent implements OnInit {
 
   displayedColumns = ['dateFrom', 'dateTo', 'actions'];
   dataSource = new MatTableDataSource<ClassesPeriod>([]);

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
-import { SettingsComponent } from './settings/settings.component';
+import { ClassesPeriodsComponent } from './classes-periods/classes-periods.component';
 
 const appRoutes: Routes = [
   {
@@ -14,8 +14,8 @@ const appRoutes: Routes = [
     component: ManageReservationsComponent,
   },
   {
-    path: 'settings',
-    component: SettingsComponent,
+    path: 'classes-periods',
+    component: ClassesPeriodsComponent,
   },
   {
     path: '', redirectTo: 'manage-users', pathMatch: 'full'
