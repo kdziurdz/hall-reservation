@@ -3,21 +3,24 @@
   <mat-sidenav mode="over" [opened]="opened" [mode]="mode" #sidenav class="sidenav mat-drawer mat-elevation-z5">
     <div class="hr-w-100">
       <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['reservation','search']"
-         routerLinkActive="active">Szukaj</a>
+         routerLinkActive="active">Rezerwuj</a>
     </div>
     <div class="hr-w-100" *hrHasRole="'ROLE_USER'">
       <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['reservation','my']"
          routerLinkActive="active">Moje rezerwacje</a>
     </div>
     <ng-container *hrHasRole="'ROLE_ADMIN'">
-
-      <div class="hr-w-100">
+      <div class="hr-w-100 mt-1">
         <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin','manage-users']"
            routerLinkActive="active">Użytkownicy</a>
       </div>
       <div class="hr-w-100">
         <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin', 'manage-reservations']"
-           routerLinkActive="active">Zarządzaj</a>
+           routerLinkActive="active">Rezerwacje</a>
+      </div>
+      <div class="hr-w-100">
+        <a class="vertical-menu-item hr-text-uppercase hr-w-100" [routerLink]="['admin', 'settings']"
+           routerLinkActive="active">Ustawienia</a>
       </div>
 
     </ng-container>

@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+    <div>Ustawienia</div>
+    <button mat-icon-button class="mat-icon-button" (click)="createClassesPeriod()">
+      <mat-icon>note_add</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-card class="m-1 d-block" *ngIf="dataSource && dataSource.data?.length > 0">
+  <mat-card-content fxLayout="column">
+    <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="dateFrom">
+        <mat-header-cell *matHeaderCellDef>Od</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.dateFrom}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dateTo">
+        <mat-header-cell *matHeaderCellDef>Do</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.dateTo}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="60px">
+          <button mat-icon-button class="mat-icon-button" (click)="remove(element)">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card class="m-1 d-block" *ngIf="dataSource && dataSource.data?.length == 0;">
+  <mat-card-content>
+    <span>Brak okresów zajęć</span>
+    <button mat-icon-button class="mat-icon-button" color="primary" (click)="createClassesPeriod()">
+      <mat-icon>note_add</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>

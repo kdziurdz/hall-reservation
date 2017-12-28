@@ -1,0 +1,29 @@
+<form [formGroup]="createPeriodFormGroup" (ngSubmit)="submit()" novalidate>
+  <h1 class="mat-dialog-title">Utwórz okres zajęć</h1>
+  <mat-divider></mat-divider>
+  <div class="mat-dialog-content">
+    <mat-form-field class="hr-w-100">
+      <input matInput formControlName="dateFrom" [min]="todayDate" [matDatepicker]="dateFromInput"
+             placeholder="Data od">
+      <mat-datepicker-toggle matSuffix [for]="dateFromInput"></mat-datepicker-toggle>
+      <mat-datepicker #dateFromInput></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="hr-w-100">
+      <input matInput formControlName="dateTo" [min]="createPeriodFormGroup.get('dateFrom').value"
+             [matDatepicker]="dateToInput"
+             placeholder="Data do">
+      <mat-datepicker-toggle matSuffix [for]="dateToInput"></mat-datepicker-toggle>
+      <mat-datepicker #dateToInput></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
+  <div fxLayout="row" fxLayoutAlign="space-around center" class="mt-1">
+    <button class="mat-raised-button"
+            type="button" role="button" (click)="dismiss()">Anuluj
+    </button>
+    <button class="mat-raised-button mat-primary" [disabled]="createPeriodFormGroup.invalid"
+            type="submit" role="button">OK
+    </button>
+  </div>
+
+</form>

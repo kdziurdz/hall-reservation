@@ -34,6 +34,6 @@ public class ClassPeriodService {
     }
 
     public boolean isClassPeriod(LocalDate date) {
-        return classPeriodRepository.existsByDateFromAfterAndAndDateToAfter(date.plusDays(1), date.minusDays(1));
+        return classPeriodRepository.existsByDateFromBeforeAndAndDateToAfter(date.plusDays(1), date.minusDays(1));
     }
 }

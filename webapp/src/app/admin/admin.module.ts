@@ -12,6 +12,9 @@ import { ManageRolesDialogComponent } from './manage-users/dialogs/manage-roles-
 import { ManageRolesComponent } from './manage-users/dialogs/manage-roles.component';
 import { CreateUserDialogComponent } from './manage-users/dialogs/create-user-dialog/create-user-dialog.component';
 import { ManageReservationsSearchFormComponent } from './manage-reservations/manage-reservations-search-form/manage-reservations-search-form.component';
+import { RemoveClassesPeriodConfirmationDialogComponent } from './settings/remove-classes-period-confirmation-dialog/remove-classes-period-confirmation-dialog.component';
+import { SettingsComponent } from './settings/settings.component';
+import { CreateClassesPeriodDialogComponent } from './settings/create-classes-period-dialog/create-classes-period-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +26,17 @@ import { ManageReservationsSearchFormComponent } from './manage-reservations/man
     ManageRolesComponent,
     CreateUserDialogComponent,
     ManageReservationsComponent,
-    ManageReservationsSearchFormComponent,
+    RemoveClassesPeriodConfirmationDialogComponent,
+    SettingsComponent,
+    CreateClassesPeriodDialogComponent
   ],
   entryComponents: [
     ChangeExpirationDateDialogComponent,
     RemoveUserConfirmationDialogComponent,
     ManageRolesDialogComponent,
-    CreateUserDialogComponent
+    CreateUserDialogComponent,
+    RemoveClassesPeriodConfirmationDialogComponent,
+    CreateClassesPeriodDialogComponent
   ],
   providers: [
     AdminService

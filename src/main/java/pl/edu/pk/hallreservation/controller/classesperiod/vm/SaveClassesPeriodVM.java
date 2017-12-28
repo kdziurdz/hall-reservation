@@ -1,9 +1,15 @@
 package pl.edu.pk.hallreservation.controller.classesperiod.vm;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class SaveClassesPeriodVM {
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateFrom;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateTo;
 
     public SaveClassesPeriodVM(LocalDate dateFrom, LocalDate dateTo) {

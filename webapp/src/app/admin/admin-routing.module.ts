@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageReservationsComponent } from './manage-reservations/manage-reservations.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const appRoutes: Routes = [
   {
@@ -11,6 +12,10 @@ const appRoutes: Routes = [
   {
     path: 'manage-reservations',
     component: ManageReservationsComponent,
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
   },
   {
     path: '', redirectTo: 'manage-users', pathMatch: 'full'

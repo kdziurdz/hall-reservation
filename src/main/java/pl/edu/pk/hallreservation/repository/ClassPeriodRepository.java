@@ -17,7 +17,7 @@ public interface ClassPeriodRepository extends BaseRepository<ClassesPeriod> {
 
 //    List<ClassesPeriod> findAll();
 
-    boolean existsByDateFromAfterAndAndDateToAfter(LocalDate dateFrom, LocalDate dateTo);
+    boolean existsByDateFromBeforeAndAndDateToAfter(LocalDate dateFrom, LocalDate dateTo);
 
 //    Stream<ClassesPeriod> streamAll();
 }

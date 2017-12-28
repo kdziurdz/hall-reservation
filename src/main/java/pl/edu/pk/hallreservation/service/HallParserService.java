@@ -49,6 +49,7 @@ public class HallParserService {
                         mergeHalls(halls.get(hall.getName()), hall); // merge even with odd
                     }
                     hallUrlNumber++;
+                    break; //todo delete
                 } else {
                     break;
                 }
