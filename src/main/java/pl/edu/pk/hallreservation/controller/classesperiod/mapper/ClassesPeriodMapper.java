@@ -1,15 +1,15 @@
-package pl.edu.pk.hallreservation.controller.admin.mapper;
+package pl.edu.pk.hallreservation.controller.classesperiod.mapper;
 
 
 import org.mapstruct.Mapper;
-import pl.edu.pk.hallreservation.controller.admin.vm.ClassesPeriodVM;
-import pl.edu.pk.hallreservation.controller.admin.vm.SaveClassesPeriodVM;
-import pl.edu.pk.hallreservation.service.admin.dto.ClassesPeriodDTO;
+import pl.edu.pk.hallreservation.controller.classesperiod.vm.ClassesPeriodVM;
+import pl.edu.pk.hallreservation.controller.classesperiod.vm.SaveClassesPeriodVM;
+import pl.edu.pk.hallreservation.service.classesperiod.dto.ClassesPeriodDTO;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface AdminMapper {
+public interface ClassesPeriodMapper {
 
     ClassesPeriodVM asVM(ClassesPeriodDTO dto);
 

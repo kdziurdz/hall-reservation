@@ -7,7 +7,7 @@ import { UserDetails } from './manage-users/user-details';
 import { CreateUserDialogCreds } from './manage-users/dialogs/create-user-dialog/create-user-dialog-result';
 import { User } from '../core/model/user';
 
-export const ADMIN_URL = 'api/admin';
+export const ADMIN_URL = 'api/classesperiod';
 export const USERS_URL = 'api/user';
 
 @Injectable()

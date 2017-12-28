@@ -7,7 +7,7 @@ import pl.edu.pk.hallreservation.model.ClassesPeriod;
 import java.util.List;
 
 @Repository
-public interface AdminRepository extends BaseRepository<ClassesPeriod> {
+public interface ClassPeriodRepository extends BaseRepository<ClassesPeriod> {
     default ClassesPeriod getOneById(Long id){
         return findOneById(id).orElseThrow(() -> new ObjectNotFoundException("ClassesPeriod", id));
     }

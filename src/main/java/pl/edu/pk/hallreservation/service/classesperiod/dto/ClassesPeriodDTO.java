@@ -1,6 +1,6 @@
-package pl.edu.pk.hallreservation.service.admin.dto;
+package pl.edu.pk.hallreservation.service.classesperiod.dto;
 
-import pl.edu.pk.hallreservation.controller.admin.vm.SaveClassesPeriodVM;
+import pl.edu.pk.hallreservation.controller.classesperiod.vm.SaveClassesPeriodVM;
 
 import java.time.LocalDate;
 

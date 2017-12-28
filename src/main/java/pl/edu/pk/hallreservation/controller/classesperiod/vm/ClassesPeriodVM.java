@@ -1,4 +1,4 @@
-package pl.edu.pk.hallreservation.controller.admin.vm;
+package pl.edu.pk.hallreservation.controller.classesperiod.vm;
 
 import java.time.LocalDate;
 

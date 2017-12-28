@@ -1,14 +1,14 @@
-package pl.edu.pk.hallreservation.service.admin.mapper;
+package pl.edu.pk.hallreservation.service.classesperiod.mapper;
 
 
 import org.mapstruct.Mapper;
 import pl.edu.pk.hallreservation.model.ClassesPeriod;
-import pl.edu.pk.hallreservation.service.admin.dto.ClassesPeriodDTO;
+import pl.edu.pk.hallreservation.service.classesperiod.dto.ClassesPeriodDTO;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface AdminDTOMapper {
+public interface ClassPeriodDTOMapper {
 
     ClassesPeriodDTO asDTO(ClassesPeriod dto);
 
