@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.pk.hallreservation.controller.reservation.vm.AvailableReservationVM;
 import pl.edu.pk.hallreservation.controller.reservation.vm.ReservationVM;
 import pl.edu.pk.hallreservation.controller.reservation.vm.SaveReservationVM;
-import pl.edu.pk.hallreservation.service.reservation.mapper.ReservationMapper;
 import pl.edu.pk.hallreservation.service.reservation.ReservationService;
 import pl.edu.pk.hallreservation.service.reservation.dto.AvailableReservationDTO;
 import pl.edu.pk.hallreservation.service.reservation.dto.ReservationDTO;
+import pl.edu.pk.hallreservation.service.reservation.mapper.ReservationMapper;
 
 import java.time.LocalDate;
 import java.util.List;

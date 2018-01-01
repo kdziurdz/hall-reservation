@@ -3,19 +3,19 @@ package pl.edu.pk.hallreservation.service.reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.edu.pk.hallreservation.exception.ObjectNotFoundException;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.model.user.User;
 import pl.edu.pk.hallreservation.repository.ReservationRepository;
+import pl.edu.pk.hallreservation.service.EmailService;
 import pl.edu.pk.hallreservation.service.classesperiod.ClassPeriodService;
 import pl.edu.pk.hallreservation.service.hall.HallService;
-import pl.edu.pk.hallreservation.service.reservation.dto.ReservationDTO;
-import pl.edu.pk.hallreservation.service.reservation.mapper.ReservationMapper;
-import pl.edu.pk.hallreservation.service.user.UserService;
 import pl.edu.pk.hallreservation.service.hall.dto.HallDTO;
 import pl.edu.pk.hallreservation.service.hall.dto.LectureDTO;
 import pl.edu.pk.hallreservation.service.reservation.dto.AvailableReservationDTO;
+import pl.edu.pk.hallreservation.service.reservation.dto.ReservationDTO;
 import pl.edu.pk.hallreservation.service.reservation.dto.SaveReservationDTO;
+import pl.edu.pk.hallreservation.service.reservation.mapper.ReservationMapper;
+import pl.edu.pk.hallreservation.service.user.UserService;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -32,15 +32,17 @@ public class ReservationService {
     private final ClassPeriodService classPeriodService;
     private final UserService userService;
     private final ReservationMapper reservationMapper;
+    private final EmailService emailService;
 
     public ReservationService(ReservationRepository reservationRepository, HallService hallService,
                               UserService userService, ReservationMapper reservationMapper,
-                              ClassPeriodService classPeriodService) {
+                              ClassPeriodService classPeriodService, EmailService emailService) {
         this.reservationRepository = reservationRepository;
         this.hallService = hallService;
         this.userService = userService;
         this.reservationMapper = reservationMapper;
         this.classPeriodService = classPeriodService;
+        this.emailService = emailService;
     }
 
     public void create(@NotNull SaveReservationDTO saveReservationDTO) {
@@ -54,6 +56,7 @@ public class ReservationService {
                 saveReservationDTO.getDate(), userService.getActualUser(), hallService.getOneEntity(hall.getId()));
 
         reservationRepository.save(reservation);
+        emailService.sendMailAboutSuccessfullReservation(reservationMapper.asDTO(reservation));
     }
 
     public List<AvailableReservationDTO> search(LocalDate dateFrom, LocalDate dateTo, Integer duration, List<Long> hallIds) {
@@ -137,7 +140,7 @@ public class ReservationService {
     }
 
     private void checkLessonHourAvailability(Set<LectureDTO> lectures, LocalDate date, List<Integer> lessonNumbers) {
-        if(classPeriodService.isClassPeriod(date)){
+        if (classPeriodService.isClassPeriod(date)) {
             boolean isEven = isWeekEven(date);
             int dayOfWeek = date.getDayOfWeek().getValue();
 
@@ -218,14 +221,23 @@ public class ReservationService {
     public void cancel(Long reservationId, String reason) {
         Reservation reservation = reservationRepository.getOneById(reservationId);
         User user = userService.getActualUser();
-        if (!reservation.getUser().getId().equals(user.getId())) {
-            throw new IllegalArgumentException(String.format("User with ID %d is not owner of reservation with id %d",
-                    user.getId(), reservationId));
-        } else {
+
+        boolean isOwner = reservation.getUser().getId().equals(user.getId());
+        boolean isAdmin = user.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isOwner || isAdmin) {
             reservation.setCancelled(true);
             reservation.setCanceller(user);
             reservation.setCancellationReason(reason);
             reservationRepository.save(reservation);
-        }
+
+            if (isOwner) {
+                emailService.sendEmailAboutSelfCancellation(reservationMapper.asDTO(reservation));
+            } else {
+                emailService.sendEmailAboutIntentionedReservationCancellation(reservationMapper.asDTO(reservation));
+            }
+        } else
+            throw new IllegalArgumentException(String.format("User with ID %d is not owner of reservation with id %d",
+                    user.getId(), reservationId));
     }
 }

@@ -34,6 +34,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, CREATE_PASSWORD_URL).permitAll()
                 .antMatchers(H2_CONSOLE_URL).permitAll()
+                .antMatchers("/reservation/search").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
