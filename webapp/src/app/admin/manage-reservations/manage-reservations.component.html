@@ -29,7 +29,8 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="60px">
-          <button mat-icon-button class="mat-icon-button" [matMenuTriggerFor]="manageReservationsActionsMenu">
+          <button mat-icon-button class="mat-icon-button" [matMenuTriggerFor]="manageReservationsActionsMenu"
+                  *ngIf="!isBeforeToday(element.date)">
             <mat-icon>more_vert</mat-icon>
             <mat-menu #manageReservationsActionsMenu="matMenu">
               <button mat-menu-item *ngIf="!element.cancelled && !isBeforeToday(element.date)"

@@ -9,6 +9,7 @@ import { HasRoleDirective } from './directives/has-role/has-role.directive';
 import { AboutComponent } from './components/about/about.component';
 import { ReservationCancellationDialog } from './components/reservation-cancellation-dialog/reservation-cancellation-dialog.component';
 import { CancellationInfoDialog } from './components/cancellation-info-dialog/cancellation-info-dialog.component';
+import { MyAccountFormComponent } from './components/my-account-form/my-account-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CancellationInfoDialog } from './components/cancellation-info-dialog/ca
     HasRoleDirective,
     AboutComponent,
     ReservationCancellationDialog,
-    CancellationInfoDialog
+    CancellationInfoDialog,
+    MyAccountFormComponent
   ],
   entryComponents: [
     ReservationCancellationDialog,

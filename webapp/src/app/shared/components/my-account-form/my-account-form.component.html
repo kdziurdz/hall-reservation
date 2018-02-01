@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div>Ustawienia konta</div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div fxLayout="column" fxLayoutAlign="center center" class="m-2">
+  <form [formGroup]="myAccountForm" (ngSubmit)="submitChanges()" novalidate style="min-width: 300px;">
+    <mat-card>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center stretch" >
+        <mat-form-field>
+          <input matInput formControlName="login" placeholder="Login">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="firstName" placeholder="Imię">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="lastName" placeholder="Nazwisko">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="email" placeholder="E-mail">
+        </mat-form-field>
+        <mat-slide-toggle class="mt-2 mb-2" [formControl]="ifChangePassword" labelPosition="after">Nowe hasło</mat-slide-toggle>
+        <mat-form-field>
+          <input matInput type="password" formControlName="newPassword" placeholder="Nowe hasło">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" formControlName="newPasswordConfirm" placeholder="Potwierdź nowe hasło">
+        </mat-form-field>
+      </mat-card-content>
+      <mat-form-field class="mt-2">
+        <input matInput type="password" formControlName="oldPassword" placeholder="Dotychczasowe hasło">
+      </mat-form-field>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+        <button class="mat-raised-button mat-primary" color="primary"
+                [disabled]="myAccountForm.invalid" type="submit" role="button">Aktualizuj
+        </button>
+      </mat-card-actions>
+  </mat-card>
+  </form>
+</div>

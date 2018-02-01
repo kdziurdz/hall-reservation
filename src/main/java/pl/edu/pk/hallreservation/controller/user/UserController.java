@@ -111,12 +111,28 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/search")
     public ResponseEntity<List<UserVM>> search(@RequestParam String query) {
         List<UserDTO> userDTOS = userService.search(query);
 
         return new ResponseEntity<>(userDTOS.stream().map(userMapper::asVM).collect(Collectors.toList()),
                 HttpStatus.OK);
+    }
+
+    @GetMapping("actual")
+    public ResponseEntity<UserDetailsVM> getActual() {
+        UserDTO userDTO = userService.getActualUserDTO();
+        return new ResponseEntity<>(userMapper.asDetailsVM(userDTO), HttpStatus.OK);
+    }
+
+    @PostMapping("/account-update")
+    public ResponseEntity<HttpStatus> updateAccount(@RequestBody UpdateAccountVM updateVM) {
+
+        userService.updateAccount(updateVM.getLogin(), updateVM.getFirstName(), updateVM.getLastName(), updateVM.getEmail(),
+                updateVM.getOldPassword(), updateVM.getNewPassword() );
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/create-password")

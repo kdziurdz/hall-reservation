@@ -8,8 +8,13 @@
 </mat-toolbar>
 
 
-<mat-card class="m-1 d-block" *ngIf="page && page?.content?.length > 0">
+<mat-card class="m-1 d-block">
   <mat-card-content fxLayout="column">
+    <div class="ml-1">
+      <mat-form-field>
+        <input matInput placeholder="Szukaj..." [formControl]="nameQuery">
+      </mat-form-field>
+    </div>
     <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
 
       <ng-container matColumnDef="lastName">
@@ -61,16 +66,11 @@
     </mat-table>
 
     <mat-paginator #paginator
-                   [pageSize]="page.size"
-                   [length]="page.totalElements"
-                   [pageIndex]="page.number"
+                   [pageSize]="page?.size"
+                   [length]="page?.totalElements"
+                   [pageIndex]="page?.number"
                    (page)="onPageChange($event)"
                    [pageSizeOptions]="[10, 20, 30]">
     </mat-paginator>
   </mat-card-content>
-</mat-card>
-
-
-<mat-card class="m-1 d-block" *ngIf="page && page?.content?.length == 0;">
-  <mat-card-content>Brak dopasowań. Zmień kryteria wyszukiwania</mat-card-content>
 </mat-card>

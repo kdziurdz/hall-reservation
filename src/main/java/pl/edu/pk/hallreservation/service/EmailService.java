@@ -29,40 +29,40 @@ public class EmailService {
     }
 
     public void sendMailAboutSuccessfullReservation(ReservationDTO reservationDTO) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(reservationDTO.getUser().getEmail());
-        message.setSubject(SUCCESSFULL_RESERVATION_SUBJECT);
-        message.setText(String.format(SUCCESSFULL_RESERVATION_TEXT, reservationDTO.getHall().getName(),
-                reservationDTO.getDate(), reservationDTO.getLessonNumbers()));
-        emailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(reservationDTO.getUser().getEmail());
+//        message.setSubject(SUCCESSFULL_RESERVATION_SUBJECT);
+//        message.setText(String.format(SUCCESSFULL_RESERVATION_TEXT, reservationDTO.getHall().getName(),
+//                reservationDTO.getDate(), reservationDTO.getLessonNumbers()));
+//        emailSender.send(message);
     }
 
     public void sendEmailAboutSelfCancellation(ReservationDTO reservationDTO) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(reservationDTO.getUser().getEmail());
-        message.setSubject(SUCCESSFULL_CANCELLATION_SUBJECT);
-        message.setText(String.format(SUCCESSFULL_CANCELLATION_TEXT, reservationDTO.getHall().getName(),
-                reservationDTO.getDate(), reservationDTO.getLessonNumbers()));
-        emailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(reservationDTO.getUser().getEmail());
+//        message.setSubject(SUCCESSFULL_CANCELLATION_SUBJECT);
+//        message.setText(String.format(SUCCESSFULL_CANCELLATION_TEXT, reservationDTO.getHall().getName(),
+//                reservationDTO.getDate(), reservationDTO.getLessonNumbers()));
+//        emailSender.send(message);
     }
 
     public void sendEmailAboutAutomatedReservationCancellation(ReservationDTO reservationDTO) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(reservationDTO.getUser().getEmail());
-        message.setSubject(SYSTEM_CANCELLATION_SUBJECT);
-        message.setText(String.format(SYSTEM_CANCELLATION_TEXT, reservationDTO.getHall().getName(),
-                reservationDTO.getDate(), reservationDTO.getLessonNumbers()));
-        emailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(reservationDTO.getUser().getEmail());
+//        message.setSubject(SYSTEM_CANCELLATION_SUBJECT);
+//        message.setText(String.format(SYSTEM_CANCELLATION_TEXT, reservationDTO.getHall().getName(),
+//                reservationDTO.getDate(), reservationDTO.getLessonNumbers()));
+//        emailSender.send(message);
     }
 
     public void sendEmailAboutIntentionedReservationCancellation(ReservationDTO reservationDTO) {
-        String cancellerName = reservationDTO.getCanceller().getFirstName() + " " + reservationDTO.getCanceller().getLastName();
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(reservationDTO.getUser().getEmail());
-        message.setSubject(INTENTIONED_CANCELLATION_SUBJECT);
-        message.setText(String.format(INTENTIONED_CANCELLATION_TEXT, reservationDTO.getHall().getName(),
-                reservationDTO.getDate(), reservationDTO.getLessonNumbers(), cancellerName,
-                reservationDTO.getCancellationReason()));
-        emailSender.send(message);
+//        String cancellerName = reservationDTO.getCanceller().getFirstName() + " " + reservationDTO.getCanceller().getLastName();
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(reservationDTO.getUser().getEmail());
+//        message.setSubject(INTENTIONED_CANCELLATION_SUBJECT);
+//        message.setText(String.format(INTENTIONED_CANCELLATION_TEXT, reservationDTO.getHall().getName(),
+//                reservationDTO.getDate(), reservationDTO.getLessonNumbers(), cancellerName,
+//                reservationDTO.getCancellationReason()));
+//        emailSender.send(message);
     }
 }

@@ -12,6 +12,7 @@ import pl.edu.pk.hallreservation.model.hall.Lecture;
 import pl.edu.pk.hallreservation.model.hall.Reservation;
 import pl.edu.pk.hallreservation.repository.HallRepository;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.*;
 
@@ -34,6 +35,7 @@ public class HallParserService {
         this.hallRepository = hallRepository;
     }
 
+    @PostConstruct
     public void refreshHallsClasses() {
         try {
             Map<String, Hall> halls = new HashMap<>();
@@ -49,7 +51,6 @@ public class HallParserService {
                         mergeHalls(halls.get(hall.getName()), hall); // merge even with odd
                     }
                     hallUrlNumber++;
-                    break; //todo delete
                 } else {
                     break;
                 }

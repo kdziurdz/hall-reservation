@@ -20,7 +20,6 @@ import pl.edu.pk.hallreservation.repository.UserRepository;
 import pl.edu.pk.hallreservation.service.user.dto.UserDTO;
 import pl.edu.pk.hallreservation.service.user.mapper.UserDTOMapper;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +45,15 @@ public class UserService implements UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return userRepository.findOneByUsername(authentication.getName());
+        } else {
+            throw new AuthenticationCredentialsNotFoundException("User is not authenticated");
+        }
+    }
+
+    public UserDTO getActualUserDTO() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return userDTOMapper.asDTO(userRepository.findOneByUsername(authentication.getName()));
         } else {
             throw new AuthenticationCredentialsNotFoundException("User is not authenticated");
         }
@@ -120,5 +128,22 @@ public class UserService implements UserDetailsService {
     public List<UserDTO> search(String query) {
         List<User> foundUsers = userRepository.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(query, query);
         return foundUsers.stream().map(userDTOMapper::asDTO).collect(Collectors.toList());
+    }
+
+    public void updateAccount(String login, String firstName, String lastName, String email, String oldPassword, String newPassword) {
+        User actualUser = getActualUser();
+        if(!actualUser.getPassword().equals(oldPassword)) {
+            throw new ConflictDataException("Password is incorrect");
+        }
+
+        actualUser.setUsername(login);
+        actualUser.setFirstName(firstName);
+        actualUser.setLastName(lastName);
+        actualUser.setEmail(email);
+        if(newPassword != null) {
+            actualUser.setPassword(newPassword);
+        }
+
+        userRepository.save(actualUser);
     }
 }

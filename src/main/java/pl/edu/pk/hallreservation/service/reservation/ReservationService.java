@@ -92,7 +92,6 @@ public class ReservationService {
 
         Page<Reservation> page;
 
-
         if (userIds == null && hallIds == null) {
             if (statuses.size() == 2) {
                 page = reservationRepository.findAllByAndDateBetween(pageable, dateFrom, dateTo);
@@ -219,11 +218,18 @@ public class ReservationService {
     }
 
     public void cancel(Long reservationId, String reason) {
-        Reservation reservation = reservationRepository.getOneById(reservationId);
+        boolean isAdmin = false;
+        Reservation reservation = reservationRepository
+                .getOneById(reservationId);
         User user = userService.getActualUser();
 
-        boolean isOwner = reservation.getUser().getId().equals(user.getId());
-        boolean isAdmin = user.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+        boolean isOwner = reservation.getUser()
+                .getId().equals(user.getId());
+        if(!isOwner) {
+            isAdmin = user.getAuthorities().stream()
+                    .anyMatch(authority -> authority
+                            .getAuthority().equals("ROLE_ADMIN"));
+        }
 
         if (isOwner || isAdmin) {
             reservation.setCancelled(true);
@@ -232,12 +238,17 @@ public class ReservationService {
             reservationRepository.save(reservation);
 
             if (isOwner) {
-                emailService.sendEmailAboutSelfCancellation(reservationMapper.asDTO(reservation));
+                emailService
+                        .sendEmailAboutSelfCancellation(reservationMapper
+                        .asDTO(reservation));
             } else {
-                emailService.sendEmailAboutIntentionedReservationCancellation(reservationMapper.asDTO(reservation));
+                emailService
+                        .sendEmailAboutIntentionedReservationCancellation(reservationMapper
+                                .asDTO(reservation));
             }
         } else
-            throw new IllegalArgumentException(String.format("User with ID %d is not owner of reservation with id %d",
+            throw new IllegalArgumentException(String
+                    .format("User with ID %d has no rights to cancel reservation with id %d",
                     user.getId(), reservationId));
     }
 }
