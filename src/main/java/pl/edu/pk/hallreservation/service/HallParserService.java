@@ -35,7 +35,7 @@ public class HallParserService {
         this.hallRepository = hallRepository;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void refreshHallsClasses() {
         try {
             Map<String, Hall> halls = new HashMap<>();

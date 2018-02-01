@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../core/auth/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { USERS_URL } from '../../../admin/admin.service';
@@ -11,12 +10,12 @@ import { UserDetails } from '../../../admin/manage-users/user-details';
   templateUrl: 'my-account-form.component.html',
   styleUrls: ['./my-account-form.component.scss']
 })
-export class MyAccountFormComponent implements OnInit{
+export class MyAccountFormComponent implements OnInit {
 
   myAccountForm: FormGroup;
   ifChangePassword: FormControl;
 
-  constructor(private authService: AuthService, private router: Router, private httpClient: HttpClient) {
+  constructor(private router: Router, private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -33,7 +32,7 @@ export class MyAccountFormComponent implements OnInit{
 
     this.ifChangePassword = new FormControl();
     this.ifChangePassword.valueChanges.subscribe(newVal => {
-      if(newVal) {
+      if (newVal) {
         this.myAccountForm.get('newPassword').enable();
         this.myAccountForm.get('newPasswordConfirm').enable();
       } else {
@@ -55,7 +54,7 @@ export class MyAccountFormComponent implements OnInit{
     delete values['newPasswordConfirm'];
     this.httpClient.post(`${USERS_URL}/account-update`, values).subscribe(() => {
       this.router.navigate(['/']);
-    }, ()=> {
+    }, () => {
       this.myAccountForm.get('oldPassword').reset();
       // TODO toaster
     });
@@ -64,10 +63,10 @@ export class MyAccountFormComponent implements OnInit{
   private MatchPassword(AC: AbstractControl) {
     let password = AC.get('newPassword').value;
     let repeatPassword = AC.get('newPasswordConfirm').value;
-    if(password != repeatPassword) {
-      AC.get('newPasswordConfirm').setErrors( {MatchPassword: true} )
+    if (password != repeatPassword) {
+      AC.get('newPasswordConfirm').setErrors({MatchPassword: true});
     } else {
-      return null
+      return null;
     }
   }
 }

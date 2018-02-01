@@ -95,9 +95,9 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     @PatchMapping("{id}/expirationDate")
     public ResponseEntity<HttpStatus> disableUser(@PathVariable Long id,
-                                                  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate newDate) {
+                                                  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate expirationDate) {
 
-        userService.setExpirationDate(id, newDate);
+        userService.setExpirationDate(id, expirationDate);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
